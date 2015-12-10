@@ -30,7 +30,7 @@
 <link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="网络安全," />
+  <meta name="keywords" content="redtiger,sql注入,writeup," />
 
 
 
@@ -46,16 +46,23 @@
 
 
 
-<meta name="description" content="第一篇博文，测试使用，谢谢！">
+<meta name="description" content="这个系列的题目都是考察sql注入相关知识的，在这一系列的writeup中，我不仅仅会给出详细的解题思路，还会由浅入深的分析所用到的sql注入的知识。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello s0m30ne">
+<meta property="og:title" content="redtiger level writeup">
 <meta property="og:url" content="http://s0m30ne.github.io/2015/12/08/Hello-s0m30ne/index.html">
 <meta property="og:site_name" content="s0m30ne的博客">
-<meta property="og:description" content="第一篇博文，测试使用，谢谢！">
-<meta property="og:updated_time" content="2015-12-08T12:42:59.411Z">
+<meta property="og:description" content="这个系列的题目都是考察sql注入相关知识的，在这一系列的writeup中，我不仅仅会给出详细的解题思路，还会由浅入深的分析所用到的sql注入的知识。">
+<meta property="og:image" content="http://7xp22c.com1.z0.glb.clouddn.com/1.PNG">
+<meta property="og:image" content="http://7xp22c.com1.z0.glb.clouddn.com/2.PNG">
+<meta property="og:image" content="http://7xp22c.com1.z0.glb.clouddn.com/3.PNG">
+<meta property="og:image" content="http://7xp22c.com1.z0.glb.clouddn.com/4.PNG">
+<meta property="og:image" content="http://7xp22c.com1.z0.glb.clouddn.com/5.PNG">
+<meta property="og:image" content="http://7xp22c.com1.z0.glb.clouddn.com/6.PNG">
+<meta property="og:image" content="http://7xp22c.com1.z0.glb.clouddn.com/7.PNG">
+<meta property="og:updated_time" content="2015-12-10T10:05:49.787Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello s0m30ne">
-<meta name="twitter:description" content="第一篇博文，测试使用，谢谢！">
+<meta name="twitter:title" content="redtiger level writeup">
+<meta name="twitter:description" content="这个系列的题目都是考察sql注入相关知识的，在这一系列的writeup中，我不仅仅会给出详细的解题思路，还会由浅入深的分析所用到的sql注入的知识。">
 
 
 
@@ -67,7 +74,7 @@
   };
 </script>
 
-  <title> Hello s0m30ne | s0m30ne的博客 </title>
+  <title> redtiger level writeup | s0m30ne的博客 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
@@ -207,7 +214,7 @@
             
             
               
-                Hello s0m30ne
+                redtiger level writeup
               
             
           </h1>
@@ -222,8 +229,8 @@
           </span>
           <span class="post-time">
             | 修改于
-            <time itemprop="dateCreated" datetime="2015-12-08T20:42:59+08:00" content="2015-12-08">
-              2015-12-08
+            <time itemprop="dateCreated" datetime="2015-12-10T18:05:49+08:00" content="2015-12-10">
+              2015-12-10
             </time>
           </span>
 
@@ -232,8 +239,8 @@
               &nbsp; | &nbsp; 分類於
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/网络安全/" itemprop="url" rel="index">
-                    <span itemprop="name">网络安全</span>
+                  <a href="/categories/writeup/" itemprop="url" rel="index">
+                    <span itemprop="name">writeup</span>
                   </a>
                 </span>
 
@@ -268,7 +275,13 @@
       
 
       
-        <span itemprop="articleBody"><p>第一篇博文，测试使用，谢谢！</p>
+        <span itemprop="articleBody"><p>这个系列的题目都是考察sql注入相关知识的，在这一系列的writeup中，我不仅仅会给出详细的解题思路，还会由浅入深的分析所用到的sql注入的知识。<br><a id="more"></a><br>打开第一关地址：<a href="https://redtiger.labs.overthewire.org/level1.php" title="第一关" target="_blank" rel="external">https://redtiger.labs.overthewire.org/level1.php</a>，我们看到如下页面：<br><img src="http://7xp22c.com1.z0.glb.clouddn.com/1.PNG" alt=""></p>
+<p>在这里，我们知道了我们需要的数据在表level1_users中。我们点击Category，看到页面发生了变化：<br><img src="http://7xp22c.com1.z0.glb.clouddn.com/2.PNG" alt=""></p>
+<p>故而这一关的注入点便是cat参数，我们假设当前使用的表是cats，那么我们可以大体构造出页面后台所使用的sql查询语句为：<code>select * from cats where cat = 1</code>。接下来，我们使用order by获取字段数，具体操作我们可以提交cat参数为1 order by 4，即构造如下链接：<a href="https://redtiger.labs.overthewire.org/level1.php?cat=1%20order%20by%204" target="_blank" rel="external">https://redtiger.labs.overthewire.org/level1.php?cat=1%20order%20by%204</a>，此时我们在构造一下后台数据库查询语句为：<code>select * from cats where cat = 1 order by 4</code>，访问页面后我们发现页面正常，而此时如果我们将参数设置为’1 order by 5’，访问页面发现页面出错，出现如下提示：<br><img src="http://7xp22c.com1.z0.glb.clouddn.com/3.PNG" alt=""></p>
+<p>这说明在后台的sql查询语句中对4个字段进行了查询，即其sql语句为：<code>select 1,2,3,4 from cats where cat = 1 order by 5</code>。接下来我们继续使用union select来获取数据，由于该页面后台对4个字段进行查询，而union select语句的作用是将两次查询的结果合并输出并要求两次查询的字段数必须相同，因此我们构造参数为-1 union select 1,2,3,4，此时其后台sql查询语句可以构造如下：<code>select 1,2,3,4 from cats where cat = -1 union select 1,2,3,4</code>，此时前面的查询由于参数cat的值为-1，查询结果为空，而后面的union查询输出1，2，3，4，故最终我们会看到如下页面：<br><img src="http://7xp22c.com1.z0.glb.clouddn.com/4.PNG" alt=""></p>
+<p>这样，3、4处就是我们后面union select输出的地方，我们尝试着在3处输入version()，然后查询出的数据库版本信息就会显示在页面中3的地方：<br><img src="http://7xp22c.com1.z0.glb.clouddn.com/5.PNG" alt=""></p>
+<p>这样，我们直接将参数设置为：-1 union select 1,2,username,password from level1_users limit 0,1，可以查询出用户名密码的信息了。<br><img src="http://7xp22c.com1.z0.glb.clouddn.com/6.PNG" alt=""></p>
+<p>在下面的登录框中输入用户名密码，得到通关密码：<br><img src="http://7xp22c.com1.z0.glb.clouddn.com/7.PNG" alt=""></p>
 </span>
       
     </div>
@@ -277,7 +290,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/网络安全/" rel="tag">#网络安全</a>
+            <a href="/tags/redtiger/" rel="tag">#redtiger</a>
+          
+            <a href="/tags/sql注入/" rel="tag">#sql注入</a>
+          
+            <a href="/tags/writeup/" rel="tag">#writeup</a>
           
         </div>
       
@@ -306,7 +323,7 @@
   <div class="comments" id="comments">
     
       <div class="ds-thread" data-thread-key="2015/12/08/Hello-s0m30ne/"
-           data-title="Hello s0m30ne" data-url="http://s0m30ne.github.io/2015/12/08/Hello-s0m30ne/">
+           data-title="redtiger level writeup" data-url="http://s0m30ne.github.io/2015/12/08/Hello-s0m30ne/">
       </div>
     
   </div>
@@ -364,7 +381,7 @@
 
           <div class="site-state-item site-state-tags">
             
-              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-count">3</span>
               <span class="site-state-item-name">標籤</span>
               
           </div>
