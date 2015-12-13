@@ -56,7 +56,7 @@
 这一关是要我们想办法绕或登录，我们可以猜测登录时后台sql语句为：select * from user where username=&amp;#39;admin&amp;#39; and password=&amp;#39;password&amp;#39;，因此我们可以尝试构造username">
 <meta property="og:image" content="http://7xp22c.com1.z0.glb.clouddn.com/8.PNG">
 <meta property="og:image" content="http://7xp22c.com1.z0.glb.clouddn.com/9.PNG">
-<meta property="og:updated_time" content="2015-12-13T12:05:54.367Z">
+<meta property="og:updated_time" content="2015-12-13T15:31:26.440Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="redtiger level2 writeup">
 <meta name="twitter:description" content="打开第二关的链接https://redtiger.labs.overthewire.org/level2.php，我们看到如下提示：
@@ -247,7 +247,7 @@
           </span>
           <span class="post-time">
             | 修改于
-            <time itemprop="dateCreated" datetime="2015-12-13T20:05:54+08:00" content="2015-12-13">
+            <time itemprop="dateCreated" datetime="2015-12-13T23:31:26+08:00" content="2015-12-13">
               2015-12-13
             </time>
           </span>
@@ -293,7 +293,8 @@
       
 
       
-        <span itemprop="articleBody"><p>打开第二关的链接<a href="https://redtiger.labs.overthewire.org/level2.php" target="_blank" rel="external">https://redtiger.labs.overthewire.org/level2.php</a>，我们看到如下提示：<br><img src="http://7xp22c.com1.z0.glb.clouddn.com/8.PNG" alt=""></p>
+        <span itemprop="articleBody"><a id="more"></a>
+<p>打开第二关的链接<a href="https://redtiger.labs.overthewire.org/level2.php" target="_blank" rel="external">https://redtiger.labs.overthewire.org/level2.php</a>，我们看到如下提示：<br><img src="http://7xp22c.com1.z0.glb.clouddn.com/8.PNG" alt=""></p>
 <p>这一关是要我们想办法绕或登录，我们可以猜测登录时后台sql语句为：<code>select * from user where username=&#39;admin&#39; and password=&#39;password&#39;</code>，因此我们可以尝试构造username=”admin”，password=”‘ or ‘1”，这样后台查询时查询语句就会变为：<code>select * from user where username=&#39;admin&#39; and password=&#39;&#39; or &#39;1&#39;</code>，这样where后面的布尔运算为False and False or True，最终结果为True。提交后如图所示：<br><img src="http://7xp22c.com1.z0.glb.clouddn.com/9.PNG" alt=""></p>
 </span>
       
