@@ -125,7 +125,7 @@
             
               <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
             
-            首頁
+            Домой
           </a>
         </li>
       
@@ -135,7 +135,7 @@
             
               <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
             
-            分類
+            Категории
           </a>
         </li>
       
@@ -145,7 +145,7 @@
             
               <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
             
-            標籤
+            Тэги
           </a>
         </li>
       
@@ -155,7 +155,7 @@
             
               <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
             
-            歸檔
+            Архив
           </a>
         </li>
       
@@ -165,7 +165,7 @@
             
               <i class="menu-item-icon fa fa-user fa-fw"></i> <br />
             
-            關於
+            О сайте
           </a>
         </li>
       
@@ -254,7 +254,7 @@
 
         <div class="post-meta">
           <span class="post-time">
-            發表於
+            отправлено
             <time itemprop="dateCreated" datetime="2015-12-11T13:38:00+08:00" content="2015-12-11">
               2015-12-11
             </time>
@@ -268,7 +268,7 @@
 
           
             <span class="post-category" >
-              &nbsp; | &nbsp; 分類於
+              &nbsp; | &nbsp; в
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
                   <a href="/categories/writeup/" itemprop="url" rel="index">
@@ -333,6 +333,121 @@
 
 
     
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/12/08/redtiger-1/" itemprop="url">
+                  redtiger level1 writeup
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            отправлено
+            <time itemprop="dateCreated" datetime="2015-12-08T13:20:43+08:00" content="2015-12-08">
+              2015-12-08
+            </time>
+          </span>
+          <span class="post-time">
+            | 修改于
+            <time itemprop="dateCreated" datetime="2015-12-13T20:13:03+08:00" content="2015-12-13">
+              2015-12-13
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; в
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/writeup/" itemprop="url" rel="index">
+                    <span itemprop="name">writeup</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/12/08/redtiger-1/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/12/08/redtiger-1/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <p>这个系列的题目都是考察sql注入相关知识的，在这一系列的writeup中，我不仅仅会给出详细的解题思路，还会由浅入深的分析所用到的sql注入的知识。<br>打开第一关地址：<a href="https://redtiger.labs.overthewire.org/level1.php" title="第一关" target="_blank" rel="external">https://redtiger.labs.overthewire.org/level1.php</a>，我们看到如下页面：<br><img src="http://7xp22c.com1.z0.glb.clouddn.com/1.PNG" alt=""></p>
+<p>在这里，我们知道了我们需要的数据在表level1_users中。我们点击Category，看到页面发生了变化：<br><img src="http://7xp22c.com1.z0.glb.clouddn.com/2.PNG" alt=""></p>
+<p>故而这一关的注入点便是cat参数，我们假设当前使用的表是cats，那么我们可以大体构造出页面后台所使用的sql查询语句为：<code>select * from cats where cat = 1 --</code>。接下来，我们使用order by获取字段数，具体操作我们可以提交cat参数为1 order by 4，即构造如下链接：<a href="https://redtiger.labs.overthewire.org/level1.php?cat=1%20order%20by%204--" target="_blank" rel="external">https://redtiger.labs.overthewire.org/level1.php?cat=1%20order%20by%204–</a>，此时我们在构造一下后台数据库查询语句为：<code>select * from cats where cat = 1 order by 4 --</code>，访问页面后我们发现页面正常，而此时如果我们将参数设置为’1 order by 5 –’，访问页面发现页面出错，出现如下提示：<br><img src="http://7xp22c.com1.z0.glb.clouddn.com/3.PNG" alt=""></p>
+<p>这说明在后台的sql查询语句中对4个字段进行了查询，即其sql语句为：<code>select 1,2,3,4 from cats where cat = 1 order by 5 --</code>。接下来我们继续使用union select来获取数据，由于该页面后台对4个字段进行查询，而union select语句的作用是将两次查询的结果合并输出并要求两次查询的字段数必须相同，因此我们构造参数为-1 union select 1,2,3,4 –，此时其后台sql查询语句可以构造如下：<code>select 1,2,3,4 from cats where cat = -1 union select 1,2,3,4 --</code>，此时前面的查询由于参数cat的值为-1，查询结果为空，而后面的union查询输出1，2，3，4，故最终我们会看到如下页面：<br><img src="http://7xp22c.com1.z0.glb.clouddn.com/4.PNG" alt=""></p>
+<p>这样，3、4处就是我们后面union select输出的地方，我们尝试着在3处输入version()，然后查询出的数据库版本信息就会显示在页面中3的地方：<br><img src="http://7xp22c.com1.z0.glb.clouddn.com/5.PNG" alt=""></p>
+<p>这样，我们直接将参数设置为：-1 union select 1,2,username,password from level1_users limit 0,1 –，可以查询出用户名密码的信息了。<br><img src="http://7xp22c.com1.z0.glb.clouddn.com/6.PNG" alt=""></p>
+<p>在下面的登录框中输入用户名密码，得到通关密码：<br><img src="http://7xp22c.com1.z0.glb.clouddn.com/7.PNG" alt=""></p>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
 
   </section>
 
@@ -376,21 +491,21 @@
           <div class="site-state-item site-state-posts">
             <a href="/archives">
               <span class="site-state-item-count">2</span>
-              <span class="site-state-item-name">文章</span>
+              <span class="site-state-item-name">записи</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             <a href="/categories">
               <span class="site-state-item-count">1</span>
-              <span class="site-state-item-name">分類</span>
+              <span class="site-state-item-name">категории</span>
               </a>
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
               <span class="site-state-item-count">3</span>
-              <span class="site-state-item-name">標籤</span>
+              <span class="site-state-item-name">тэги</span>
               </a>
           </div>
 
@@ -433,11 +548,11 @@
 </div>
 
 <div class="powered-by">
-  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+  Powered by <a class="theme-link" href="http://hexo.io">Hexo</a>
 </div>
 
 <div class="theme-info">
-  主題 -
+  Theme -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
     NexT.Mist
   </a>
