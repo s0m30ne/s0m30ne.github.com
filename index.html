@@ -290,17 +290,11 @@
         
           <span itemprop="articleBody">
             
-            打开第二关的链接https://redtiger.labs.overthewire.org/level2.php，我们看到如下提示：
-这一关是要我们想办法绕或登录，我们可以猜测登录时后台sql语句为：select * from user where username=&#39;admin&#39; 
-            ...
+              <p>打开第二关的链接<a href="https://redtiger.labs.overthewire.org/level2.php" target="_blank" rel="external">https://redtiger.labs.overthewire.org/level2.php</a>，我们看到如下提示：<br><img src="http://7xp22c.com1.z0.glb.clouddn.com/8.PNG" alt=""></p>
+<p>这一关是要我们想办法绕或登录，我们可以猜测登录时后台sql语句为：<code>select * from user where username=&#39;admin&#39; and password=&#39;password&#39;</code>，因此我们可以尝试构造username=”admin”，password=”‘ or ‘1”，这样后台查询时查询语句就会变为：<code>select * from user where username=&#39;admin&#39; and password=&#39;&#39; or &#39;1&#39;</code>，这样where后面的布尔运算为False and False or True，最终结果为True。提交后如图所示：<br><img src="http://7xp22c.com1.z0.glb.clouddn.com/9.PNG" alt=""></p>
+
+            
           </span>
-          <!--
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/12/11/redtiger-2/#more" rel="contents">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-          -->
         
       
     </div>
