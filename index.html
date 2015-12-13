@@ -261,7 +261,7 @@
           </span>
           <span class="post-time">
             | 修改于
-            <time itemprop="dateCreated" datetime="2015-12-13T23:31:26+08:00" content="2015-12-13">
+            <time itemprop="dateCreated" datetime="2015-12-13T23:32:52+08:00" content="2015-12-13">
               2015-12-13
             </time>
           </span>
@@ -310,12 +310,17 @@
         
           <span itemprop="articleBody">
             
-              <a id="more"></a>
-<p>打开第二关的链接<a href="https://redtiger.labs.overthewire.org/level2.php" target="_blank" rel="external">https://redtiger.labs.overthewire.org/level2.php</a>，我们看到如下提示：<br><img src="http://7xp22c.com1.z0.glb.clouddn.com/8.PNG" alt=""></p>
-<p>这一关是要我们想办法绕或登录，我们可以猜测登录时后台sql语句为：<code>select * from user where username=&#39;admin&#39; and password=&#39;password&#39;</code>，因此我们可以尝试构造username=”admin”，password=”‘ or ‘1”，这样后台查询时查询语句就会变为：<code>select * from user where username=&#39;admin&#39; and password=&#39;&#39; or &#39;1&#39;</code>，这样where后面的布尔运算为False and False or True，最终结果为True。提交后如图所示：<br><img src="http://7xp22c.com1.z0.glb.clouddn.com/9.PNG" alt=""></p>
-
-            
+            打开第二关的链接https://redtiger.labs.overthewire.org/level2.php，我们看到如下提示：
+这一关是要我们想办法绕或登录，我们可以猜测登录时后台sql语句为：select * from user where username=&#39;admin&#39; 
+            ...
           </span>
+          <!--
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/12/11/redtiger-2/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          -->
         
       
     </div>
@@ -372,7 +377,7 @@
           </span>
           <span class="post-time">
             | 修改于
-            <time itemprop="dateCreated" datetime="2015-12-13T23:29:24+08:00" content="2015-12-13">
+            <time itemprop="dateCreated" datetime="2015-12-13T23:32:50+08:00" content="2015-12-13">
               2015-12-13
             </time>
           </span>
@@ -421,17 +426,17 @@
         
           <span itemprop="articleBody">
             
-              <a id="more"></a>
-<p>这个系列的题目都是考察sql注入相关知识的，在这一系列的writeup中，我不仅仅会给出详细的解题思路，还会由浅入深的分析所用到的sql注入的知识。<br>打开第一关地址：<a href="https://redtiger.labs.overthewire.org/level1.php" title="第一关" target="_blank" rel="external">https://redtiger.labs.overthewire.org/level1.php</a>，我们看到如下页面：<br><img src="http://7xp22c.com1.z0.glb.clouddn.com/1.PNG" alt=""></p>
-<p>在这里，我们知道了我们需要的数据在表level1_users中。我们点击Category，看到页面发生了变化：<br><img src="http://7xp22c.com1.z0.glb.clouddn.com/2.PNG" alt=""></p>
-<p>故而这一关的注入点便是cat参数，我们假设当前使用的表是cats，那么我们可以大体构造出页面后台所使用的sql查询语句为：<code>select * from cats where cat = 1 --</code>。接下来，我们使用order by获取字段数，具体操作我们可以提交cat参数为1 order by 4，即构造如下链接：<a href="https://redtiger.labs.overthewire.org/level1.php?cat=1%20order%20by%204--" target="_blank" rel="external">https://redtiger.labs.overthewire.org/level1.php?cat=1%20order%20by%204–</a>，此时我们在构造一下后台数据库查询语句为：<code>select * from cats where cat = 1 order by 4 --</code>，访问页面后我们发现页面正常，而此时如果我们将参数设置为’1 order by 5 –’，访问页面发现页面出错，出现如下提示：<br><img src="http://7xp22c.com1.z0.glb.clouddn.com/3.PNG" alt=""></p>
-<p>这说明在后台的sql查询语句中对4个字段进行了查询，即其sql语句为：<code>select 1,2,3,4 from cats where cat = 1 order by 5 --</code>。接下来我们继续使用union select来获取数据，由于该页面后台对4个字段进行查询，而union select语句的作用是将两次查询的结果合并输出并要求两次查询的字段数必须相同，因此我们构造参数为-1 union select 1,2,3,4 –，此时其后台sql查询语句可以构造如下：<code>select 1,2,3,4 from cats where cat = -1 union select 1,2,3,4 --</code>，此时前面的查询由于参数cat的值为-1，查询结果为空，而后面的union查询输出1，2，3，4，故最终我们会看到如下页面：<br><img src="http://7xp22c.com1.z0.glb.clouddn.com/4.PNG" alt=""></p>
-<p>这样，3、4处就是我们后面union select输出的地方，我们尝试着在3处输入version()，然后查询出的数据库版本信息就会显示在页面中3的地方：<br><img src="http://7xp22c.com1.z0.glb.clouddn.com/5.PNG" alt=""></p>
-<p>这样，我们直接将参数设置为：-1 union select 1,2,username,password from level1_users limit 0,1 –，可以查询出用户名密码的信息了。<br><img src="http://7xp22c.com1.z0.glb.clouddn.com/6.PNG" alt=""></p>
-<p>在下面的登录框中输入用户名密码，得到通关密码：<br><img src="http://7xp22c.com1.z0.glb.clouddn.com/7.PNG" alt=""></p>
-
-            
+            这个系列的题目都是考察sql注入相关知识的，在这一系列的writeup中，我不仅仅会给出详细的解题思路，还会由浅入深的分析所用到的sql注入的知识。打开第一关地址：https://redtiger.labs.overthewire.org/level1.php，我们看到如下页面：
+在这里，我们知道了
+            ...
           </span>
+          <!--
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/12/08/redtiger-1/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          -->
         
       
     </div>
