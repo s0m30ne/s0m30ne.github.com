@@ -46,12 +46,16 @@
 
 
 
-<meta name="description" content="这个系列的题目都是考察sql注入相关知识的，在这一系列的writeup中，我不仅仅会给出详细的解题思路，还会由浅入深的分析所用到的sql注入的知识。打开第一关地址：https://redtiger.labs.overthewire.org/level1.php，我们看到如下页面：">
+<meta name="description" content="这个系列的题目都是考察sql注入相关知识的，在这一系列的writeup中，我不仅仅会给出详细的解题思路，还会由浅入深的分析所用到的sql注入的知识。打开第一关地址：https://redtiger.labs.overthewire.org/level1.php，我们看到如下页面：
+在这里，我们知道了我们需要的数据在表level1_users中。我们点击Category，看到页面发生了变化：
+故而这">
 <meta property="og:type" content="article">
 <meta property="og:title" content="redtiger level1 writeup">
 <meta property="og:url" content="http://s0m30ne.github.io/2015/12/08/redtiger-1/index.html">
 <meta property="og:site_name" content="s0m30ne的博客">
-<meta property="og:description" content="这个系列的题目都是考察sql注入相关知识的，在这一系列的writeup中，我不仅仅会给出详细的解题思路，还会由浅入深的分析所用到的sql注入的知识。打开第一关地址：https://redtiger.labs.overthewire.org/level1.php，我们看到如下页面：">
+<meta property="og:description" content="这个系列的题目都是考察sql注入相关知识的，在这一系列的writeup中，我不仅仅会给出详细的解题思路，还会由浅入深的分析所用到的sql注入的知识。打开第一关地址：https://redtiger.labs.overthewire.org/level1.php，我们看到如下页面：
+在这里，我们知道了我们需要的数据在表level1_users中。我们点击Category，看到页面发生了变化：
+故而这">
 <meta property="og:image" content="http://7xp22c.com1.z0.glb.clouddn.com/1.PNG">
 <meta property="og:image" content="http://7xp22c.com1.z0.glb.clouddn.com/2.PNG">
 <meta property="og:image" content="http://7xp22c.com1.z0.glb.clouddn.com/3.PNG">
@@ -59,10 +63,12 @@
 <meta property="og:image" content="http://7xp22c.com1.z0.glb.clouddn.com/5.PNG">
 <meta property="og:image" content="http://7xp22c.com1.z0.glb.clouddn.com/6.PNG">
 <meta property="og:image" content="http://7xp22c.com1.z0.glb.clouddn.com/7.PNG">
-<meta property="og:updated_time" content="2015-12-13T13:55:56.172Z">
+<meta property="og:updated_time" content="2015-12-13T13:56:46.368Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="redtiger level1 writeup">
-<meta name="twitter:description" content="这个系列的题目都是考察sql注入相关知识的，在这一系列的writeup中，我不仅仅会给出详细的解题思路，还会由浅入深的分析所用到的sql注入的知识。打开第一关地址：https://redtiger.labs.overthewire.org/level1.php，我们看到如下页面：">
+<meta name="twitter:description" content="这个系列的题目都是考察sql注入相关知识的，在这一系列的writeup中，我不仅仅会给出详细的解题思路，还会由浅入深的分析所用到的sql注入的知识。打开第一关地址：https://redtiger.labs.overthewire.org/level1.php，我们看到如下页面：
+在这里，我们知道了我们需要的数据在表level1_users中。我们点击Category，看到页面发生了变化：
+故而这">
 
 
 
@@ -249,7 +255,7 @@
           </span>
           <span class="post-time">
             | 修改于
-            <time itemprop="dateCreated" datetime="2015-12-13T21:55:56+08:00" content="2015-12-13">
+            <time itemprop="dateCreated" datetime="2015-12-13T21:56:46+08:00" content="2015-12-13">
               2015-12-13
             </time>
           </span>
@@ -295,7 +301,7 @@
       
 
       
-        <span itemprop="articleBody"><p>这个系列的题目都是考察sql注入相关知识的，在这一系列的writeup中，我不仅仅会给出详细的解题思路，还会由浅入深的分析所用到的sql注入的知识。<br>打开第一关地址：<a href="https://redtiger.labs.overthewire.org/level1.php" title="第一关" target="_blank" rel="external">https://redtiger.labs.overthewire.org/level1.php</a>，我们看到如下页面：<br><a id="more"></a><br><img src="http://7xp22c.com1.z0.glb.clouddn.com/1.PNG" alt=""></p>
+        <span itemprop="articleBody"><p>这个系列的题目都是考察sql注入相关知识的，在这一系列的writeup中，我不仅仅会给出详细的解题思路，还会由浅入深的分析所用到的sql注入的知识。<br>打开第一关地址：<a href="https://redtiger.labs.overthewire.org/level1.php" title="第一关" target="_blank" rel="external">https://redtiger.labs.overthewire.org/level1.php</a>，我们看到如下页面：<br><img src="http://7xp22c.com1.z0.glb.clouddn.com/1.PNG" alt=""></p>
 <p>在这里，我们知道了我们需要的数据在表level1_users中。我们点击Category，看到页面发生了变化：<br><img src="http://7xp22c.com1.z0.glb.clouddn.com/2.PNG" alt=""></p>
 <p>故而这一关的注入点便是cat参数，我们假设当前使用的表是cats，那么我们可以大体构造出页面后台所使用的sql查询语句为：<code>select * from cats where cat = 1 --</code>。接下来，我们使用order by获取字段数，具体操作我们可以提交cat参数为1 order by 4，即构造如下链接：<a href="https://redtiger.labs.overthewire.org/level1.php?cat=1%20order%20by%204--" target="_blank" rel="external">https://redtiger.labs.overthewire.org/level1.php?cat=1%20order%20by%204–</a>，此时我们在构造一下后台数据库查询语句为：<code>select * from cats where cat = 1 order by 4 --</code>，访问页面后我们发现页面正常，而此时如果我们将参数设置为’1 order by 5 –’，访问页面发现页面出错，出现如下提示：<br><img src="http://7xp22c.com1.z0.glb.clouddn.com/3.PNG" alt=""></p>
 <p>这说明在后台的sql查询语句中对4个字段进行了查询，即其sql语句为：<code>select 1,2,3,4 from cats where cat = 1 order by 5 --</code>。接下来我们继续使用union select来获取数据，由于该页面后台对4个字段进行查询，而union select语句的作用是将两次查询的结果合并输出并要求两次查询的字段数必须相同，因此我们构造参数为-1 union select 1,2,3,4 –，此时其后台sql查询语句可以构造如下：<code>select 1,2,3,4 from cats where cat = -1 union select 1,2,3,4 --</code>，此时前面的查询由于参数cat的值为-1，查询结果为空，而后面的union查询输出1，2，3，4，故最终我们会看到如下页面：<br><img src="http://7xp22c.com1.z0.glb.clouddn.com/4.PNG" alt=""></p>
