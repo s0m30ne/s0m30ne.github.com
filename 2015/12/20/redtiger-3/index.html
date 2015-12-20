@@ -46,31 +46,23 @@
 
 
 
-<meta name="description" content="这个系列的题目都是考察sql注入相关知识的，在这一系列的writeup中，我不仅仅会给出详细的解题思路，还会由浅入深的分析所用到的sql注入的知识。打开第一关地址：https://redtiger.labs.overthewire.org/level1.php，我们看到如下页面：
-在这里，我们知道了我们需要的数据在表level1_users中。我们点击Category，看到页面发生了变化：
-故而这">
+<meta name="description" content="打开第三关链接https://redtiger.labs.overthewire.org/level3.php，题目提示我们得到一个错误：
+我们点击下面的其中一个链接后url变为https://redtiger.labs.overthewire.org/level3.php?usr=MTQ4MTY4MTY1MTMxMTc1MTgz，既然要得到一个错误肯定就要从url上入手，显然参数应该是经过某种编">
 <meta property="og:type" content="article">
-<meta property="og:title" content="redtiger level1 writeup">
-<meta property="og:url" content="http://s0m30ne.github.io/2015/12/08/redtiger-1/index.html">
+<meta property="og:title" content="redtiger-3">
+<meta property="og:url" content="http://s0m30ne.github.io/2015/12/20/redtiger-3/index.html">
 <meta property="og:site_name" content="s0m30ne的博客">
-<meta property="og:description" content="这个系列的题目都是考察sql注入相关知识的，在这一系列的writeup中，我不仅仅会给出详细的解题思路，还会由浅入深的分析所用到的sql注入的知识。打开第一关地址：https://redtiger.labs.overthewire.org/level1.php，我们看到如下页面：
-在这里，我们知道了我们需要的数据在表level1_users中。我们点击Category，看到页面发生了变化：
-故而这">
-<meta property="og:image" content="http://7xp22c.com1.z0.glb.clouddn.com/1.PNG">
-<meta property="og:image" content="http://7xp22c.com1.z0.glb.clouddn.com/2.PNG">
-<meta property="og:image" content="http://7xp22c.com1.z0.glb.clouddn.com/14.PNG">
-<meta property="og:image" content="http://7xp22c.com1.z0.glb.clouddn.com/15.PNG">
-<meta property="og:image" content="http://7xp22c.com1.z0.glb.clouddn.com/3.PNG">
-<meta property="og:image" content="http://7xp22c.com1.z0.glb.clouddn.com/4.PNG">
-<meta property="og:image" content="http://7xp22c.com1.z0.glb.clouddn.com/5.PNG">
-<meta property="og:image" content="http://7xp22c.com1.z0.glb.clouddn.com/6.PNG">
-<meta property="og:image" content="http://7xp22c.com1.z0.glb.clouddn.com/7.PNG">
-<meta property="og:updated_time" content="2015-12-20T07:22:30.039Z">
+<meta property="og:description" content="打开第三关链接https://redtiger.labs.overthewire.org/level3.php，题目提示我们得到一个错误：
+我们点击下面的其中一个链接后url变为https://redtiger.labs.overthewire.org/level3.php?usr=MTQ4MTY4MTY1MTMxMTc1MTgz，既然要得到一个错误肯定就要从url上入手，显然参数应该是经过某种编">
+<meta property="og:image" content="http://7xp22c.com1.z0.glb.clouddn.com/10.PNG">
+<meta property="og:image" content="http://7xp22c.com1.z0.glb.clouddn.com/11.PNG">
+<meta property="og:image" content="http://7xp22c.com1.z0.glb.clouddn.com/12.PNG">
+<meta property="og:image" content="http://7xp22c.com1.z0.glb.clouddn.com/13.PNG">
+<meta property="og:updated_time" content="2015-12-20T07:11:23.328Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="redtiger level1 writeup">
-<meta name="twitter:description" content="这个系列的题目都是考察sql注入相关知识的，在这一系列的writeup中，我不仅仅会给出详细的解题思路，还会由浅入深的分析所用到的sql注入的知识。打开第一关地址：https://redtiger.labs.overthewire.org/level1.php，我们看到如下页面：
-在这里，我们知道了我们需要的数据在表level1_users中。我们点击Category，看到页面发生了变化：
-故而这">
+<meta name="twitter:title" content="redtiger-3">
+<meta name="twitter:description" content="打开第三关链接https://redtiger.labs.overthewire.org/level3.php，题目提示我们得到一个错误：
+我们点击下面的其中一个链接后url变为https://redtiger.labs.overthewire.org/level3.php?usr=MTQ4MTY4MTY1MTMxMTc1MTgz，既然要得到一个错误肯定就要从url上入手，显然参数应该是经过某种编">
 
 
 
@@ -82,7 +74,7 @@
   };
 </script>
 
-  <title> redtiger level1 writeup | s0m30ne的博客 </title>
+  <title> redtiger-3 | s0m30ne的博客 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -242,7 +234,7 @@
             
             
               
-                redtiger level1 writeup
+                redtiger-3
               
             
           </h1>
@@ -251,13 +243,13 @@
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2015-12-08T13:20:43+08:00" content="2015-12-08">
-              2015-12-08
+            <time itemprop="dateCreated" datetime="2015-12-20T14:34:16+08:00" content="2015-12-20">
+              2015-12-20
             </time>
           </span>
           <span class="post-time">
             | 修改于
-            <time itemprop="dateCreated" datetime="2015-12-20T15:22:30+08:00" content="2015-12-20">
+            <time itemprop="dateCreated" datetime="2015-12-20T15:11:23+08:00" content="2015-12-20">
               2015-12-20
             </time>
           </span>
@@ -283,8 +275,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/12/08/redtiger-1/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/12/08/redtiger-1/" itemprop="commentsCount"></span>
+                <a href="/2015/12/20/redtiger-3/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/12/20/redtiger-3/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -303,17 +295,11 @@
       
 
       
-        <span itemprop="articleBody"><p>这个系列的题目都是考察sql注入相关知识的，在这一系列的writeup中，我不仅仅会给出详细的解题思路，还会由浅入深的分析所用到的sql注入的知识。<br>打开第一关地址：<a href="https://redtiger.labs.overthewire.org/level1.php" title="第一关" target="_blank" rel="external">https://redtiger.labs.overthewire.org/level1.php</a>，我们看到如下页面：<br><img src="http://7xp22c.com1.z0.glb.clouddn.com/1.PNG" alt=""></p>
-<p>在这里，我们知道了我们需要的数据在表level1_users中。我们点击Category，看到页面发生了变化：<br><img src="http://7xp22c.com1.z0.glb.clouddn.com/2.PNG" alt=""></p>
-<p>故而这一关的注入点便是cat参数，我们假设当前使用的表是cats，那么我们可以大体构造出页面后台所使用的sql查询语句为：<code>select * from cats where cat = 1</code>或者<code>select * from cats where cat = &#39;1&#39;</code>亦或者包围参数的是双引号或括号之类的。这样的话我们应该如何确定参数的具体形式呢？我们可以尝试提交参数为1’#，提交后出现如下页面：</p>
-<p><img src="http://7xp22c.com1.z0.glb.clouddn.com/14.PNG" alt=""></p>
-<p>这说明我们提交的参数出错了，这也就说明其参数并不是由单引号包围，因为如果其sql语句是<code>select * from cats where cat = &#39;1&#39;</code>，那么我们提交1’#后该语句变为<code>select * from cats where cat = &#39;1&#39;#&#39;</code>，此时应该返回正确结果。而当我们提交参数为1#时，返回正确结果：</p>
-<p><img src="http://7xp22c.com1.z0.glb.clouddn.com/15.PNG" alt=""></p>
-<p>由以上分析我们可以知道，其后台sql查询语句为：<code>select * from cats where cat = 1</code>。接下来，我们使用order by获取字段数，具体操作我们可以提交cat参数为1 order by 4，即构造如下链接：<a href="https://redtiger.labs.overthewire.org/level1.php?cat=1%20order%20by%204--" target="_blank" rel="external">https://redtiger.labs.overthewire.org/level1.php?cat=1%20order%20by%204–</a>，此时我们在构造一下后台数据库查询语句为：<code>select * from cats where cat = 1 order by 4 --</code>，访问页面后我们发现页面正常，而此时如果我们将参数设置为’1 order by 5 –’，访问页面发现页面出错，出现如下提示：<br><img src="http://7xp22c.com1.z0.glb.clouddn.com/3.PNG" alt=""></p>
-<p>这说明在后台的sql查询语句中对4个字段进行了查询，即其sql语句为：<code>select 1,2,3,4 from cats where cat = 1 order by 5 --</code>。接下来我们继续使用union select来获取数据，由于该页面后台对4个字段进行查询，而union select语句的作用是将两次查询的结果合并输出并要求两次查询的字段数必须相同，因此我们构造参数为-1 union select 1,2,3,4 –，此时其后台sql查询语句可以构造如下：<code>select 1,2,3,4 from cats where cat = -1 union select 1,2,3,4 --</code>，此时前面的查询由于参数cat的值为-1，查询结果为空，而后面的union查询输出1，2，3，4，故最终我们会看到如下页面：<br><img src="http://7xp22c.com1.z0.glb.clouddn.com/4.PNG" alt=""></p>
-<p>这样，3、4处就是我们后面union select输出的地方，我们尝试着在3处输入version()，然后查询出的数据库版本信息就会显示在页面中3的地方：<br><img src="http://7xp22c.com1.z0.glb.clouddn.com/5.PNG" alt=""></p>
-<p>这样，我们直接将参数设置为：-1 union select 1,2,username,password from level1_users limit 0,1 –，可以查询出用户名密码的信息了。<br><img src="http://7xp22c.com1.z0.glb.clouddn.com/6.PNG" alt=""></p>
-<p>在下面的登录框中输入用户名密码，得到通关密码：<br><img src="http://7xp22c.com1.z0.glb.clouddn.com/7.PNG" alt=""></p>
+        <span itemprop="articleBody"><p>打开第三关链接<a href="https://redtiger.labs.overthewire.org/level3.php" target="_blank" rel="external">https://redtiger.labs.overthewire.org/level3.php</a>，题目提示我们得到一个错误：<br><img src="http://7xp22c.com1.z0.glb.clouddn.com/10.PNG" alt=""></p>
+<p>我们点击下面的其中一个链接后url变为<a href="https://redtiger.labs.overthewire.org/level3.php?usr=MTQ4MTY4MTY1MTMxMTc1MTgz" target="_blank" rel="external">https://redtiger.labs.overthewire.org/level3.php?usr=MTQ4MTY4MTY1MTMxMTc1MTgz</a>，既然要得到一个错误肯定就要从url上入手，显然参数应该是经过某种编码的，因此直接在参数上做手脚可能不会有用，既然这样，我们可以尝试修改一下参数名。当前参数名是usr，如果修改为其他值，在后台执行$_GET[‘usr’]时不会有任何用处，顶多后台得到的数据为空，因此我们可以尝试参数名不变，但是将其变为一个数组，这样后台就会得到一个数组并直接对数组进行操作导致出错。既然这样，我们就将url改为：<br><a href="https://redtiger.labs.overthewire.org/level3.php?usr[]=MTQ4MTY4MTY1MTMxMTc1MTgz" target="_blank" rel="external">https://redtiger.labs.overthewire.org/level3.php?usr[]=MTQ4MTY4MTY1MTMxMTc1MTgz</a>，提交后页面出现错误提示：<br><img src="http://7xp22c.com1.z0.glb.clouddn.com/11.PNG" alt=""></p>
+<p>然而并不能直接进行注入，再仔细看一下错误信息，发现提示文件/var/www/hackit/urlcrypt.inc，看名字好像是对参数进行加密的文件，打开看一下：<br><img src="http://7xp22c.com1.z0.glb.clouddn.com/12.PNG" alt=""></p>
+<p>果然，这是一个对参数进行加密的文件，也就是说我们可以将构造好的注入语句进行加密后传过去即可。我们将文件保存下来，通过前面讲过的方式构造payload：<a href="https://redtiger.labs.overthewire.org/level3.php?usr=MjMxMjI0MTgxMTc0MTY5MTc1MTc0MjI0MTc5MTY1MTcyMTY1MTYzMTgwMjI0MjQxMjM2MTgxMTc5MTY1MTc4MTc0MTYxMTczMTY1MjM2MjQzMjM2MjQ0MjM2MjQ1MjM2MTc2MTYxMTc5MTc5MTgzMTc1MTc4MTY0MjM2MjQ3MjI0MTY2MTc4MTc1MTczMjI0MTcyMTY1MTgyMTY1MTcyMjQzMTU5MTgxMTc5MTY1MTc4MTc5MjI0MTgzMTY4MTY1MTc4MTY1MjI0MTgxMTc5MTY1MTc4MTc0MTYxMTczMTY1MjUzMjMxMTYxMTY0MTczMTY5MTc0MjMxMjI3" target="_blank" rel="external">https://redtiger.labs.overthewire.org/level3.php?usr=MjMxMjI0MTgxMTc0MTY5MTc1MTc0MjI0MTc5MTY1MTcyMTY1MTYzMTgwMjI0MjQxMjM2MTgxMTc5MTY1MTc4MTc0MTYxMTczMTY1MjM2MjQzMjM2MjQ0MjM2MjQ1MjM2MTc2MTYxMTc5MTc5MTgzMTc1MTc4MTY0MjM2MjQ3MjI0MTY2MTc4MTc1MTczMjI0MTcyMTY1MTgyMTY1MTcyMjQzMTU5MTgxMTc5MTY1MTc4MTc5MjI0MTgzMTY4MTY1MTc4MTY1MjI0MTgxMTc5MTY1MTc4MTc0MTYxMTczMTY1MjUzMjMxMTYxMTY0MTczMTY5MTc0MjMxMjI3</a>，提交后如下所示：</p>
+<p><img src="http://7xp22c.com1.z0.glb.clouddn.com/13.PNG" alt=""></p>
 </span>
       
     </div>
@@ -335,13 +321,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2015/12/11/redtiger-2/" rel="next" title="redtiger level2 writeup">
+                <i class="fa fa-chevron-left"></i> redtiger level2 writeup
+              </a>
+            
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2015/12/11/redtiger-2/" rel="prev" title="redtiger level2 writeup">
-                redtiger level2 writeup <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -368,8 +354,8 @@
         
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2015/12/08/redtiger-1/"
-           data-title="redtiger level1 writeup" data-url="http://s0m30ne.github.io/2015/12/08/redtiger-1/">
+      <div class="ds-thread" data-thread-key="2015/12/20/redtiger-3/"
+           data-title="redtiger-3" data-url="http://s0m30ne.github.io/2015/12/20/redtiger-3/">
       </div>
     
   </div>
