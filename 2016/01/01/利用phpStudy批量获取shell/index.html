@@ -30,7 +30,7 @@
 <link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="条码安全,漏洞," />
+  <meta name="keywords" content="Censys,poc,漏洞," />
 
 
 
@@ -46,23 +46,23 @@
 
 
 
-<meta name="description" content="在GEEK PWN大会上，TK为大家演示了腾讯玄武实验室最近研究的新成果—badbarcode，也就是对条码中一些安全隐患的研究。其实关于条码及二维码的安全研究由来已久，本文主要为大家介绍一下badbarcode最基本的原理。
-乌云上有一篇关于二维码出现过的利用总结，链接地址：http://drops.wooyun.org/mobile/10775
-在badbarcode中，主要针对的是code1">
+<meta name="description" content="其实这并不能算是一个漏洞，只是一个配置上的失误罢了，而且很早之前就有人在用了。最近想着再次把这个翻出来结合Censys看看能不能批量拿shell，于是就有了此文。首先我还是介绍一下phpStudy是怎么回事吧。
+
+phpStudy是一个PHP调试环境的程序集成包。该程序包集成最新的Apache + PHP + MySQL + phpMyAdmin + ZendOptimizer，一次性安装，无须配">
 <meta property="og:type" content="article">
-<meta property="og:title" content="badbarcode浅析">
-<meta property="og:url" content="http://s0m30ne.github.io/2015/12/23/badbarcode浅析/index.html">
+<meta property="og:title" content="利用phpStudy探针批量获取shell">
+<meta property="og:url" content="http://s0m30ne.github.io/2016/01/01/利用phpStudy批量获取shell/index.html">
 <meta property="og:site_name" content="s0m30ne的博客">
-<meta property="og:description" content="在GEEK PWN大会上，TK为大家演示了腾讯玄武实验室最近研究的新成果—badbarcode，也就是对条码中一些安全隐患的研究。其实关于条码及二维码的安全研究由来已久，本文主要为大家介绍一下badbarcode最基本的原理。
-乌云上有一篇关于二维码出现过的利用总结，链接地址：http://drops.wooyun.org/mobile/10775
-在badbarcode中，主要针对的是code1">
-<meta property="og:image" content="http://7xp22c.com1.z0.glb.clouddn.com/badbarcode.PNG">
-<meta property="og:updated_time" content="2015-12-25T11:39:30.619Z">
+<meta property="og:description" content="其实这并不能算是一个漏洞，只是一个配置上的失误罢了，而且很早之前就有人在用了。最近想着再次把这个翻出来结合Censys看看能不能批量拿shell，于是就有了此文。首先我还是介绍一下phpStudy是怎么回事吧。
+
+phpStudy是一个PHP调试环境的程序集成包。该程序包集成最新的Apache + PHP + MySQL + phpMyAdmin + ZendOptimizer，一次性安装，无须配">
+<meta property="og:image" content="http://7xp22c.com1.z0.glb.clouddn.com/phpStudy.png">
+<meta property="og:updated_time" content="2016-01-01T10:54:50.303Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="badbarcode浅析">
-<meta name="twitter:description" content="在GEEK PWN大会上，TK为大家演示了腾讯玄武实验室最近研究的新成果—badbarcode，也就是对条码中一些安全隐患的研究。其实关于条码及二维码的安全研究由来已久，本文主要为大家介绍一下badbarcode最基本的原理。
-乌云上有一篇关于二维码出现过的利用总结，链接地址：http://drops.wooyun.org/mobile/10775
-在badbarcode中，主要针对的是code1">
+<meta name="twitter:title" content="利用phpStudy探针批量获取shell">
+<meta name="twitter:description" content="其实这并不能算是一个漏洞，只是一个配置上的失误罢了，而且很早之前就有人在用了。最近想着再次把这个翻出来结合Censys看看能不能批量拿shell，于是就有了此文。首先我还是介绍一下phpStudy是怎么回事吧。
+
+phpStudy是一个PHP调试环境的程序集成包。该程序包集成最新的Apache + PHP + MySQL + phpMyAdmin + ZendOptimizer，一次性安装，无须配">
 
 
 
@@ -74,7 +74,7 @@
   };
 </script>
 
-  <title> badbarcode浅析 | s0m30ne的博客 </title>
+  <title> 利用phpStudy探针批量获取shell | s0m30ne的博客 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -234,7 +234,7 @@
             
             
               
-                badbarcode浅析
+                利用phpStudy探针批量获取shell
               
             
           </h1>
@@ -243,14 +243,14 @@
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2015-12-23T21:27:57+08:00" content="2015-12-23">
-              2015-12-23
+            <time itemprop="dateCreated" datetime="2016-01-01T18:22:45+08:00" content="2016-01-01">
+              2016-01-01
             </time>
           </span>
           <span class="post-time">
             | 修改于
-            <time itemprop="dateCreated" datetime="2015-12-25T19:39:30+08:00" content="2015-12-25">
-              2015-12-25
+            <time itemprop="dateCreated" datetime="2016-01-01T18:54:50+08:00" content="2016-01-01">
+              2016-01-01
             </time>
           </span>
 
@@ -259,8 +259,8 @@
               &nbsp; | &nbsp; 分类于
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/漏洞解析/" itemprop="url" rel="index">
-                    <span itemprop="name">漏洞解析</span>
+                  <a href="/categories/漏洞利用/" itemprop="url" rel="index">
+                    <span itemprop="name">漏洞利用</span>
                   </a>
                 </span>
 
@@ -275,8 +275,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/12/23/badbarcode浅析/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/12/23/badbarcode浅析/" itemprop="commentsCount"></span>
+                <a href="/2016/01/01/利用phpStudy批量获取shell/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/01/利用phpStudy批量获取shell/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -298,9 +298,9 @@
           
             <div class="post-gallery-row">
               <a class="post-gallery-img fancybox"
-                 href="http://7xp22c.com1.z0.glb.clouddn.com/badbarcode.PNG" rel="gallery_ciivkdgcw0010wonfs1ase1pt"
+                 href="http://7xp22c.com1.z0.glb.clouddn.com/phpStudy.png" rel="gallery_ciivkdg4d0003wonf98p4fvmq"
                  itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
-                <img src="http://7xp22c.com1.z0.glb.clouddn.com/badbarcode.PNG" itemprop="contentUrl"/>
+                <img src="http://7xp22c.com1.z0.glb.clouddn.com/phpStudy.png" itemprop="contentUrl"/>
               </a>
             
           
@@ -311,19 +311,16 @@
       
 
       
-        <span itemprop="articleBody"><p>在GEEK PWN大会上，TK为大家演示了腾讯玄武实验室最近研究的新成果—badbarcode，也就是对条码中一些安全隐患的研究。其实关于条码及二维码的安全研究由来已久，本文主要为大家介绍一下badbarcode最基本的原理。</p>
-<p>乌云上有一篇关于二维码出现过的利用总结，链接地址：<a href="http://drops.wooyun.org/mobile/10775" target="_blank" rel="external">http://drops.wooyun.org/mobile/10775</a></p>
-<p>在badbarcode中，主要针对的是code128协议，由于几乎所有的读码器都可以识别code128协议的条码，因此，此方法还是十分通用的。Code128码其实还分成三类，即128A、128B、128C。它们的区别就是对应的字符表不一样。那么code128码到底怎么读呢？请看下面的图：<br><img src="http://7xp22c.com1.z0.glb.clouddn.com/barcode.jpg" alt=""></p>
-<p>条码中从左往右是黑白相间的条形图，其中黑颜色的叫做“条”，用B表示，白颜色的叫做“空”，用S表示。条和空都有4种不同的宽度，我们将其从细到粗赋予1、2、3、4四个值。然后我们开始按照不同粗细的值来阅读上面的条码，结果如下：</p>
-<p>211232 112232 131123 331121 241112 214121 124211 2331112</p>
-<p>Code128码有一个头一个尾。尾用2331112来表示，这代表Code128已经结束；尾前面的6位是校验位，用于检查该条形码是否被正确编码；头有3种，分别是211412表示128A、211214表示128B、211232表示128C；其余的部分是6位为一个块。去掉头、尾以及校验码后就是下面这样：</p>
-<p>112232 131123 331121 241112 214121</p>
-<p>我们可以根据字符表读出该条码的具体内容，字符表如下所示：<br><img src="http://7xp22c.com1.z0.glb.clouddn.com/code128.PNG" alt=""></p>
-<p>根据头我们可以知道这个是Code128C型。C型码是纯数字的，每个块对应2位数字，查表可得：12 34 56 78 90</p>
-<p>要研究badbarcode，我们就要了解一下条码扫描仪是如何识别条码并对条码中的数据进行处理的。识别条码的原理在上面已经介绍过了，那么识别出其中的数据后扫码仪是如何工作的呢？其实大部分扫码仪是基于模仿键盘的机制进行工作的，也就是说在条码中读出数据后，机器会认为该数据是通过键盘输入的，从而在商品编号等信息框内输入商品信息。那么这样的话，我们可不可以通过控制条码信息来在电脑上执行命令呢？答案当然是可以的！在code128协议中，是支持ASCII控制字符的。也就是说在code128协议中对于输入的ASCII字符都会有一个控制字符与之对应，具体的对应情况请看下表：<br><img src="http://7xp22c.com1.z0.glb.clouddn.com/code2ascii.png" alt=""></p>
-<p>通过上表我们可以看到，针对不同的ASCII字符，都有一个CTRL+X(X代表任意键)与之对应，这样呢，我们就可以通过执行CTRL+O打开对话框，然后大家就可以使用各种方式执行cmd命令了。根据上面对code128协议的介绍，我们可以通过生成一个含有2114121341111341112331112信息的条码来执行CTRL+O命令。该信息表明此条码是128A类型的条码，其中包含ASCII字符SI，即对应着CTRL+O命令。生成该条码后，条码如下所示：<br><img src="http://7xp22c.com1.z0.glb.clouddn.com/CtrlO.png" alt=""></p>
-<p>扫码仪扫描过上面条码后就会打开一个如下窗口：<br><img src="http://7xp22c.com1.z0.glb.clouddn.com/win.png" alt=""></p>
-<p>以上只是badbarcode中最基础的内容，再次仅仅做一个简单的解析，更加精彩的攻击方式可以通过ADF技术自定义键盘输入来实现构造一段包含win+r命令的条码。具体关于ADF的技术原理在此就不做介绍了，有兴趣的可以自己进行进一步的研究。</p>
+        <span itemprop="articleBody"><p>其实这并不能算是一个漏洞，只是一个配置上的失误罢了，而且很早之前就有人在用了。最近想着再次把这个翻出来结合Censys看看能不能批量拿shell，于是就有了此文。首先我还是介绍一下phpStudy是怎么回事吧。</p>
+<blockquote>
+<p>phpStudy是一个PHP调试环境的程序集成包。该程序包集成最新的Apache + PHP + MySQL + phpMyAdmin + ZendOptimizer，一次性安装，无须配置即可使用，是非常方便、好用的PHP调试环境。该程序不仅包括PHP调试环境，还包括了开发工具、开发手册等，总之学习PHP只需一个包。</p>
+</blockquote>
+<p>以上摘自百度百科。是的，有了phpStudy就是这么方便，但是如果你不小心也会十分危险。那这是为什么呢？因为phpStudy有个东西叫做探针，phpStudy探针在原先的phpinfo基础上做了一些变化，在开发过程中，我们常常需要服务器的各项配置，而“探针”就是就是用来探测配置的。在安装完phpStudy之后，在浏览器输入：localhost. 就可以打开“探针”。因此，如果让探针保持默认配置那么访问服务器时就会打开探针，也就是如下页面：</p>
+<p><img src="http://7xp22c.com1.z0.glb.clouddn.com/%E6%8E%A2%E9%92%88.PNG" alt=""></p>
+<p>我们看到，页面中暴露了服务器的绝对路径信息，这也就为我们后续的写入一句话木马创造了前提条件。由于安装了phpStudy的主机都会安装Mysql，这样我们可以通过弱口令登录相应主机的数据库，然后通过数据库命令将一句话写入数据库中，再通过select outfile命令将内容写入到服务器相应目录下。后面的事情就不用说了，尽情的去提权吧！</p>
+<p><img src="http://7xp22c.com1.z0.glb.clouddn.com/ips.PNG" alt=""></p>
+<p><img src="http://7xp22c.com1.z0.glb.clouddn.com/caidao.PNG" alt=""></p>
+<p>脚本下载地址：<a href="https://github.com/s0m30ne/PhpStudy.git" target="_blank" rel="external">https://github.com/s0m30ne/PhpStudy.git</a></p>
 </span>
       
     </div>
@@ -332,7 +329,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/条码安全/" rel="tag">#条码安全</a>
+            <a href="/tags/Censys/" rel="tag">#Censys</a>
+          
+            <a href="/tags/poc/" rel="tag">#poc</a>
           
             <a href="/tags/漏洞/" rel="tag">#漏洞</a>
           
@@ -343,17 +342,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/12/23/利用Censys批量获取Juniper-Netscreen后门/" rel="next" title="利用Censys批量获取Juniper Netscreen后门">
-                <i class="fa fa-chevron-left"></i> 利用Censys批量获取Juniper Netscreen后门
+              <a href="/2015/12/23/badbarcode浅析/" rel="next" title="badbarcode浅析">
+                <i class="fa fa-chevron-left"></i> badbarcode浅析
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/01/01/利用phpStudy批量获取shell/" rel="prev" title="利用phpStudy探针批量获取shell">
-                利用phpStudy探针批量获取shell <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -380,8 +375,8 @@
         
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2015/12/23/badbarcode浅析/"
-           data-title="badbarcode浅析" data-url="http://s0m30ne.github.io/2015/12/23/badbarcode浅析/">
+      <div class="ds-thread" data-thread-key="2016/01/01/利用phpStudy批量获取shell/"
+           data-title="利用phpStudy探针批量获取shell" data-url="http://s0m30ne.github.io/2016/01/01/利用phpStudy批量获取shell/">
       </div>
     
   </div>
