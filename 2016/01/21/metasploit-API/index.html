@@ -1,0 +1,1218 @@
+<!doctype html>
+<html class="theme-next   use-motion ">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="api,metasploit," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.2" />
+
+
+
+
+
+
+<meta name="description" content="metasploit提供了很全面的api接口，主要可以分为如下八个方面：   
+
+auth       认证相关，用于远程连接 msf 时的认证   
+console    终端相关，用于创建与销毁终端以及与终端的命令交互   
+core       内核相关，用于全局性的一些设置   
+db         数据库相关，用于存储与查询使用过程中的各种数据   
+job        任务相关，对">
+<meta property="og:type" content="article">
+<meta property="og:title" content="metasploit API">
+<meta property="og:url" content="http://s0m30ne.github.io/2016/01/21/metasploit-API/index.html">
+<meta property="og:site_name" content="s0m30ne的博客">
+<meta property="og:description" content="metasploit提供了很全面的api接口，主要可以分为如下八个方面：   
+
+auth       认证相关，用于远程连接 msf 时的认证   
+console    终端相关，用于创建与销毁终端以及与终端的命令交互   
+core       内核相关，用于全局性的一些设置   
+db         数据库相关，用于存储与查询使用过程中的各种数据   
+job        任务相关，对">
+<meta property="og:image" content="http://7xp22c.com1.z0.glb.clouddn.com/msf.png">
+<meta property="og:updated_time" content="2016-03-09T06:41:14.528Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="metasploit API">
+<meta name="twitter:description" content="metasploit提供了很全面的api接口，主要可以分为如下八个方面：   
+
+auth       认证相关，用于远程连接 msf 时的认证   
+console    终端相关，用于创建与销毁终端以及与终端的命令交互   
+core       内核相关，用于全局性的一些设置   
+db         数据库相关，用于存储与查询使用过程中的各种数据   
+job        任务相关，对">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'hide',
+    motion: true
+  };
+</script>
+
+  <title> metasploit API | s0m30ne的博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">s0m30ne的博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">热爱生活，热爱技术</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            时间轴
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-user fa-fw"></i> <br />
+            
+            关于我
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <form class="site-search-form">
+    <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+  </form>
+
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'hvaxiz3ShL-zzkGasFcQ','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                metasploit API
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-01-21T23:29:29+08:00" content="2016-01-21">
+              2016-01-21
+            </time>
+          </span>
+          <span class="post-time">
+            | 修改于
+            <time itemprop="dateCreated" datetime="2016-03-09T14:41:14+08:00" content="2016-03-09">
+              2016-03-09
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/metasploit/" itemprop="url" rel="index">
+                    <span itemprop="name">metasploit</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/01/21/metasploit-API/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/21/metasploit-API/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+        <div class="post-gallery" itemscope itemtype="http://schema.org/ImageGallery">
+          
+          
+            <div class="post-gallery-row">
+              <a class="post-gallery-img fancybox"
+                 href="http://7xp22c.com1.z0.glb.clouddn.com/msf.png" rel="gallery_cilkgpiy80000zcnf3sko01jr"
+                 itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
+                <img src="http://7xp22c.com1.z0.glb.clouddn.com/msf.png" itemprop="contentUrl"/>
+              </a>
+            
+          
+
+          
+          </div>
+        </div>
+      
+
+      
+        <span itemprop="articleBody"><p>metasploit提供了很全面的api接口，主要可以分为如下八个方面：   </p>
+<ul>
+<li>auth       认证相关，用于远程连接 msf 时的认证   </li>
+<li>console    终端相关，用于创建与销毁终端以及与终端的命令交互   </li>
+<li>core       内核相关，用于全局性的一些设置   </li>
+<li>db         数据库相关，用于存储与查询使用过程中的各种数据   </li>
+<li>job        任务相关，对任务的开启与停止或查询当前任务信息   </li>
+<li>module     模块相关，对msf各模块信息的查询与配置   </li>
+<li>plugin     插件相关，对相关插件的管理   </li>
+<li>session    会话相关，对会话信息的管理</li>
+</ul>
+<p>由于接口函数数量比较多，放在一篇文章里会略显臃肿，因此我按照上面八个模块将其分开如下几篇文章中进行叙述：</p>
+<ul>
+<li><a href="#auth">auth</a></li>
+<li><a href="#console">console</a></li>
+<li><a href="#core">core</a></li>
+<li><a href="#db">db</a></li>
+<li><a href="#job">job</a></li>
+<li><a href="#module">module</a></li>
+<li><a href="#plugin">plugin</a></li>
+<li><a href="#session">session</a></li>
+</ul>
+<h1><b id="auth">auth</b></h1>
+
+<hr>
+<p>auth部分的API函数都是与认证相关的，主要用于远程连接msf时进行认证。<br><br><a href="#login\_noauth">auth.login_noauth</a><br><a href="#logout">auth.logout</a><br><a href="#token\_list">auth.token_list</a><br><a href="#token\_add">auth.token_add</a><br><a href="#token\_generate">auth.token_generate</a><br><a href="#token\_remove">auth.token_remove</a><br><br></p>
+<blockquote>
+<p></p><h3 id="login\_noauth">rpc.call(‘auth.login_noauth’, username, password)</h3>Handles client authentication. The authentication token will expire 5 minutes after the last request was made.<p></p>
+</blockquote>
+<p> @param [String] user The username.<br> @param [String] pass The password.<br> @raise [Msf::RPC::Exception] Something is wrong while authenticating, you can possibly get：<br>　　<code>401 Failed authentication</code>.<br> @return [Hash] A hash indicating a successful login, it contains the following keys:<br>　　‘result’ [String] A successful message: ‘success’.<br>　　‘token’ [String] A token for the authentication.<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;auth.login_noauth&#39;, &#39;msf&#39;, &#39;msf123&#39;)</code><br> This returns something like the following:<br>　　<code>{&quot;result&quot;=&gt;&quot;success&quot;, &quot;token&quot;=&gt;&quot;TEMPyp1N40NK8GM0Tx7A87E6Neak2tVJ&quot;}</code></p>
+<h2 id=""><a href="#" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="logout">rpc.call(‘auth.logout’, token)</h3>Handles client deauthentication.<p></p>
+</blockquote>
+<p> @param [String] token The user’s token to log off.<br> @raise [Msf::RPC::Exception] An error indicating a failed deauthentication, including:<br>　　<code>500 Invalid authentication token</code>.<br>　　<code>500 Permanent authentication token</code>.<br> @return [Hash] A hash indiciating the action was successful. It contains the following key:<br>　　‘result’ [String] The successful message: ‘success’<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;auth.logout&#39;, &#39;TEMPyp1N40NK8GM0Tx7A87E6Neak2tVJ&#39;)</code><br> This returns something like:<br>　　<code>{&quot;result&quot;=&gt;&quot;success&quot;}</code></p>
+<h2 id="-1"><a href="#-1" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="token\_list">rpc.call(‘auth.token_list’)</h3>temporary, permanent, or stored in the backend.<p></p>
+</blockquote>
+<p> @return [Hash] A hash that contains a list of authentication tokens. It contains the following key:<br>　　‘tokens’ [Array<string>] An array of tokens.<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;auth.token_list&#39;)</code><br> This returns something like:<br>　　<code>{&quot;tokens&quot;=&gt;[&quot;TEMPf5I4Ec8cBEKVD8D7xtIbTXWoKapP&quot;, &quot;TEMPtcVmMld8w74zo0CYeosM3iXW0nJz&quot;]}</code></string></p>
+<h2 id="-2"><a href="#-2" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="token\_add">rpc.call(‘auth.token_add’, token)</h3>Adds a new token to the database.<p></p>
+</blockquote>
+<p> @param [String] token A unique token.<br> @return [Hash] A hash indicating the action was successful. It contains the following key:<br>　　‘result’ [String] The successful message: ‘success’<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;auth.token_add&#39;, &#39;UNIQUE_TOKEN&#39;)</code><br> This returns something like:<br>　　<code>{&quot;result&quot;=&gt;&quot;success&quot;}</code></p>
+<h2 id="-3"><a href="#-3" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="token\_generate">rpc.call(‘auth.token_generate’)</h3>database as a side-effect.<p></p>
+</blockquote>
+<p> @return [Hash] A hash indicating the action was successful, also the new token.<br>  It contains the following keys:<br>　　‘result’ [String] The successful message: ‘success’<br>　　‘token’ [String] A new token.<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;auth.token_generate&#39;)</code><br> This returns something like:<br>　　<code>{&quot;result&quot;=&gt;&quot;success&quot;, &quot;token&quot;=&gt;&quot;TEMPyp1N40NK8GM0Tx7A87E6Neak2tVJ&quot;}</code>   </p>
+<h2 id="-4"><a href="#-4" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="token\_remove">rpc.call(‘auth.token_remove’, token)</h3>can remove tokens stored in the database backend (Mdm).<p></p>
+</blockquote>
+<p> @param [String] token The token to delete.<br> @return [Hash] A hash indicating the action was successful. It contains the following key:<br>　　‘result’ [String] The successful message: ‘success’<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;auth.token_remove&#39;, &#39;TEMPtcVmMld8w74zo0CYeosM3iXW0nJz&#39;)</code><br> This returns something like:<br>　　<code>{&quot;result&quot;=&gt;&quot;success&quot;}</code>  </p>
+<h1><b id="console">console</b></h1>
+
+<hr>
+<p>console部分是与终端交互相关的接口函数，是用的比较多的部分。<br><br><a href="#create">console.create</a><br><a href="#list">console.list</a><br><a href="#destroy">console.destroy</a><br><a href="#read">console.read</a><br><a href="#write">console.write</a><br><a href="#tabs">console.tabs</a><br><a href="#session\_kill">console.session_kill</a><br><a href="#session\_detach">console.session_detach</a><br><br></p>
+<blockquote>
+<p></p><h3 id="create">rpc.call(‘console.create’)</h3>Creates a new framework console instance.   <p></p>
+</blockquote>
+<p> @param [Hash] opts See Msf::Ui::Web::Driver#create_console<br> @return [Hash] Information about the new console. It contains the following keys:<br>　　‘id’ [Fixnum] The console’s ID.<br>　　‘prompt’ [String] The framework prompt (example: ‘msf &gt; ‘)<br>　　‘busy’ [TrueClass] The console’s busy state, or<br>　　‘busy’ [FalseClass] The console’s busy state.<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;console.create&#39;)</code><br> This returns something like:<br>　　<code>{&#39;busy&#39;: False, &#39;prompt&#39;: &#39;msf &gt; &#39;, &#39;id&#39;: &#39;1&#39;}</code>   </p>
+<h2 id="-5"><a href="#-5" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="list">rpc.call(‘console.list’)</h3>Returns a list of framework consoles.   <p></p>
+</blockquote>
+<p> @return [Hash] Console information.<br>　　‘consoles’ [Array<hash>] consoles, each element is a hash that includes:<br>　　　　‘id’ [Fixnum] The console’s ID<br>　　　　‘prompt’ [String] The framework prompt (example: ‘msf &gt; ‘)<br>　　　　‘busy’ [TrueClass] The console’s busy state, or<br>　　　　‘busy’ [FalseClass] The console’s busy state.<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;console.list&#39;)</code><br> This returns something like:<br>　　<code>{&#39;consoles&#39;: [{&#39;busy&#39;: False, &#39;prompt&#39;: &#39;msf &gt; &#39;, &#39;id&#39;: &#39;4&#39;}]}</code>   </hash></p>
+<h2 id="-6"><a href="#-6" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="destroy">rpc.call(‘console.destroy’, id)</h3>Deletes a framework console instance.<p></p>
+</blockquote>
+<p> @param [Fixnum] cid Framework console ID.<br> @return [Hash] A result indicating whether the action was successful or not. It contains the following key:<br>　　‘result’ [String] Either ‘success’ or ‘failure’.<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;console.destroy&#39;, 1)</code><br> This returns something like:<br>　　<code>{&quot;result&quot;=&gt;&quot;success&quot;}</code>   </p>
+<h2 id="-7"><a href="#-7" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="read">rpc.call(‘console.read’, id)</h3>Returns the framework console output in raw form.<p></p>
+</blockquote>
+<p> @param [Fixnum] cid Framework console ID.<br> @return [Hash] There are two different hashes you might get:<br>　　If the console ID is invalid, you will get a hash like the following:<br>　　　　‘result’ [String] A value that says ‘failure’.<br>　　If the console ID is valid, you will get a hash like the following:<br>　　　　‘data’ [String] The output the framework console produces (example: the banner)<br>　　　　‘prompt’ [String] The framework prompt (example: ‘msf &gt; ‘)<br>　　　　‘busy’ [TrueClass] The console’s busy state, or<br>　　　　‘busy’ [FalseClass] The console’s busy state.<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;console.read&#39;, 1)</code>   </p>
+<h2 id="-8"><a href="#-8" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="write">rpc.call(‘console.write’, id, input)</h3>Sends an input (such as a command) to the framework console.<p></p>
+</blockquote>
+<p> @param [Fixnum] cid Framework console ID.<br> @param [String] data User input.<br> @return [Hash] There are two different hashes you might get:<br>　　If the console ID is invalid, you will get a hash like the following:<br>　　　　‘result’ [String] A value that says ‘failure’.<br>　　If the console ID is invalid, you will get a hash like the following:<br>　　　　‘wrote’ [Fixnum] Number of bytes sent.<br> @note Remember to add a newline (\r\n) at the end of input, otherwise the console will not do anything. And you will need to use the rpc_read method to retrieve the output again.<br> @example Here is how you would use this from the client:<br> This will show the current module’s options.<br>　　<code>rpc.call(&#39;console.write&#39;, 4, &quot;show options\r\n&quot;)</code>   </p>
+<h2 id="-9"><a href="#-9" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="tabs">rpc.call(‘console.tabs’, id, command)</h3>Returns the tab-completed version of your input (such as a module path).<p></p>
+</blockquote>
+<p> @param [Fixnum] cid Framework console ID.<br> @param [String] line Command.<br> @return [Hash] There are two different hashes you might get:<br>　　If the console ID is invalid, you will get a hash like the following:<br>　　　　‘result’ [String] A value that says ‘failure’.<br>　　If the console ID is valid, you will get a hash like the following:<br>　　　　‘tabs’ [String] The tab-completed version of the command.<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;console.tabs&#39;, 4, &quot;use exploit/windows/smb/ms08_067_&quot;)</code><br> This will return:<br>　　<code>{&quot;tabs&quot;=&gt;[&quot;use exploit/windows/smb/ms08_067_netapi&quot;]}</code>   </p>
+<h2 id="-10"><a href="#-10" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="session\_kill">rpc.call(‘console.session_kill’, id)</h3>You might also want to considering using the session API calls instead of this.<p></p>
+</blockquote>
+<p> @param [Fixnum] cid Framework console ID.<br> @return [Hash] A hash indicating whether the action was successful or not. It contains:<br>　　‘result’ [String] A message that says ‘success’ if the console ID is valid (and successfully killed, otherwise ‘failed’)<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;console.session_kill&#39;, 4)</code>   </p>
+<h2 id="-11"><a href="#-11" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="session\_detach">rpc.call(‘console.session_detach’, id)</h3>background an interactive session.<p></p>
+</blockquote>
+<p> @param [Fixnum] cid Framework console ID.<br> @return [Hash] A hash indicating whether the action was successful or not. It contains:<br>　　‘result’ [String] A message that says ‘success’ if the console ID is valid (and successfully detached, otherwise ‘failed’)<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;console.session_detach&#39;, 4)</code>   </p>
+<h1><b id="core">core</b></h1>
+
+<hr>
+<p>core部分的API主要是用于全局性的一些设置。<br><br><a href="#version">core.version</a><br><a href="#stop">core.stop</a><br><a href="#getg">core.getg</a><br><a href="#setg">core.setg</a><br><a href="#unsetg">core.unsetg</a><br><a href="#save">core.save</a><br><a href="#reload\_modules">core.reload_modules</a><br><a href="#add\_module\_path">core.add_module_path</a><br><a href="#module\_stats">core.module_stats</a><br><a href="#thread\_list">core.thread_list</a><br><a href="#thread\_kill">core.thread_kill</a><br><br></p>
+<blockquote>
+<p></p><h3 id="version">rpc.call(‘core.version’)</h3>Returns the RPC service versions.<p></p>
+</blockquote>
+<p> @return [Hash] A hash that includes the version information:<br>　　‘version’ [String] Framework version<br>　　‘ruby’    [String] Ruby version<br>　　‘api’     [String] API version<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;core.version&#39;)</code>   </p>
+<h2 id="-12"><a href="#-12" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="stop">rpc.call(‘core.stop’)</h3>Stops the RPC service.<p></p>
+</blockquote>
+<p> @return [void]<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;core.stop&#39;)</code>   </p>
+<h2 id="-13"><a href="#-13" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="getg">rpc.call(‘core.getg’, GlobalSetting)</h3>Returns a global datastore option.<p></p>
+</blockquote>
+<p> @param [String] var The name of the global datastore.<br> @return [Hash] The global datastore option. If the option is not set, then the value is empty.<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;core.getg&#39;, &#39;GlobalSetting&#39;)</code>   </p>
+<h2 id="-14"><a href="#-14" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="setg">rpc.call(‘core.setg’, globalOpton, globalOptionValue)</h3>Sets a global datastore option.<p></p>
+</blockquote>
+<p> @param [String] var The hash key of the global datastore option.<br> @param [String] val The value of the global datastore option.<br> @return [Hash] A hash indicating the action was successful. It contains the following key:<br>　　‘result’ [String] The successful message: ‘success’<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;core.setg&#39;, &#39;MyGlobal&#39;, &#39;foobar&#39;)</code></p>
+<h2 id="-15"><a href="#-15" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="unsetg">rpc.call(‘core.unsetg’, globalOption)</h3>Unsets a global datastore option.<p></p>
+</blockquote>
+<p> @param [String] var The global datastore option.<br> @return [Hash] A hash indicating the action was successful. It contains the following key:<br>　　‘result’ [String] The successful message: ‘success’<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;core.unsetg&#39;, &#39;MyGlobal&#39;)</code></p>
+<h2 id="-16"><a href="#-16" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="save">rpc.call(‘core.save’)</h3>Saves current framework settings.<p></p>
+</blockquote>
+<p> @return [Hash] A hash indicating the action was successful. It contains the following key:<br>　　‘result’ [String] The successful message: ‘success’<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;core.save&#39;)</code></p>
+<h2 id="-17"><a href="#-17" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="reload\_modules">rpc.call(‘core.reload_modules’)</h3>Reloads framework modules. This will take some time to complete.<p></p>
+</blockquote>
+<p> @return [Hash] Module stats that contain the following keys:<br>　　‘exploits’ [Fixnum] The number of exploits reloaded.<br>　　‘auxiliary’ [Fixnum] The number of auxiliary modules reloaded.<br>　　‘post’ [Fixnum] The number of post modules reloaded.<br>　　‘encoders’ [Fixnum] The number of encoders reloaded.<br>　　‘nops’ [Fixnum] The number of NOP modules reloaded.<br>　　‘payloads’ [Fixnum] The number of payloads reloaded.<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;core.reload_modules&#39;)</code></p>
+<h2 id="-18"><a href="#-18" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="add\_module\_path">rpc.call(‘core.add_module_path’, path)</h3>this will not unload modules that were deleted from the file system that were previously loaded.<p></p>
+</blockquote>
+<p> @param [String] path The new path to load.<br> @return [Hash] Module stats that contain the following keys:<br>　　‘exploits’ [Fixnum] The number of exploits loaded.<br>　　‘auxiliary’ [Fixnum] The number of auxiliary modules loaded.<br>　　‘post’ [Fixnum] The number of post modules loaded.<br>　　‘encoders’ [Fixnum] The number of encoders loaded.<br>　　‘nops’ [Fixnum] The number of NOP modules loaded.<br>　　‘payloads’ [Fixnum] The number of payloads loaded.<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;core.add_module_path&#39;, &#39;/tmp/modules/&#39;)</code></p>
+<h2 id="-19"><a href="#-19" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="module\_stats">rpc.call(‘core.module_stats’)</h3>Returns the module stats.<p></p>
+</blockquote>
+<p> @return [Hash] Module stats that contain the following keys:<br>　　‘exploits’ [Fixnum] The number of exploits.<br>　　‘auxiliary’ [Fixnum] The number of auxiliary modules.<br>　　‘post’ [Fixnum] The number of post modules.<br>　　‘encoders’ [Fixnum] The number of encoders.<br>　　‘nops’ [Fixnum] The number of NOP modules.<br>　　‘payloads’ [Fixnum] The number of payloads.<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;core.module_stats&#39;)</code></p>
+<h2 id="-20"><a href="#-20" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="thread\_list">rpc.call(‘core.thread_list’)</h3>Returns a list of framework threads.<p></p>
+</blockquote>
+<p> @return [Hash] A collection of threads. Each key is the thread ID, and the value is another hash that contains the following:<br>　　‘status’ [String] Thread status.<br>　　‘critical’ [Boolean] Thread is critical.<br>　　‘name’ [String] Thread name.<br>　　‘started’ [String] Timestamp of when the thread started.<br> @example Here is how you would use this from the cient:<br>　　<code>rpc.call(&#39;core.thread_list&#39;)</code><br> You will get something like this:<br>　　<code>{0=&gt;{&quot;status&quot;=&gt;&quot;sleep&quot;, &quot;critical&quot;=&gt;false, &quot;name&quot;=&gt;&quot;StreamServerListener&quot;, &quot;started&quot;=&gt;&quot;2015-04-21 15:25:49 -0500&quot;}}</code></p>
+<h2 id="-21"><a href="#-21" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="thread\_kill">rpc.call(‘core.thread_kill’, id)</h3>Kills a framework thread.<p></p>
+</blockquote>
+<p> @param [Fixnum] tid The thread ID to kill.<br> @return [Hash] A hash indicating the action was successful. It contains the following key:<br>　　‘result’ [String] A successful message: ‘success’<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;core.thread_kill&#39;, 10)</code></p>
+<h1><b id="db">db</b></h1>
+
+<hr>
+<p>db部分的API与数据库相关，用于存储与查询使用过程中的各种数据。<br><br><a href="#create\_cracked\_credential">db.create_cracked_credential</a><br><a href="#create\_cracked\_credential">db.create_credential</a><br><a href="#invalidate\_login">db.invalidate_login</a><br><a href="#creds">db.creds</a><br><a href="#hosts">db.hosts</a><br><a href="#services">db.services</a><br><a href="#vulns">db.vulns</a><br><a href="#workspaces">db.workspaces</a><br><a href="#current\_workspace">db.current_workspace</a><br><a href="#get\_workspace">db.get_workspace</a><br><a href="#set\_workspace">db.set_workspace</a><br><a href="#wspace">db.wspace</a><br><a href="#get\_host">db.get_host</a><br><a href="#report\_host">db.report_host</a><br><a href="#report\_service">db.report_service</a><br><a href="#get\_service">db.get_service</a><br><a href="#get\_note">db.get_note</a><br><a href="#get\_client">db.get_client</a><br><a href="#report\_client">db.report_client</a><br><a href="#report\_note">db.report_note</a><br><a href="#notes">db.notes</a><br><a href="#get\_ref">db.get_ref</a><br><a href="#del\_vuln">db.del_vuln</a><br><a href="#del\_note">db.del_note</a><br><a href="#del\_service">db.del_service</a><br><a href="#del\_host">db.del_host</a><br><a href="#report\_vuln">db.report_vuln</a><br><a href="#events">db.events</a><br><a href="#report\_event">db.report_event</a><br><a href="#report\_loot">db.report_loot</a><br><a href="#loots">db.loots</a><br><a href="#import\_data">db.import_data</a><br><a href="#get\_vuln">db.get_vuln</a><br><a href="#clients">db.clients</a><br><a href="#del\_client">db.del_client</a><br><a href="#driver">db.driver</a><br><a href="#connect">db.connect</a><br><a href="#status">db.status</a><br><a href="#disconnect">db.disconnect</a><br><br></p>
+<blockquote>
+<p></p><h3 id="create\_cracked\_credential">rpc.call(‘db.create_cracked_credential’, opts)</h3>Creates a cracked credential.<p></p>
+</blockquote>
+<p> @param [Hash] xopts Credential options. (See #create_credential Documentation)<br> @return [Metasploit::Credential::Core]<br> @see <a href="https://github.com/rapid7/metasploit-credential/blob/master/lib/metasploit/credential/creation.rb#L107" target="_blank" rel="external">https://github.com/rapid7/metasploit-credential/blob/master/lib/metasploit/credential/creation.rb#L107</a> #create_credential Documentation.<br> @see #rpc_create_credential<br> @example Here is how you would use this from the client:   </p>
+<pre><code>opts = {
+    username: username,`
+    password: password,
+    core_id: core_id
+}
+rpc.call(&apos;db.create_cracked_credential&apos;, opts)
+</code></pre><h2 id="-22"><a href="#-22" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="create\_credential">rpc.call(‘db.create_credential’, opts)</h3>Creates a credential.<p></p>
+</blockquote>
+<p> @param [Hash] xopts Credential options. (See #create_credential Documentation)<br> @return [Hash] Credential data. It contains the following keys:<br>　　‘username’ [String] Username saved.<br>　　‘private’ [String] Password saved.<br>　　‘private_type’ [String] Password type.<br>　　‘realm_value’ [String] Realm.<br>　　‘realm_key’ [String] Realm key.<br>　　‘host’ [String] Host (Only avilable if there’s a last_attempted_at and status)<br>　　‘sname’ [String] Service name (only available if there’s a last_attempted_at and status)<br>　　‘status’ [Status] Login status (only available if there’s a last_attempted_at and status)<br> @see <a href="https://github.com/rapid7/metasploit-credential/blob/master/lib/metasploit/credential/creation.rb#L107" target="_blank" rel="external">https://github.com/rapid7/metasploit-credential/blob/master/lib/metasploit/credential/creation.rb#L107</a> #create_credential Documentation.<br> @example Here is how you would use this from the client:   </p>
+<pre><code>opts = {
+    origin_type: service,
+    address: &apos;192.168.1.100&apos;,
+    port: 445,
+    service_name: &apos;smb&apos;,
+    protocol: &apos;tcp&apos;,
+    module_fullname: &apos;auxiliary/scanner/smb/smb_login&apos;,
+    workspace_id: myworkspace_id,
+    private_data: &apos;password1&apos;,
+    private_type: password,
+    username: &apos;Administrator&apos;
+}
+rpc.call(&apos;db.create_credential&apos;, opts)
+</code></pre><h2 id="-23"><a href="#-23" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="invalidate\_login">rpc.call(‘db.invalidate_login’, opts)</h3>Sets the status of a login credential to a failure.<p></p>
+</blockquote>
+<p> @param [Hash] xopts Credential data (See #invalidate_login Documentation)<br> @raise [Msf::RPC::Exception] If there’s an option missing.<br> @return [void]<br> @see <a href="https://github.com/rapid7/metasploit-credential/blob/master/lib/metasploit/credential/creation.rb#L492" target="_blank" rel="external">https://github.com/rapid7/metasploit-credential/blob/master/lib/metasploit/credential/creation.rb#L492</a> #invalidate_login Documentation<br> @see <a href="https://github.com/rapid7/metasploit-model/blob/master/lib/metasploit/model/login/status.rb" target="_blank" rel="external">https://github.com/rapid7/metasploit-model/blob/master/lib/metasploit/model/login/status.rb</a> Status symbols.<br> @example Here is how you would use this from the client:   </p>
+<pre><code>opts = {
+    address: &apos;192.168.1.100&apos;,
+    port: 445,
+    protocol: &apos;tcp&apos;,
+    public: &apos;admin&apos;,
+    private: &apos;password1&apos;,
+    status: &apos;Incorrect&apos;
+}
+rpc.call(&apos;db.invalidate_login&apos;, opts)
+</code></pre><h2 id="-24"><a href="#-24" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="creds">rpc.call(‘db.creds’, opts)</h3>Returns login credentials from a specific workspace.<p></p>
+</blockquote>
+<p> @param [Hash] xopts Options:<br> @option xopts [String] :workspace Name of the workspace.<br> @raise [Msf::RPC::ServerException] You might get one of these errors:<br>　　<code>500 ActiveRecord::ConnectionNotEstablished. Try: rpc.call(&#39;console.create&#39;)</code><br>　　<code>500 Database not loaded. Try: rpc.call(&#39;console.create&#39;)</code><br>　　<code>500 Invalid workspace</code><br> @return [Hash] Credentials with the following hash key:<br>　　‘creds’ [Array<hash>] An array of credentials. Each hash in the array will have the following:<br>　　　　‘user’ [String] Username.<br>　　　　‘pass’ [String] Password.<br>　　　　‘updated_at’ [Fixnum] Last updated at.<br>　　　　‘type’ [String] Password type.<br>　　　　‘host’ [String] Host.<br>　　　　‘port’ [Fixnum] Port.<br>　　　　‘proto’ [String] Protocol.<br>　　　　‘sname’ [String] Service name.<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;db.creds&#39;, {})</code></hash></p>
+<h2 id="-25"><a href="#-25" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="hosts">rpc.call(‘db.hosts’, opts)</h3>Returns information about hosts.<p></p>
+</blockquote>
+<p> @param [Hash] xopts Options:<br> @option xopts [String] :workspace Name of the workspace.<br> @raise [Msf::RPC::ServerException] You might get one of these errors:<br>　　<code>500 ActiveRecord::ConnectionNotEstablished. Try: rpc.call(&#39;console.create&#39;)</code><br>　　<code>500 Database not loaded. Try: rpc.call(&#39;console.create&#39;)</code><br>　　<code>500 Invalid workspace</code><br> @return [Hash] Host information that starts with the following hash key:<br>　　‘hosts’ [Array<hash>] An array of hosts. Each hash in the array will have the following:<br>　　　　‘created_at’ [Fixnum] Creation date.<br>　　　　‘address’ [String] IP address.<br>　　　　‘mac’ [String] MAC address.<br>　　　　‘name’ [String] Computer name.<br>　　　　‘state’ [String] Host’s state.<br>　　　　‘os_name’ [String] Name of the operating system.<br>　　　　‘os_flavor’ [String] OS flavor.<br>　　　　‘os_sp’ [String] Service pack.<br>　　　　‘os_lang’ [String] OS language.<br>　　　　‘updated_at’ [Fixnum] Last updated at.<br>　　　　‘purpose’ [String] Host purpose (example: server)<br>　　　　‘info’ [String] Additional information about the host.<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;db.hosts&#39;, {})</code></hash></p>
+<h2 id="-26"><a href="#-26" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="services">rpc.call(‘db.services’, opts)</h3>Returns information about services.<p></p>
+</blockquote>
+<p> @param [Hash] xopts Options:<br> @option xopts [String] :workspace Name of workspace.<br> @option xopts [Fixnum] :limit Limit.<br> @option xopts [Fixnum] :offset Offset.<br> @option xopts [String] :proto Protocol.<br> @option xopts [String] :address Address.<br> @option xopts [String] :ports Port range.<br> @option xopts [String] :names Names (Use ‘,’ as the separator).<br> @raise [Msf::RPC::ServerException] You might get one of these errors:<br>　　<code>500 ActiveRecord::ConnectionNotEstablished. Try: rpc.call(&#39;console.create&#39;)</code><br>　　<code>500 Database not loaded. Try: rpc.call(&#39;console.create&#39;)</code><br>　　<code>500 Invalid workspace</code><br> @return [Hash] A hash with the following keys:<br>　　‘services’ [Array<hash>] In each hash of the array, you will get these keys:<br>　　　　‘host’ [String] Host.<br>　　　　‘created_at’ [Fixnum] Last created at.<br>　　　　‘updated_at’ [Fixnum] Last updated at.<br>　　　　‘port’ [Fixnum] Port.<br>　　　　‘proto’ [String] Protocol.<br>　　　　‘state’ [String] Service state.<br>　　　　‘name’ [String] Service name.<br>　　　　‘info’ [String] Additional information about the service.<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;db.services&#39;, {})</code></hash></p>
+<h2 id="-27"><a href="#-27" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="vulns">rpc.call(‘db.vulns’, opts)</h3>Returns information about reported vulnerabilities.<p></p>
+</blockquote>
+<p> @param [Hash] xopts Options:<br> @option xopts [String] :workspace Name of workspace.<br> @option xopts [Fixnum] :limit Limit.<br> @option xopts [Fixnum] :offset Offset.<br> @option xopts [String] :proto Protocol.<br> @option xopts [String] :address Address.<br> @option xopts [String] :ports Port range.<br> @raise [Msf::RPC::ServerException] You might get one of these errors:<br>　　<code>500 ActiveRecord::ConnectionNotEstablished. Try: rpc.call(&#39;console.create&#39;)</code><br>　　<code>500 Database not loaded. Try: rpc.call(&#39;console.create&#39;)</code><br>　　<code>500 Invalid workspace</code><br> @return [Hash] A hash with the following key:<br>　　‘vulns’ [Array<hash>] In each hash of the array, you will get these keys:<br>　　　　‘port’ [Fixnum] Port.<br>　　　　‘proto’ [String] Protocol.<br>　　　　‘time’ [Fixnum] Time reported.<br>　　　　‘host’ [String] Vulnerable host.<br>　　　　‘name’ [String] Exploit that was used.<br>　　　　‘refs’ [String] Vulnerability references.<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;db.vulns&#39;, {})</code></hash></p>
+<h2 id="-28"><a href="#-28" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="workspaces">rpc.call(‘db.workspaces’)</h3>Returns information about workspaces.<p></p>
+</blockquote>
+<p> @raise [Msf::RPC::Exception] Database not loaded.<br> @return [Hash] A hash with the following key:<br>　　‘workspaces’ [Array<hash>] In each hash of the array, you will get these keys:<br>　　　　‘id’ [Fixnum] Workspace ID.<br>　　　　‘name’ [String] Workspace name.<br>　　　　‘created_at’ [Fixnum] Last created at.<br>　　　　‘updated_at’ [Fixnum] Last updated at.<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;db.workspaces&#39;)</code></hash></p>
+<h2 id="-29"><a href="#-29" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="current\_workspace">rpc.call(‘db.current_workspace’)</h3>Returns the current workspace.<p></p>
+</blockquote>
+<p> @raise [Msf::RPC::Exception] Database not loaded. Try: rpc.call(‘console.create’)<br> @return [Hash] A hash with the following keys:<br>　　‘workspace’ [String] Workspace name.<br>　　‘workspace_id’ [Fixnum] Workspace ID.<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;db.current_workspace&#39;)</code></p>
+<h2 id="-30"><a href="#-30" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="get\_workspace">rpc.call(‘db.get_workspace’)</h3>Returns the current workspace.<p></p>
+</blockquote>
+<p> @param [String] wspace workspace name.<br> @raise [Msf::RPC::Exception] You might get one of the following errors:<br>　　<code>500 Database not loaded</code><br>　　<code>500 Invalid workspace</code><br> @return [Hash] A hash with the following key:<br>　　‘workspace’ [Array<hash>] In each hash of the array, you will get these keys:<br>　　　　‘name’ [String] Workspace name.<br>　　　　‘id’ [Fixnum] Workspace ID.<br>　　　　‘created_at’ [Fixnum] Last created at.<br>　　　　‘updated_at’ [Fixnum] Last updated at.<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;db.get_workspace&#39;)</code></hash></p>
+<h2 id="-31"><a href="#-31" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="set\_workspace">rpc.call(‘db.set_workspace’, workspace)</h3>Sets a workspace.<p></p>
+</blockquote>
+<p> @param [String] wspace Workspace name.<br> @raise [Msf::RPC::ServerException] You might get one of these errors:<br>　　<code>500 ActiveRecord::ConnectionNotEstablished. Try: rpc.call(&#39;console.create&#39;)</code><br>　　<code>500 Database not loaded. Try: rpc.call(&#39;console.create&#39;)</code><br>　　<code>500 Invalid workspace</code><br>　　<code>404 Workspace not found</code><br> @return [Hash] A hash indicating whether the action was successful or not. You will get:<br>　　‘result’ [String] A message that says either ‘success’ or ‘failed’<br> @example Here is how you would use this from the client:<br> This will set the current workspace to ‘default’<br>　　<code>rpc.call(&#39;db.set_workspace&#39;, &#39;default&#39;)</code></p>
+<h2 id="-32"><a href="#-32" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="wspace">rpc.call(‘db.wspace’, workspace)</h3>Deletes a workspace.<p></p>
+</blockquote>
+<p> @param [String] wspace Workspace name.<br> @raise [Msf::RPC::ServerException] You might get one of these errors:<br>　　<code>500 ActiveRecord::ConnectionNotEstablished. Try: rpc.call(&#39;console.create&#39;)</code><br>　　<code>500 Database not loaded. Try: rpc.call(&#39;console.create&#39;)</code><br>　　<code>404 Workspace not found</code><br> @return [Hash] A hash indicating the action was successful. It contains the following:<br>　　‘result’ [String] A message that says ‘success’.<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;db.wspace&#39;, &#39;temp_workspace&#39;)</code></p>
+<h2 id="-33"><a href="#-33" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="get\_host">rpc.call(‘db.get_host’, address)</h3>Returns information about a host.<p></p>
+</blockquote>
+<p> @param [Hash] xopts Options (:addr, :address, :host are the same thing, and you only need one):<br> @option xopts [String] :addr Host address.<br> @option xopts [String] :address Same as :addr.<br> @option xopts [String] :host Same as :address.<br> @raise [Msf::RPC::ServerException] You might get one of these errors:<br>　　<code>500 ActiveRecord::ConnectionNotEstablished. Try: rpc.call(&#39;console.create&#39;)</code><br>　　<code>500 Database not loaded. Try: rpc.call(&#39;console.create&#39;)</code><br>　　<code>500 Invalid workspace</code><br> @return [Hash] A hash that contains the following:<br>　　‘host’ [Array<hash>] Each hash in the array contains the following:<br>　　　　‘created_at’ [Fixnum] Last created at.<br>　　　　‘address’ [String] Address.<br>　　　　‘mac’ [String] Mac address.<br>　　　　‘name’ [String] Host name.<br>　　　　‘state’ [String] Host state.<br>　　　　‘os_name’ [String] OS name.<br>　　　　‘os_flavor’ [String] OS flavor.<br>　　　　‘os_sp’ [String] OS service pack.<br>　　　　‘os_lang’ [String] OS language.<br>　　　　‘updated_at’ [Fixnum] Last updated at.<br>　　　　‘purpose’ [String] Purpose. Example: ‘server’.<br>　　　　‘info’ [String] Additional information.<br> @example Here is how you would use this from the client:<br>　　　　<code>rpc.call(&#39;db.get_host&#39;, {:host =&gt; ip})</code>   </hash></p>
+<h2 id="-34"><a href="#-34" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="report\_host">rpc.call(‘db.report_host’, hostInfo)</h3>Reports a new host to the database.<p></p>
+</blockquote>
+<p> @param [Hash] xopts Information to report about the host. See below:<br> @option xopts [String] :host IP address. You msut supply this.<br> @option xopts [String] :state One of the Msf::HostState constants. (See Most::HostState Documentation)<br> @option xopts [String] :os_name Something like “Windows”, “Linux”, or “Mac OS X”.<br> @option xopts [String] :os_flavor Something like “Enterprise”, “Pro”, or “Home”.<br> @option xopts [String] :os_sp Something like “SP2”.<br> @option xopts [String] :os_lang Something like “English”, “French”, or “en-US”.<br> @option xopts [String] :arch one of the ARCH_* constants. (see ARCH Documentation)<br> @option xopts [String] :mac Mac address.<br> @option xopts [String] :scope Interface identifier for link-local IPv6.<br> @option xopts [String] :virtual_host The name of the VM host software, eg “VMWare”, “QEMU”, “Xen”, etc.<br> @see <a href="https://github.com/rapid7/metasploit-framework/blob/master/lib/msf/core/host_state.rb" target="_blank" rel="external">https://github.com/rapid7/metasploit-framework/blob/master/lib/msf/core/host_state.rb</a> Most::HostState Documentation.<br> @see <a href="https://github.com/rapid7/metasploit-framework/blob/master/lib/rex/constants.rb#L66" target="_blank" rel="external">https://github.com/rapid7/metasploit-framework/blob/master/lib/rex/constants.rb#L66</a> ARCH Documentation.<br> @raise [Msf::RPC::ServerException] You might get one of these errors:<br>　　<code>500 ActiveRecord::ConnectionNotEstablished. Try: rpc.call(&#39;console.create&#39;)</code><br>　　<code>500 Database not loaded. Try: rpc.call(&#39;console.create&#39;)</code><br>　　<code>500 Invalid workspace</code><br> @return [Hash] A hash indicating whether the action was successful or not. It contains the following:<br>　　‘result’ [String] A message that says either ‘success’ or ‘failed’.<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;db.report_host&#39;, {:host =&gt; ip})</code></p>
+<h2 id="-35"><a href="#-35" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="report\_service">rpc.call(‘db.report_service’, serviceInfo)</h3>Reports a service to the database.<p></p>
+</blockquote>
+<p> @param [Hash] xopts Information to report about the service. See below:<br> @option xopts [String] :host Required. The host where this service is running.<br> @option xopts [String] :port Required. The port where this service listens.<br> @option xopts [String] :proto Required. The transport layer protocol (e.g. tcp, udp).<br> @option xopts [String] :name The application layer protocol (e.g. ssh, mssql, smb).<br> @option xopts [String] :sname An alias for the above<br> @raise [Msf::RPC::ServerException] You might get one of these errors:<br>　　<code>500 ActiveRecord::ConnectionNotEstablished. Try: rpc.call(&#39;console.create&#39;)</code><br>　　<code>500 Database not loaded. Try: rpc.call(&#39;console.create&#39;)</code><br>　　<code>500 Invalid workspace</code><br> @return [Hash] A hash indicating whether the action was successful or not. It contains:<br>　　‘result’ [String] A message that says either ‘success’ or ‘failed’.<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;db.report_service&#39;, {:host=&gt;ip, :port=&gt;8181, :proto=&gt;&#39;tcp&#39;, :name=&gt;&#39;http&#39;})</code></p>
+<h2 id="-36"><a href="#-36" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="get\_service">rpc.call(‘db.get_service’, search)</h3>Returns information about a service.<p></p>
+</blockquote>
+<p> @param [Hash] xopts Filters for the search, see below:<br> @option xopts [String] :workspace Workspace name.<br> @option xopts [String] :proto Protocol.<br> @option xopts [Fixnum] :port Port.<br> @option xopts [String] :names Service names.<br> @raise [Msf::RPC::ServerException] You might get one of these errors:<br>　　<code>500 ActiveRecord::ConnectionNotEstablished. Try: rpc.call(&#39;console.create&#39;)</code><br>　　<code>500 Database not loaded. Try: rpc.call(&#39;console.create&#39;)</code><br>　　<code>500 Invalid workspace</code><br> @return [Hash] A hash that contains the following key:<br>　　‘service’ [Array<hash>] Each hash in the array contains the following:<br>　　　　‘host’ [String] Host address.<br>　　　　‘created_at’ [Fixnum] Creation date.<br>　　　　‘port’ [Fixnum] Port.<br>　　　　‘proto’ [String] Protocol.<br>　　　　‘state’ [String] Service state.<br>　　　　‘name’ [String] Service name.<br>　　　　‘info’ [String] Additional information.<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;db.get_service&#39;, {:workspace=&gt;&#39;default&#39;, :proto=&gt;&#39;tcp&#39;, :port=&gt;443})</code></hash></p>
+<h2 id="-37"><a href="#-37" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="get\_note">rpc.call(‘db.get_note’, opts)</h3>Returns a note.<p></p>
+</blockquote>
+<p> @param [Hash] xopts Options.<br> @option xopts [String] :addr Host address.<br> @option xopts [String] :address Same as :addr.<br> @option xopts [String] :host Same as :address.<br> @option xopts [String] :proto Protocol.<br> @option xopts [Fixnum] :port Port.<br> @option xopts [String] :ntype Note type.<br> @raise [Msf::RPC::ServerException] You might get one of these errors:<br>　　<code>500 ActiveRecord::ConnectionNotEstablished. Try: rpc.call(&#39;console.create&#39;)</code><br>　　<code>500 Database not loaded. Try: rpc.call(&#39;console.create&#39;)</code><br>　　<code>500 Invalid workspace</code><br> @return [Hash] A hash that contains the following:<br>　　‘note’ [Array<hash>] Each hash in the array contains the following:<br>　　　　‘host’ [String] Host.<br>　　　　‘port’ [Fixnum] Port.<br>　　　　‘proto’ [String] Protocol.<br>　　　　‘created_at’ [Fixnum] Last created at.<br>　　　　‘updated_at’ [Fixnum] Last updated at.<br>　　　　‘ntype’ [String] Note type.<br>　　　　‘data’ [String] Note data.<br>　　　　‘critical’ [String] A boolean indicating criticality.<br>　　　　‘seen’ [String] A boolean indicating whether the note has been seen before.<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;db.get_note&#39;, {:proto =&gt; &#39;tcp&#39;, :port =&gt; 80})</code></hash></p>
+<h2 id="-38"><a href="#-38" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="get\_client">rpc.call(‘db.get_client’, opts)</h3>Returns information about a client connection.<p></p>
+</blockquote>
+<p> @param [Hash] xopts Options:<br> @option xopts [String] :workspace Workspace name.<br> @option xopts [String] :ua_string User agent string.<br> @option xopts [String] :host Host IP.<br> @raise [Msf::RPC::ServerException] You might get one of these errors:<br>　　<code>500 ActiveRecord::ConnectionNotEstablished. Try: rpc.call(&#39;console.create&#39;)</code><br>　　<code>500 Database not loaded. Try: rpc.call(&#39;console.create&#39;)</code><br>　　<code>500 Invalid workspace</code><br> @return [Hash] A hash that contains the client connection:<br>　　‘client’ [Array<hash>] Each hash of the array contains the following:<br>　　　　‘host’ [String] Host IP.<br>　　　　‘created_at’ [Fixnum] Created date.<br>　　　　‘updated_at’ [Fixnum] Last updated at.<br>　　　　‘ua_string’ [String] User-Agent string.<br>　　　　‘ua_name’ [String] User-Agent name.<br>　　　　‘ua_ver’ [String] User-Agent version.<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;db.get_client&#39;, {:workspace=&gt;&#39;default&#39;, :ua_string=&gt;user_agent, :host=&gt;ip})</code></hash></p>
+<h2 id="-39"><a href="#-39" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="report\_client">rpc.call(‘db.report_client’, clientInfo)</h3>Reports a client connection.<p></p>
+</blockquote>
+<p> @param [Hash] xopts Information about the client.<br> @option xopts [String] :ua_string Required. User-Agent string.<br> @option xopts [String] :host Required. Host IP.<br> @option xopts [String] :ua_name One of the Msf::HttpClients constants. (See Msf::HttpClient Documentation.)<br> @option xopts [String] :ua_ver Detected version of the given client.<br> @option xopts [String] :campaign An id or Campaign object.<br> @see <a href="https://github.com/rapid7/metasploit-framework/blob/master/lib/msf/core/constants.rb#L52" target="_blank" rel="external">https://github.com/rapid7/metasploit-framework/blob/master/lib/msf/core/constants.rb#L52</a> Msf::HttpClient Documentation.<br> @raise [Msf::RPC::ServerException] You might get one of these errors:<br>　　<code>500 ActiveRecord::ConnectionNotEstablished. Try: rpc.call(&#39;console.create&#39;)</code><br>　　<code>500 Database not loaded. Try: rpc.call(&#39;console.create&#39;)</code><br>　　<code>500 Invalid workspace</code><br> @return [Hash] A hash indicating whether the action was successful or not. It contains:<br>　　‘result’ [String] A message that says either ‘success’ or ‘failed’.<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;db.report_client&#39;, {:workspace=&gt;&#39;default&#39;, :ua_string=&gt;user_agent, :host=&gt;ip})</code></p>
+<h2 id="-40"><a href="#-40" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="report\_note">rpc.call(‘db.report_note’, noteInfo)</h3>Reports a note.<p></p>
+</blockquote>
+<p> @param [Hash] xopts Information about the note.<br> @option xopts [String] :type Required. The type of note, e.g. smb_peer_os.<br> @option xopts [String] :workspace The workspace to associate with this note.<br> @option xopts [String] :host An IP address or a Host object to associate with this note.<br> @option xopts [String] :service A Service object to associate with this note.<br> @option xopts [String] :data Whatever it is you’re making a note of.<br> @option xopts [Fixnum] :port Along with +:host+ and +:proto+, a service to associate with this note.<br> @option xopts [String] :proto Along with +:host+ and +:port+, a service to associate with this note.<br> @option xopts [Hash] A hash that contains the following information.<br>　　:unique [Boolean] Allow only a single Note per +:host+/+:type+ pair.<br>　　:unique_data [Boolean] Like +:uniqe+, but also compare +:data+.<br>　　:insert [Boolean] Always insert a new Note even if one with identical values exists.<br> @raise [Msf::RPC::ServerException] You might get one of these errors:<br>　　<code>500 ActiveRecord::ConnectionNotEstablished. Try: rpc.call(&#39;console.create&#39;)</code><br>　　<code>500 Database not loaded. Try: rpc.call(&#39;console.create&#39;)</code><br>　　<code>500 Invalid workspace</code><br> @return [Hash] A hash indicating whether the action was successful or not. It contains:<br>　　‘result’ [String] A message that says either ‘success’ or ‘failed’.<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;db.report_note&#39;, {:type=&gt;&#39;http_data&#39;, :host=&gt;&#39;192.168.1.123&#39;, :data=&gt;&#39;data&#39;})</code></p>
+<h2 id="-41"><a href="#-41" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="notes">rpc.call(‘db.notes’, search)</h3>Returns notes from the database.<p></p>
+</blockquote>
+<p> @param [Hash] xopts Filters for the search. See below:<br> @option xopts [String] :address Host address.<br> @option xopts [String] :names Names (separated by ‘,’).<br> @option xopts [String] :ntype Note type.<br> @option xopts [String] :proto Protocol.<br> @option xopts [String] :ports Port change.<br> @raise [Msf::RPC::ServerException] You might get one of these errors:<br>　　<code>500 ActiveRecord::ConnectionNotEstablished. Try: rpc.call(&#39;console.create&#39;)</code><br>　　<code>500 Database not loaded. Try: rpc.call(&#39;console.create&#39;)</code><br>　　<code>500 Invalid workspace</code><br> @return [Hash] A hash that contains the following:<br>　　‘notes’ [Array<hash>] Each hash in the array contains the following:<br>　　　　‘time’ [Fixnum] Creation date.<br>　　　　‘host’ [String] Host address.<br>　　　　‘service’ [String] Service name or port.<br>　　　　‘type’ [String] Host type.<br>　　　　‘data’ [String] Host data.<br> @example Here is how you would use this from the client:<br>　　This gives you all the notes.<br>　　<code>rpc.call(&#39;db.notes&#39;, {})</code></hash></p>
+<h2 id="-42"><a href="#-42" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="get\_ref">rpc.call(‘db.get_ref’, refName)</h3>Returns an external vulnerability reference.<p></p>
+</blockquote>
+<p> @param [String] name Reference name.<br> @raise [Msf::RPC::ServerException] You might get one of these errors:<br>　　<code>500 ActiveRecord::ConnectionNotEstablished. Try: rpc.call(&#39;console.create&#39;)</code><br>　　<code>500 Database not loaded. Try: rpc.call(&#39;console.create&#39;)</code><br>　　<code>500 Invalid workspace</code><br> @return [String] Reference.<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;db.get_ref&#39;, ref_name)</code></p>
+<h2 id="-43"><a href="#-43" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="del\_vuln">rpc.call(‘db.del_vuln’, opts)</h3>Deletes vulnerabilities.<p></p>
+</blockquote>
+<p> @param [Hash] xopts Filters that narrow down which vulnerabilities to delete. See below:<br> @option xopts [String] :workspace Workspace name.<br> @option xopts [String] :host Host address.<br> @option xopts [String] :address Same as :host.<br> @option xopts [Array] :addresses Same as :address.<br> @option xopts [Fixnum] :port Port.<br> @option xopts [String] :proto Protocol.<br> @option xopts [String] :name Name of the vulnerability.<br> @raise [Msf::RPC::ServerException] You might get one of these errors:<br>　　<code>500 ActiveRecord::ConnectionNotEstablished. Try: rpc.call(&#39;console.create&#39;)</code><br>　　<code>500 Database not loaded. Try: rpc.call(&#39;console.create&#39;)</code><br>　　<code>500 Invalid workspace</code><br> @return [Hash] A hash that contains the following:<br>　　‘result’ [String] A message that says ‘success’.<br>　　‘deleted’ [Array<hash>] Each hash in the array contains the following:<br>　　　　‘address’ [String] Host address.<br>　　　　‘port’ [Fixnum] Port.<br>　　　　‘proto’ [String] Protocol.<br>　　　　‘name’ [String] Vulnerability name.<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;db.del_vuln&#39;, {:host=&gt;ip, :port=&gt;445, :proto=&gt;&#39;tcp&#39;})</code></hash></p>
+<h2 id="-44"><a href="#-44" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="del\_note">rpc.call(‘db.del_note’, opts)</h3>Deletes notes.<p></p>
+</blockquote>
+<p> @param [Hash] xopts Filters to narrow down which notes to delete.<br> @option xopts [String] :workspace Workspace name.<br> @option xopts [String] :host Host address.<br> @option xopts [String] :address Same as :host.<br> @option xopts [Array] :addresses Same as :address.<br> @option xopts [Fixnum] :port Port.<br> @option xopts [String] :proto Protocol.<br> @option xopts [String] :ntype Note type.<br> @raise [Msf::RPC::ServerException] You might get one of these errors:<br>　　<code>500 ActiveRecord::ConnectionNotEstablished. Try: rpc.call(&#39;console.create&#39;)</code><br>　　<code>500 Database not loaded. Try: rpc.call(&#39;console.create&#39;)</code><br>　　<code>500 Invalid workspace</code><br> @return [Hash] A hash that contains the following:<br>　　‘result’ [String] A message that says ‘success’.<br>　　‘deleted’ [Array<hash>] Each hash in the array contains the following:<br>　　　　‘address’ [String] Host address.<br>　　　　‘port’ [Fixnum] Port.<br>　　　　‘proto’ [String] Protocol.<br>　　　　‘ntype’ [String] Note type.<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;db.del_note&#39;, {:workspace=&gt;&#39;default&#39;, :host=&gt;ip, :port=&gt;443, :proto=&gt;&#39;tcp&#39;})</code></hash></p>
+<h2 id="-45"><a href="#-45" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="del\_service">rpc.call(‘db.del_service’, opts)</h3>Deletes services.<p></p>
+</blockquote>
+<p> @param [Hash] xopts Filters to narrow down which services to delete.<br> @option xopts [String] :workspace Workspace name.<br> @option xopts [String] :host Host address.<br> @option xopts [String] :address Same as :host.<br> @option xopts [Array] :addresses Host addresses.<br> @option xopts [Fixnum] :port Port.<br> @option xopts [String] :proto Protocol.<br> @raise [Msf::RPC::ServerException] You might get one of these errors:<br>　　<code>500 ActiveRecord::ConnectionNotEstablished. Try: rpc.call(&#39;console.create&#39;)</code><br>　　<code>500 Database not loaded. Try: rpc.call(&#39;console.create&#39;)</code><br>　　<code>500 Invalid workspace</code><br> @return [Hash] A hash that contains the following:<br>　　‘result’ [String] A message that says ‘success’ or ‘failed’.<br>　　‘deleted’ [Array<hash>] If result says success, then you will get this key, Each hash in the array contains:<br>　　　　‘address’ [String] Host address.<br>　　　　‘port’ [Fixnum] Port.<br>　　　　‘proto’ [String] Protocol.<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;db.del_service&#39;, {:host=&gt;ip})</code></hash></p>
+<h2 id="-46"><a href="#-46" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="del\_host">rpc.call(‘db.del_host’, opts)</h3>Deletes hosts.<p></p>
+</blockquote>
+<p> @param [Hash] xopts Filters to narrow down which hosts to delete.<br> @option xopts [String] :workspace Workspace name.<br> @option xopts [String] :host Host address.<br> @option xopts [String] :address Same as :host.<br> @option xopts [Array] :addresses Host addresses.<br> @raise [Msf::RPC::ServerException] You might get one of these errors:<br>　　<code>500 ActiveRecord::ConnectionNotEstablished. Try: rpc.call(&#39;console.create&#39;)</code><br>　　<code>500 Database not loaded. Try: rpc.call(&#39;console.create&#39;)</code><br>　　<code>500 Invalid workspace</code><br> @return [Hash] A hash that contains the following:<br>　　‘result’ [String] A message that says ‘success’.<br>　　‘deleted’ [Array<string>] All the deleted hosts.<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;db.del_host&#39;, {:host=&gt;ip})</code></string></p>
+<h2 id="-47"><a href="#-47" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="report\_vuln">rpc.call(‘db.report_vuln’, vulInfo)</h3>Reports a vulnerability.<p></p>
+</blockquote>
+<p> @param [Hash] xopts Information about the vulnerability:<br> @option xopts [String] :workspace Workspace name.<br> @option xopts [String] :host The host where this vulnerability resides<br> @option xopts [String] :name The friendly name for this vulnerability (title).<br> @option xopts [String] :info A human readable description of the vuln, free-form text.<br> @option xopts [Array] :refs An array of Ref objects or string names of references.<br> @option xopts [Hash] :details A hash with :key pointed to a find criteria hash and the rest containing VulnDetail fields.<br> @raise [Msf::RPC::ServerException] You might get one of these errors:<br>　　<code>500 ActiveRecord::ConnectionNotEstablished. Try: rpc.call(&#39;console.create&#39;)</code><br>　　<code>500 Database not loaded. Try: rpc.call(&#39;console.create&#39;)</code><br>　　<code>500 Invalid workspace</code><br> @return [Hash] A hash indicating whether the action was successful or not. It contains:<br>　　‘result’ [String] A message that says either ‘success’ or ‘failed’.<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;db.report_vuln&#39;, {:host=&gt;ip, :name=&gt;&#39;file upload&#39;})</code></p>
+<h2 id="-48"><a href="#-48" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="events">rpc.call(‘db.events’, opts)</h3>Returns framework events.<p></p>
+</blockquote>
+<p> @param [Hash] xopts Options:<br> @option xopts [String] :workspace Workspace name.<br> @option xopts [Fixnum] :limit Limit.<br> @option xopts [Fixnum] :offset Offset.<br> @raise [Msf::RPC::ServerException] You might get one of these errors:<br>　　<code>500 ActiveRecord::ConnectionNotEstablished. Try: rpc.call(&#39;console.create&#39;)</code><br>　　<code>500 Database not loaded. Try: rpc.call(&#39;console.create&#39;)</code><br>　　<code>500 Invalid workspace</code><br> @return [Hash] A hash that contains the following:<br>　　‘events’ [Array<hash>] Each hash in the array contains the following:<br>　　　　‘host’ [String] Host address.<br>　　　　‘created_at’ [Fixnum] Creation date.<br>　　　　‘updated_at’ [Fixnum] Last updated at.<br>　　　　‘name’ [String] Event name.<br>　　　　‘critical’ [Boolean] Criticality.<br>　　　　‘username’ [String] Username.<br>　　　　‘info’ [String] Additional information.<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;db.events&#39;, {})</code></hash></p>
+<h2 id="-49"><a href="#-49" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="report\_event">rpc.call(‘db.report_event’, eventInfo)</h3>Reports a framework event.<p></p>
+</blockquote>
+<p> @param [Hash] xopts Information about the event.<br> @option xopts [String] :workspace Workspace name.<br> @option xopts [String] :username Username.<br> @option xopts [String] :host Host address.<br> @raise [Msf::RPC::ServerException] You might get one of these errors:<br>　　<code>500 ActiveRecord::ConnectionNotEstablished. Try: rpc.call(&#39;console.create&#39;)</code><br>　　<code>500 Database not loaded. Try: rpc.call(&#39;console.create&#39;)</code><br>　　<code>500 Invalid workspace</code><br> @return [Hash] A hash indicating the action was successful. It contains:<br>　　‘result’ [String] A message that says ‘success’.<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;db.report_event&#39;, {:username =&gt; username, :host=&gt;ip})</code></p>
+<h2 id="-50"><a href="#-50" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="report\_loot">rpc.call(‘db.report_loot’, itemInfo)</h3>Reports a looted item.<p></p>
+</blockquote>
+<p> @param [Hash] xopts Information about the looted item.<br> @option xopts [String] :workspace Workspace name.<br> @option xopts [String] :host Host address.<br> @option xopts [Fixnum] :port Port. Should match :service.<br> @option xopts [String] :proto Protocol. Should match :service.<br> @option xopts [String] :path Required. Path where the item was looted.<br> @option xopts [String] :type Loot type.<br> @option xopts [String] :ctype Content type.<br> @option xopts [String] :name Name.<br> @option xopts [String] :info Additional information.<br> @option xopts [String] :data Looted data.<br> @option xopts [Mdm::Service] :service Service where the data was found.<br> @raise [Msf::RPC::ServerException] You might get one of these errors:<br>　　<code>500 ActiveRecord::ConnectionNotEstablished. Try: rpc.call(&#39;console.create&#39;)</code><br>　　<code>500 Database not loaded. Try: rpc.call(&#39;console.create&#39;)</code><br>　　<code>500 Invalid workspace</code><br> @return [Hash] A hash that contains the following:<br>　　‘result’ [String] A message that says ‘success’.<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;db.report_loot&#39;, {})</code></p>
+<h2 id="-51"><a href="#-51" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="loots">rpc.call(‘db.loots’, opts)</h3>Returns all the looted items.<p></p>
+</blockquote>
+<p> @param [Hash] xopts Filters that narrow down the search:<br> @option xopts [Hash] :workspace Workspace name.<br> @option xopts [Fixnum] :limit Limit.<br> @option xopts [Fixnum] :offset Offset.<br> @raise [Msf::RPC::ServerException] You might get one of these errors:<br>　　<code>500 ActiveRecord::ConnectionNotEstablished. Try: rpc.call(&#39;console.create&#39;)</code><br>　　<code>500 Database not loaded. Try: rpc.call(&#39;console.create&#39;)</code><br>　　<code>500 Invalid workspace</code><br> @return [Hash] A hash that contains the following:<br>　　‘loots’ [Array<hash>] Each hash in the array contains the following:<br>　　　　‘host’ [String] Host address.<br>　　　　‘service’ [String] Service name or port.<br>　　　　‘ltype’ [String] Loot type.<br>　　　　‘ctype’ [String] Content type.<br>　　　　‘data’ [String] Looted data.<br>　　　　‘created_at’ [Fixnum] Creation date.<br>　　　　‘updated_at’ [Fixnum] Last updated at.<br>　　　　‘name’ [String] Name.<br>　　　　‘info’ [String] Additional information.<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;db.loots&#39;, {})</code></hash></p>
+<h2 id="-52"><a href="#-52" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="import\_data">rpc.call(‘db.import_data’, opts)</h3>Imports file to the database.<p></p>
+</blockquote>
+<p> @param [Hash] xopts A hash that contains:<br> @option xopts [String] :workspace Workspace name.<br> @option xopts [String] ‘data’ Data to import. The method will automatically detect the file type:<br>　　:acunetix_xml<br>　　:amap_log<br>　　:amap_mlog<br>　　:appscan_xml<br>　　:burp_session_xml<br>　　:ci_xml<br>　　:foundstone_xml<br>　　:fusionvm_xml<br>　　:ip360_aspl_xml<br>　　:ip360_xml_v3<br>　　:ip_list<br>　　:libpcap<br>　　:mbsa_xml<br>　　:msf_cred_dump_zip<br>　　:msf_pwdump<br>　　:msf_xml<br>　　:msf_zip<br>　　:nessus_nbe<br>　　:nessus_xml<br>　　:nessus_xml_v2<br>　　:netsparker_xml<br>　　:nexpose_rawxml<br>　　:nexpose_simplexml<br>　　:nikto_xml<br>　　:nmap_xml<br>　　:openvas_new_xml<br>　　:openvas_xml<br>　　:outpost24_xml<br>　　:qualys_asset_xml<br>　　:qualys_scan_xml<br>　　:retina_xml<br>　　:spiceworks_csv<br>　　:wapiti_xml<br> @raise [Msf::RPC::ServerException] You might get one of these errors:<br>　　<code>500 ActiveRecord::ConnectionNotEstablished. Try: rpc.call(&#39;console.create&#39;)</code><br>　　<code>500 Database not loaded. Try: rpc.call(&#39;console.create&#39;)</code><br>　　<code>500 Invalid workspace</code><br> @return [Hash] A hash that indicates the action was successful. It contains the following:<br>　　‘result’ <string> A message that says ‘success’.<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;db.import_data&#39;, {&#39;data&#39;=&gt;nexpose_scan_results})</code></string></p>
+<h2 id="-53"><a href="#-53" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="get\_vuln">rpc.call(‘db.get_vuln’, opts)</h3>Returns vulnerabilities from services or from a host.<p></p>
+</blockquote>
+<p> @param [Hash] xopts Filters to narrow down which vulnerabilities to find.<br> @option xopts [String] :workspace Workspace name.<br> @option xopts [String] :proto Protocol.<br> @option xopts [Fixnum] :port Port.<br> @raise [Msf::RPC::ServerException] You might get one of these errors:<br>　　<code>500 ActiveRecord::ConnectionNotEstablished. Try: rpc.call(&#39;console.create&#39;)</code><br>　　<code>500 Database not loaded. Try: rpc.call(&#39;console.create&#39;)</code><br>　　<code>500 Invalid workspace</code><br> @return [Hash] A hash that contains the following:<br>　　‘vuln’ [Array<hash>] Each hash in the array contains the following:<br>　　　　‘host’ [String] Host address.<br>　　　　‘port’ [Fixnum] Port.<br>　　　　‘proto’ [String] Protocol.<br>　　　　‘created_at’ [Fixnum] Creation date.<br>　　　　‘updated_at’ [Fixnum] Last updated at.<br>　　　　‘name’ [String] Vulnerability name.<br>　　　　‘info’ [String] Additional information.<br>　　　　‘refs’ [Array<string>] Reference names.<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;db.get_vuln&#39;, {:proto=&gt;&#39;tcp&#39;})</code></string></hash></p>
+<h2 id="-54"><a href="#-54" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="clients">rpc.call(‘db.clients’, opts)</h3>Returns browser clients information.<p></p>
+</blockquote>
+<p> @param [Hash] xopts Filters that narrow down the search.<br> @option xopts [String] :ua_name User-Agent name.<br> @option xopts [String] :ua_ver Browser version.<br> @option xopts [Array] :addresses Addresses.<br> @raise [Msf::RPC::ServerException] You might get one of these errors:<br>　　<code>500 ActiveRecord::ConnectionNotEstablished. Try: rpc.call(&#39;console.create&#39;)</code><br>　　<code>500 Database not loaded. Try: rpc.call(&#39;console.create&#39;)</code><br>　　<code>500 Invalid workspace</code><br> @return [Hash] A hash that contains the following:<br>　　‘clients’ [Array<hash>] Each hash in the array that contains the following:<br>　　　　‘host’ [String] Host address.<br>　　　　‘ua_string’ [String] User-agent string.<br>　　　　‘ua_name’ [String] Browser name.<br>　　　　‘ua_ver’ [String] Browser version.<br>　　　　‘created_at’ [Fixnum] Creation date.<br>　　　　‘updated_at’ [Fixnum] Last updated at.<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;db.clients&#39;, {})</code></hash></p>
+<h2 id="-55"><a href="#-55" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="del\_client">rpc.call(‘db.del_client’, opts)</h3>Deletes browser information from a client.<p></p>
+</blockquote>
+<p> @param [Hash] xopts Filters that narrow down what to delete.<br> @option xopts [String] :workspace Workspace name.<br> @option xopts [String] :host Host address.<br> @option xopts [String] :address Same as :host.<br> @option xopts [Array] :addresses Same as :address.<br> @option xopts [String] :ua_name Browser name.<br> @option xopts [String] :ua_ver Browser version.<br> @raise [Msf::RPC::ServerException] You might get one of these errors:<br>　　<code>500 ActiveRecord::ConnectionNotEstablished. Try: rpc.call(&#39;console.create&#39;)</code><br>　　<code>500 Database not loaded. Try: rpc.call(&#39;console.create&#39;)</code><br>　　<code>500 Invalid workspace</code><br> @return [Hash] A hash that contains the following:<br>　　‘result’ [String] A message that says ‘success’.<br>　　‘deleted’ [Array<hash>] Each hash in the array contains the following:<br>　　　　‘address’ [String] Host address.<br>　　　　‘ua_string’ [String] User-Agent string.<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;db.del_client&#39;, opts)</code></hash></p>
+<h2 id="-56"><a href="#-56" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="driver">rpc.call(‘db.driver’, name)</h3>Sets the driver for the database or returns the current one.<p></p>
+</blockquote>
+<p> @param [Hash] xopts Options:<br> @option [String] :workspace Workspace name.<br> @option [String] :driver Driver name. For example: ‘postgresql’. If this option is not set, then the method returns the current one.<br> @return [Hash] A hash that contains:<br>　　‘result’ [String] Indiciating whether we’ve successfully set the driver or not.<br>　　‘driver’ [String] If the :driver option isn’t set, then this returns the current one.<br> @example Here is how you would use this from the client:<br>　　Sets a driver<br>　　<code>rpc.call(&#39;db.driver&#39;, {:driver=&gt;new_driver})</code><br>　　Returns the current driver<br>　　<code>rpc.call(&#39;db.driver&#39;, {})</code></p>
+<h2 id="-57"><a href="#-57" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="connect">rpc.call(‘db.connect’, driverName)</h3>Connects to the database.<p></p>
+</blockquote>
+<p> @param [Hash] xopts Options:<br> @option xopts [String] :driver Driver name. For example: ‘postgresql’.<br> @return [Hash] A hash that indicates whether the action was successful or not.<br>　　‘result’ [String] A message that says either ‘success’ or ‘failed’.<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;db.connect&#39;, {:driver=&gt;&#39;postgresql&#39;})</code></p>
+<h2 id="-58"><a href="#-58" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="status">rpc.call(‘db.status’)</h3>Returns the database status.<p></p>
+</blockquote>
+<p> @raise [Msf::RPC::ServerException] You might get one of these errors:<br>　　<code>500 ActiveRecord::ConnectionNotEstablished. Try: rpc.call(&#39;console.create&#39;)</code><br>　　<code>500 Database not loaded. Try: rpc.call(&#39;console.create&#39;)</code><br> @return [Hash] A hash that contains the following keys:<br>　　‘driver’ [String] Name of the database driver.<br>　　‘db’ [String] Name of the database.<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;db.status&#39;)</code></p>
+<h2 id="-59"><a href="#-59" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="disconnect">rpc.call(‘db.disconnect’)</h3>Disconnects the database.<p></p>
+</blockquote>
+<p> @return [Hash] A hash that indicates whether the action was successful or not. It contains:<br>　　‘result’ [String] A message that says either ‘success’ or ‘failed’.<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;db.disconnect&#39;)</code></p>
+<h1><b id="job">job</b></h1>
+
+<hr>
+<p>job部分是与任务相关的API，执行对任务的开启与停止或查询当前任务信息。<br><br><a href="#list">job.list</a><br><a href="#stop">job.stop</a><br><a href="#info">job.info</a><br><br></p>
+<blockquote>
+<p></p><h3 id="list">rpc.call(‘job.list’)</h3>Returns a list of jobs.<p></p>
+</blockquote>
+<p> @return [Hash] A list of jobs (IDs and names). Each key is the job ID, and each value is the job name.<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;job.list&#39;)</code><br> This will return (‘0’ is the job ID):<br>　　<code>{&quot;0&quot;=&gt;&quot;Exploit: windows/browser/ms14_064_ole_code_execution&quot;</code></p>
+<h2 id="-60"><a href="#-60" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="stop">rpc.call(‘job.stop’, id)</h3>Stops a job.<p></p>
+</blockquote>
+<p> @param [Fixnum] jid Job ID.<br> @raise [Msf::RPC::Exception] A 500 response indicating an invalid job ID was given.<br> @return [Hash] A hash indicating the action was successful. It contains the following key:<br>　　‘result’ [String] A successful message: ‘success’<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;job.stop&#39;, 0)</code></p>
+<h2 id="-61"><a href="#-61" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="info">rpc.call(‘job.info’, id)</h3>Returns information about a job.<p></p>
+</blockquote>
+<p> @param [Fixnum] jid Job ID.<br> @raise [Msf::RPC::Exception] A 500 response indicating an invalid job ID was given.<br> @return [Hash] A hash that contains information about the job, such as the following (and maybe more):<br>　　‘jid’ [Fixnum] The Job ID.<br>　　‘name’ [String] The name of the job.<br>　　‘start_time’ [Fixnum] The start time.<br>　　‘datastore’ [Hash] Datastore options for the module.<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;job.info&#39;, 0)</code></p>
+<h1><b id="module">module</b></h1>
+
+<hr>
+<p>module部分是与metasploit内部模块相关的API，可以对各模块信息进行查询与配置。<br><br><a href="#exploits">module.exploits</a><br><a href="#auxiliary">module.auxiliary</a><br><a href="#payloads">module.payloads</a><br><a href="#encoders">module.encoders</a><br><a href="#nops">module.nops</a><br><a href="#post">module.post</a><br><a href="#info">module.info</a><br><a href="#compatible\_payloads">module.compatible_payloads</a><br><a href="#compatible\_sessions">module.compatible_sessions</a><br><a href="#target\_compatible\_payloads">module.target_compatible_payloads</a><br><a href="#options">module.options</a><br><a href="#execute">module.execute</a><br><a href="#encode\_formats">module.encode_formats</a><br><br></p>
+<blockquote>
+<p></p><h3 id="exploits">rpc.call(‘module.exploits’)</h3>Returns a list of exploit names. The ‘exploit/‘ prefix will not be included.<p></p>
+</blockquote>
+<p> @return [Hash] A list of exploit names. It contains the following key:<br>　　‘modules’ [Array<string>] Exploit names, for example: [‘windows/wins/ms04_045_wins’]<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;module.exploits&#39;)</code></string></p>
+<h2 id="-62"><a href="#-62" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="auxiliary">rpc.call(‘module.auxiliary’)</h3>Returns a list of auxiliary module names. The ‘auxiliary/‘ prefix will not be included.<p></p>
+</blockquote>
+<p> @return [Hash] A list of auxiliary module names. It contains the following key:<br>　　‘modules’ [Array<string>] Auxiliary module names, for example: [‘vsploit/pii/web_pii’]<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;module.auxiliary&#39;)</code></string></p>
+<h2 id="-63"><a href="#-63" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="payloads">rpc.call(‘module.payloads’)</h3>Returns a list of payload module names. The ‘payload/‘ prefix will not be included.<p></p>
+</blockquote>
+<p> @return [Hash] A list of payload module names. It contains the following key:<br>　　‘modules’ [Array<string>] Payload module names, for example: [‘windows/x64/shell_reverse_tcp’]<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;module.payloads&#39;)</code></string></p>
+<h2 id="-64"><a href="#-64" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="encoders">rpc.call(‘module.encoders’)</h3>Returns a list of encoder module names. The ‘encoder/‘ prefix will not be included.<p></p>
+</blockquote>
+<p> @return [Hash] A list of encoder module names. It contains the following key:<br>　　‘modules’ [Array<string>] Encoder module names, for example: [‘x86/unicode_upper’]<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;module.encoders&#39;)</code></string></p>
+<h2 id="-65"><a href="#-65" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="nops">rpc.call(‘module.nops’)</h3>Returns a list of NOP module names. The ‘nop/‘ prefix will not be included.<p></p>
+</blockquote>
+<p> @return [Hash] A list of NOP module names. It contains the following key:<br>　　‘modules’ [Array<string>] NOP module names, for example: [‘x86/single_byte’]<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;module.nops&#39;)</code></string></p>
+<h2 id="-66"><a href="#-66" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="post">rpc.call(‘module.post’)</h3>Returns a list of post module names. The ‘post/‘ prefix will not be included.<p></p>
+</blockquote>
+<p> @return [Hash] A list of post module names. It contains the following key:<br>　　‘modules’ [Array<string>] Post module names, for example: [‘windows/wlan/wlan_profile’]<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;module.post&#39;)</code></string></p>
+<h2 id="-67"><a href="#-67" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="info">rpc.call(‘module.info’, ModuleType, ModuleName)</h3>Returns the metadata for a module.<p></p>
+</blockquote>
+<p> @param [String] mtype Module type. Supported types include (case-sensitive):<br>　　exploit<br>　　auxiliary<br>　　post<br>　　nop<br>　　payload<br> @param [String] mname Module name. For example: ‘windows/wlan/wlan_profile’.<br> @raise [Msf::RPC::Exception] Module not found (either the wrong type or name).<br> @return [Hash] The module’s metadata. The exact keys you will get depends on the module.<br> @example Here is how you would use this from the client:<br> 　　This gives us the metadata of ms08_067_netapi<br>　　<code>rpc.call(&#39;module.info&#39;, &#39;exploit&#39;, &#39;windows/smb/ms08_067_netapi&#39;)</code></p>
+<h2 id="-68"><a href="#-68" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="compatible\_payloads">rpc.call(‘module.compatible_payloads’, ModuleName)</h3>Returns the compatible payloads for a specific exploit.<p></p>
+</blockquote>
+<p> @param [String] mname Exploit module name. For example: ‘windows/smb/ms08_067_netapi’.<br> @raise [Msf::RPC::Exception] Module not found (wrong name).<br> @return [Hash] The exploit’s compatible payloads. It contains the following key:<br>　　‘payloads’ [Array<string>] A list of payloads. For example: [‘generic/custom’]<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;module.compatible_payloads&#39;, &#39;windows/smb/ms08_067_netapi&#39;)</code></string></p>
+<h2 id="-69"><a href="#-69" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="compatible\_sessions">rpc.call(‘module.compatible_sessions’, ModuleName)</h3>Returns the compatible sessions for a specific post module.<p></p>
+</blockquote>
+<p> @param [String] mname Post module name. For example: ‘windows/wlan/wlan_profile’.<br> @raise [Msf::RPC::Exception] Module not found (wrong name).<br> @return [Hash] The post module’s compatible sessions. It contains the following key:<br>　　‘sessions’ [Array<fixnum>] A list of session IDs.<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;module.compatible_sessions&#39;, &#39;windows/wlan/wlan_profile&#39;)</code></fixnum></p>
+<h2 id="-70"><a href="#-70" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="target\_compatible\_payloads">rpc.call(‘module.target_compatible_payloads’, ModuleName, target)</h3>Returns the compatible target-specific payloads for an exploit.<p></p>
+</blockquote>
+<p> @param [String] mname Exploit module name. For example: ‘windows/smb/ms08_067_netapi’<br> @param [Fixnum] target A specific target the exploit module provides.<br> @raise [Msf::RPC::Exception] Module not found (wrong name).<br> @return [Hash] The exploit’s target-specific payloads. It contains the following key:<br>　　‘payloads’ [Array<string>] A list of payloads.<br> @example Here is how you would use this from the client:<br>　　Find all the compatible payloads for target 1 (Windows 2000 Universal)<br>　　<code>rpc.call(&#39;module.target_compatible_payloads&#39;, &#39;windows/smb/ms08_067_netapi&#39;, 1)</code></string></p>
+<h2 id="-71"><a href="#-71" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="options">rpc.call(‘module.options’, ModuleType, ModuleName)</h3>Returns the module’s datastore options.<p></p>
+</blockquote>
+<p> @param [String] mtype Module type. Supported types include (case-sensitive):<br>　　exploit<br>　　auxiliary<br>　　post<br>　　nop<br>　　payload<br> @param [String] mname Module name. For example: ‘windows/wlan/wlan_profile’.<br> @raise [Msf::RPC::Exception] Module not found (either wrong type or name).<br> @return [Hash] The module’s datastore options. This will actually give you each option’s data type, requirement state, basic/advanced type, description, default value, etc.<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;module.options&#39;, &#39;exploit&#39;, &#39;windows/smb/ms08_067_netapi&#39;)</code></p>
+<h2 id="-72"><a href="#-72" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="execute">rpc.call(‘module.execute’, ModuleType, ModuleName, opts)</h3>Executes a module.<p></p>
+</blockquote>
+<p> @param [String] mtype Module type. Supported types include (case-sensitive):<br>　　exploit<br>　　auxiliary<br>　　post<br>　　payload<br> @param [String] mname Module name. For example: ‘windows/smb/ms08_067_netapi’.<br> @param [Hash] opts Options for the module (such as datastore options).<br> @raise [Msf::RPC::Exception] Module not found (either wrong type or name).<br> @note If you get exploit sessions via the RPC service, know that only the RPC clients have access to those sessions. Framework msfconsole will not be able to use or even see these sessions, because it belongs to a different framework instance. However, this restriction does not apply to the database.<br> @return [Hash] It contains the following keys:<br>　　‘job_id’ [Fixnum] Job ID.<br>　　‘uuid’ [String] UUID.<br> @example Here is how you would use this from the client:<br> Starts a windows/meterpreter/reverse_tcp on port 6669   </p>
+<pre><code>opts = {&apos;LHOST&apos; =&gt; &apos;0.0.0.0&apos;, &apos;LPORT&apos;=&gt;6669, &apos;PAYLOAD&apos;=&gt;&apos;windows/meterpreter/reverse_tcp&apos;}
+rpc.call(&apos;module.execute&apos;, &apos;exploit&apos;, &apos;multi/handler&apos;, opts)
+</code></pre><h2 id="-73"><a href="#-73" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="encode\_formats">rpc.call(‘module.encode_formats’)</h3>Returns a list of encoding formats.<p></p>
+</blockquote>
+<p> @return [Array<string>] Encoding foramts.<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;module.encode_formats&#39;)</code></string></p>
+<h1><b id="plugin">plugin</b></h1>
+
+<hr>
+<p>plugin部分是与插件相关的API，可以对相关插件进行管理。<br><br><a href="#load">plugin.load</a><br><a href="#unload">plugin.unload</a><br><a href="#loaded">plugin.loaded</a><br><br></p>
+<blockquote>
+<p></p><h3 id="load">rpc.call(‘plugin.load’, filename)</h3>Loads a plugin.<p></p>
+</blockquote>
+<p> @param [String] path The plugin filename (without the extension). It will try to find your plugin in either one of these directories:<br>　　msf/plugins/<br>　　~/.msf4/plugins/<br> @param [Hash] xopts Options to pass to the plugin.<br> @return [Hash] A hash indicating whether the action was successful or not. It contains the following key:<br>　　‘result’ [String] A value that either says ‘success’ or ‘failure’.<br> @example Here is how you would use this from the client:<br> 　　Load the nexpose plugin<br>　　<code>rpc.call(&#39;plugin.load&#39;, &#39;nexpose&#39;)</code></p>
+<h2 id="-74"><a href="#-74" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="unload">rpc.call(‘plugin.unload’, filename)</h3>Unloads a plugin.<p></p>
+</blockquote>
+<p> @param [String] name The plugin filename (without the extension). For example: ‘nexpose’.<br> @return [Hash] A hash indicating whether the action was successful or not. It contains the following key:<br>　　‘result’ [String] A value that either says ‘success’ or ‘failure’.<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;plugin.unload&#39;, &#39;nexpose&#39;)</code></p>
+<h2 id="-75"><a href="#-75" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="loaded">rpc.call(‘plugin.loaded’)</h3>Returns a list of loaded plugins.<p></p>
+</blockquote>
+<p> @return [Hash] All the plugins loaded. It contains the following key:<br>　　‘plugins’ [Array<string>] A list of plugin names.<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;plugin.loaded&#39;)</code></string></p>
+<h1><b id="session">session</b></h1>
+
+<hr>
+<p>session部分是与会话相关的API，可以对会话信息进行管理。<br><br><a href="#list">session.list</a><br><a href="#shell\_read">session.shell_read</a><br><a href="#shell\_write">session.shell_write</a><br><a href="#shell\_upgrade">session.shell_upgrade</a><br><a href="#meterpreter\_read">session.meterpreter_read</a><br><a href="#ring\_read">session.ring_read</a><br><a href="#ring\_put">session.ring_put</a><br><a href="#ring\_last">session.ring_last</a><br><a href="#ring\_clear">session.ring_clear</a><br><a href="#meterpreter\_write">session.meterpreter_write</a><br><a href="#meterpreter\_session\_detach">session.meterpreter_session_detach</a><br><a href="#meterpreter\_session\_kill">session.meterpreter_session_kill</a><br><a href="#meterpreter\_tabs">session.meterpreter_tabs</a><br><a href="#meterpreter\_run\_single">session.meterpreter_run_single</a><br><a href="#meterpreter\_script">session.meterpreter_script</a><br><a href="#meterpreter\_directory\_separator">session.meterpreter_directory_separator</a><br><a href="#compatible\_modules">session.compatible_modules</a><br><br></p>
+<blockquote>
+<p></p><h3 id="list">rpc.call(‘session.list’)</h3>Returns a list of sessions that belong to the framework instance used by the RPC service.<p></p>
+</blockquote>
+<p> @return [Hash] Information about sessions. Each key is the session ID, and each value is a hash that contains the following:<br>　　‘type’ [String] Payload type. Example: meterpreter.<br>　　‘tunnel_local’ [String] Tunnel (where the malicious traffic comes from).<br>　　‘tunnel_peer’ [String] Tunnel (local).<br>　　‘via_exploit’ [String] Name of the exploit used by the session.<br>　　‘desc’ [String] Session description.<br>　　‘info’ [String] Session info (most likely the target’s computer name).<br>　　‘workspace’ [String] Name of the workspace.<br>　　‘session_host’ [String] Session host.<br>　　‘session_port’ [Fixnum] Session port.<br>　　‘target_host’ [String] Target host.<br>　　‘username’ [String] Username.<br>　　‘uuid’ [String] UUID.<br>　　‘exploit_uuid’ [String] Exploit’s UUID.<br>　　‘routes’ [String] Routes.<br>　　‘platform’ [String] Platform.<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;session.list&#39;)</code></p>
+<h2 id="-76"><a href="#-76" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="shell\_read">rpc.call(‘session.shell_read’, id)</h3>Reads the output of a shell session (such as a command output).<p></p>
+</blockquote>
+<p> @note Shell read is now a positon-aware reader of the shell’s associated ring buffer. For more direct control of the pointer into a ring buffer, a client can instead use ring_read, and note the returned sequence number on their own (making multiple views into the same session possible, regardless of position in the stream)<br> @see #rpc_ring_read<br> @param [Fixnum] sid Session ID.<br> @param [Fixnum] ptr Pointer.<br> @raise [Msf::RPC::Exception] An error that could be one of these:<br>　　<code>500 Session ID is unknown</code><br>　　<code>500 Invalid session type</code><br>　　<code>500 Session is disconnected</code><br> @return [Hash] It contains the following keys:<br>　　‘seq’ [String] Sequence.<br>　　‘data’ [String] Read data.<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;session.shell_read&#39;, 2)</code></p>
+<h2 id="-77"><a href="#-77" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="shell\_write">rpc.call(‘session.shell_write’, id, data)</h3>You may want to use #rpc_shell_read to retrieve the output.<p></p>
+</blockquote>
+<p> @note shell_write is a wrapper of #rpc_ring_put.<br> @see #rpc_ring_put<br> @raise [Msf::RPC::Exception] An error that could be one of these:<br>　　<code>500 Session ID is unknown</code><br>　　<code>500 Invalid session type</code><br>　　<code>500 Session is disconnected</code><br> @param [Fixnum] sid Session ID.<br> @param [String] data The data to write.<br> @return [Hash]<br>　　‘write_count’ [Fixnum] Number of bytes written.<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;session.shell_write&#39;, 2, &quot;DATA&quot;)</code></p>
+<h2 id="-78"><a href="#-78" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="shell\_upgrade">rpc.call(‘session.shell_upgrade’, id, LHOST, LPORT)</h3>Upgrades a shell to a meterpreter.<p></p>
+</blockquote>
+<p> @note This uses post/multi/manage/shell_to_meterpreter.<br> @param [Fixnum] sid Session ID.<br> @param [String] lhost Local host.<br> @param [Fixnum] lport Local port.<br> @return [Hash] A hash indicating the actioin was successful. It contains the following key:<br>　　‘result’ [String] A message that says ‘success’<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;session.shell_upgrade&#39;, 2, payload_lhost, payload_lport)</code></p>
+<h2 id="-79"><a href="#-79" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="meterpreter\_read">rpc.call(‘session.meterpreter_read’, id)</h3>Reads the output from a meterpreter session (such as a command output).<p></p>
+</blockquote>
+<p> @note Multiple concurrent callers writing and reading the same Meterperter session can lead to a conflict, where one caller gets the others output and vice versa. Concurrent access to a Meterpreter session is best handled by post modules.<br> @param [Fixnum] sid Session ID.<br> @raise [Msf::RPC::Exception] An error that could be one of these:<br>　　<code>500 Session ID is unknown</code><br>　　<code>500 Invalid session type</code><br> @return [Hash] It contains the following key:<br>　　‘data’ [String] Data read.<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;session.meterpreter_read&#39;, 2)</code></p>
+<h2 id="-80"><a href="#-80" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="ring\_read">rpc.call(‘session.ring_read’, id)</h3>Reads from a session (such as a command output).<p></p>
+</blockquote>
+<p> @param [Fixnum] sid Session ID.<br> @param [Fixnum] ptr Pointer.<br> @raise [Msf::RPC::Exception] An error that could be one of these:<br>　　<code>500 Session ID is unknown</code><br>　　<code>500 Invalid session type</code><br>　　<code>500 Session is disconnected</code><br> @return [Hash] It contains the following key:<br>　　‘seq’ [String] Sequence.<br>　　‘data’ [String] Read data.<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;session.ring_read&#39;, 2)</code></p>
+<h2 id="-81"><a href="#-81" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="ring\_put">rpc.call(‘session.ring_put’, id, data)</h3>Sends an input to a session (such as a command).<p></p>
+</blockquote>
+<p> @param [Fixnum] sid Session ID.<br> @param [String] data Data to write.<br> @raise [Msf::RPC::Exception] An error that could be one of these:<br>　　<code>500 Session ID is unknown</code><br>　　<code>500 Invalid session type</code><br>　　<code>500 Session is disconnected</code><br> @return [Hash] It contains the following key:<br>　　‘write_count’ [String] Number of bytes written.<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;session.ring_put&#39;, 2, &quot;DATA&quot;)</code></p>
+<h2 id="-82"><a href="#-82" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="ring\_last">rpc.call(‘session.ring_last’, id)</h3>Returns the last sequence (last issued ReadPointer) for a shell session.<p></p>
+</blockquote>
+<p> @param [Fixnum] sid Session ID.<br> @raise [Msf::RPC::Exception] An error that could be one of these:<br>　　<code>500 Session ID is unknown</code><br>　　<code>500 Invalid session type</code><br> @return [Hash] It contains the following key:<br>　　‘seq’ [String] Sequence.<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;session.ring_last&#39;, 2)</code></p>
+<h2 id="-83"><a href="#-83" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="ring\_clear">rpc.call(‘session.ring_clear’, id)</h3>Clears a shell session. This may be useful to reclaim memory for idle background sessions.<p></p>
+</blockquote>
+<p> @param [Fixnum] sid Session ID.<br> @raise [Msf::RPC::Exception] An error that could be one of these:<br>　　<code>500 Session ID is unknown</code><br>　　<code>500 Invalid session type</code><br> @return [Hash] A hash indicating whether the action was successful or not. It contains:<br>　　‘result’ [String] Either ‘success’ or ‘failure’.<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;session.ring_clear&#39;, 2)</code></p>
+<h2 id="-84"><a href="#-84" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="meterpreter\_write">rpc.call(‘session.meterpreter_write’, id, input)</h3>You may want to use #rpc_meterpreter_read to retrieve the output.<p></p>
+</blockquote>
+<p> @note Multiple concurrent callers writing and reading the same Meterperter session can lead to a conflict, where one caller gets the others output and vice versa. Concurrent access to a Meterpreter session is best handled by post modules.<br> @param [Fixnum] sid Session ID.<br> @param [String] data Input to the meterpreter prompt.<br> @raise [Msf::RPC::Exception] An error that could be one of these:<br>　　<code>500 Session ID is unknown</code><br>　　<code>500 Invalid session type</code><br> @return [Hash] A hash indicating the action was successful or not. It contains the following key:<br>　　‘result’ [String] Either ‘success’ or ‘failure’.<br> @see #rpc_meterpreter_run_single<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;session.meterpreter_write&#39;, 2, &quot;sysinfo&quot;)</code></p>
+<h2 id="-85"><a href="#-85" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="meterpreter\_session\_detach">rpc.call(‘session.meterpreter_session_detach’, id)</h3>Detaches from a meterpreter session. Serves the same purpose as [CTRL]+[Z].<p></p>
+</blockquote>
+<p> @param [Fixnum] sid Session ID.<br> @raise [Msf::RPC::Exception] An error that could be one of these:<br>　　<code>500 Session ID is unknown</code><br>　　<code>500 Invalid session type</code><br> @return [Hash] A hash indicating the action was successful or not. It contains:<br>　　‘result’ [String] Either ‘success’ or ‘failure’.<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;session.meterpreter_session_detach&#39;, 3)</code></p>
+<h2 id="-86"><a href="#-86" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="meterpreter\_session\_kill">rpc.call(‘session.meterpreter_session_kill’, id)</h3>Kills a meterpreter session. Serves the same purpose as [CTRL]+[C].<p></p>
+</blockquote>
+<p> @param [Fixnum] sid Session ID.<br> @raise [Msf::RPC::Exception] An error that could be one of these:<br>　　<code>500 Session ID is unknown</code><br>　　<code>500 Invalid session type</code><br> @return [Hash] A hash indicating the action was successful or not. It contains the following key:<br>　　‘result’ [String] Either ‘success’ or ‘failure’.<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;session.meterpreter_session_kill&#39;, 3)</code></p>
+<h2 id="-87"><a href="#-87" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="meterpreter\_tabs">rpc.call(‘session.meterpreter_tabs’, id, input)</h3>Returns a tab-completed version of your meterpreter prompt input.<p></p>
+</blockquote>
+<p> @param [Fixnum] sid Session ID.<br> @param [String] line Input.<br> @raise [Msf::RPC::Exception] An error that could be one of these:<br>　　<code>500 Session ID is unknown</code><br>　　<code>500 Invalid session type</code><br> @return [Hash] The tab-completed result. It contains the following key:<br>　　‘tabs’ [String] The tab-completed version of your input.<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;session.meterpreter_tabs&#39;, 3, &#39;sysin&#39;)</code><br> This returns:<br>　　<code>{&quot;tabs&quot;=&gt;[&quot;sysinfo&quot;]}</code></p>
+<h2 id="-88"><a href="#-88" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="meterpreter\_run\_single">rpc.call(‘session.meterpreter_run_single’, id, command)</h3>You will want to use the #rpc_meterpreter_read to retrieve the output.<p></p>
+</blockquote>
+<p> @param [Fixnum] sid Session ID.<br> @param [String] data Command.<br> @raise [Msf::RPC::Exception] An error that could be one of these:<br>　　<code>500 Session ID is unknown</code><br>　　<code>500 Invalid session type</code><br> @return [Hash] A hash indicating the action was successful. It contains the following key:<br>　　‘result’ [String] ‘success’<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;session.meterpreter_run_single&#39;, 3, &#39;getpid&#39;)</code></p>
+<h2 id="-89"><a href="#-89" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="meterpreter\_script">rpc.call(‘session.meterpreter_script’, id, scriptName)</h3>Runs a meterpreter script.<p></p>
+</blockquote>
+<p> @deprecated Metasploit no longer maintains or accepts meterpreter scripts. Please try to use post modules instead.<br> @see Msf::RPC::RPC_Module#rpc_execute You should use Msf::RPC::RPC_Module#rpc_execute instead.<br> @param [Fixnum] sid Session ID.<br> @param [String] data Meterpreter script name.<br> @return [Hash] A hash indicating the action was successful. It contains the following key:<br>　　‘result’ [String] ‘success’<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;session.meterpreter_script&#39;, 3, &#39;checkvm&#39;)</code></p>
+<h2 id="-90"><a href="#-90" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="meterpreter\_directory\_separator">rpc.call(‘session.meterpreter_directory_separator’, id)</h3>Returns the separator used by the meterpreter.<p></p>
+</blockquote>
+<p> @param [Fixnum] sid Session ID.<br> @raise [Msf::RPC::Exception] An error that could be one of these:<br>　　<code>500 Session ID is unknown</code><br>　　<code>500 Invalid session type</code><br> @return [Hash] A hash that contains the separator. It contains the following key:<br>　　‘separator’ [String] The separator used by the meterpreter.<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;session.meterpreter_directory_separator&#39;, 3)</code><br> This returns:<br>　　<code>{&quot;separator&quot;=&gt;&quot;\\&quot;}</code></p>
+<h2 id="-91"><a href="#-91" class="headerlink" title="<br/>"></a><br></h2><blockquote>
+<p></p><h3 id="compatible\_modules">rpc.call(‘session.compatible_modules’, id)</h3>Returns all the compatible post modules for this session.<p></p>
+</blockquote>
+<p> @param [Fixnum] sid Session ID.<br> @return [Hash] Post modules. It contains the following key:<br>　　‘modules’ [Array<string>] An array of post module names. Example [‘post/windows/wlan/wlan_profile’]<br> @example Here is how you would use this from the client:<br>　　<code>rpc.call(&#39;session.compatible_modules&#39;, 3)</code></string></p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/api/" rel="tag">#api</a>
+          
+            <a href="/tags/metasploit/" rel="tag">#metasploit</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/01/21/metasploit-python打造批量漏洞检测工具/" rel="next" title="metasploit + python打造批量漏洞检测工具">
+                <i class="fa fa-chevron-left"></i> metasploit + python打造批量漏洞检测工具
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+        </div>
+
+        
+
+
+        
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/01/21/metasploit-API/"
+           data-title="metasploit API" data-url="http://s0m30ne.github.io/2016/01/21/metasploit-API/">
+      </div>
+    
+  </div>
+
+
+      </div>
+
+      
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/default_avatar.jpg" alt="s0m30ne" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">s0m30ne</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">hack | python</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">5</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">4</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">12</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator">
+            <i class="fa fa-angle-double-up"></i>
+          </div>
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">auth</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#login\_noauth"><span class="nav-number">1.0.1.</span> <span class="nav-text">rpc.call(‘auth.login_noauth’, username, password)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#"><span class="nav-number">1.1.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#logout"><span class="nav-number">1.1.1.</span> <span class="nav-text">rpc.call(‘auth.logout’, token)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-1"><span class="nav-number">1.2.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#token\_list"><span class="nav-number">1.2.1.</span> <span class="nav-text">rpc.call(‘auth.token_list’)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-2"><span class="nav-number">1.3.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#token\_add"><span class="nav-number">1.3.1.</span> <span class="nav-text">rpc.call(‘auth.token_add’, token)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-3"><span class="nav-number">1.4.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#token\_generate"><span class="nav-number">1.4.1.</span> <span class="nav-text">rpc.call(‘auth.token_generate’)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-4"><span class="nav-number">1.5.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#token\_remove"><span class="nav-number">1.5.1.</span> <span class="nav-text">rpc.call(‘auth.token_remove’, token)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">2.</span> <span class="nav-text">console</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#create"><span class="nav-number">2.0.1.</span> <span class="nav-text">rpc.call(‘console.create’)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-5"><span class="nav-number">2.1.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#list"><span class="nav-number">2.1.1.</span> <span class="nav-text">rpc.call(‘console.list’)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-6"><span class="nav-number">2.2.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#destroy"><span class="nav-number">2.2.1.</span> <span class="nav-text">rpc.call(‘console.destroy’, id)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-7"><span class="nav-number">2.3.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#read"><span class="nav-number">2.3.1.</span> <span class="nav-text">rpc.call(‘console.read’, id)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-8"><span class="nav-number">2.4.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#write"><span class="nav-number">2.4.1.</span> <span class="nav-text">rpc.call(‘console.write’, id, input)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-9"><span class="nav-number">2.5.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#tabs"><span class="nav-number">2.5.1.</span> <span class="nav-text">rpc.call(‘console.tabs’, id, command)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-10"><span class="nav-number">2.6.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#session\_kill"><span class="nav-number">2.6.1.</span> <span class="nav-text">rpc.call(‘console.session_kill’, id)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-11"><span class="nav-number">2.7.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#session\_detach"><span class="nav-number">2.7.1.</span> <span class="nav-text">rpc.call(‘console.session_detach’, id)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">3.</span> <span class="nav-text">core</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#version"><span class="nav-number">3.0.1.</span> <span class="nav-text">rpc.call(‘core.version’)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-12"><span class="nav-number">3.1.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#stop"><span class="nav-number">3.1.1.</span> <span class="nav-text">rpc.call(‘core.stop’)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-13"><span class="nav-number">3.2.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#getg"><span class="nav-number">3.2.1.</span> <span class="nav-text">rpc.call(‘core.getg’, GlobalSetting)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-14"><span class="nav-number">3.3.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#setg"><span class="nav-number">3.3.1.</span> <span class="nav-text">rpc.call(‘core.setg’, globalOpton, globalOptionValue)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-15"><span class="nav-number">3.4.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#unsetg"><span class="nav-number">3.4.1.</span> <span class="nav-text">rpc.call(‘core.unsetg’, globalOption)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-16"><span class="nav-number">3.5.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#save"><span class="nav-number">3.5.1.</span> <span class="nav-text">rpc.call(‘core.save’)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-17"><span class="nav-number">3.6.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#reload\_modules"><span class="nav-number">3.6.1.</span> <span class="nav-text">rpc.call(‘core.reload_modules’)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-18"><span class="nav-number">3.7.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#add\_module\_path"><span class="nav-number">3.7.1.</span> <span class="nav-text">rpc.call(‘core.add_module_path’, path)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-19"><span class="nav-number">3.8.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#module\_stats"><span class="nav-number">3.8.1.</span> <span class="nav-text">rpc.call(‘core.module_stats’)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-20"><span class="nav-number">3.9.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#thread\_list"><span class="nav-number">3.9.1.</span> <span class="nav-text">rpc.call(‘core.thread_list’)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-21"><span class="nav-number">3.10.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#thread\_kill"><span class="nav-number">3.10.1.</span> <span class="nav-text">rpc.call(‘core.thread_kill’, id)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">4.</span> <span class="nav-text">db</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#create\_cracked\_credential"><span class="nav-number">4.0.1.</span> <span class="nav-text">rpc.call(‘db.create_cracked_credential’, opts)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-22"><span class="nav-number">4.1.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#create\_credential"><span class="nav-number">4.1.1.</span> <span class="nav-text">rpc.call(‘db.create_credential’, opts)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-23"><span class="nav-number">4.2.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#invalidate\_login"><span class="nav-number">4.2.1.</span> <span class="nav-text">rpc.call(‘db.invalidate_login’, opts)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-24"><span class="nav-number">4.3.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#creds"><span class="nav-number">4.3.1.</span> <span class="nav-text">rpc.call(‘db.creds’, opts)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-25"><span class="nav-number">4.4.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#hosts"><span class="nav-number">4.4.1.</span> <span class="nav-text">rpc.call(‘db.hosts’, opts)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-26"><span class="nav-number">4.5.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#services"><span class="nav-number">4.5.1.</span> <span class="nav-text">rpc.call(‘db.services’, opts)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-27"><span class="nav-number">4.6.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#vulns"><span class="nav-number">4.6.1.</span> <span class="nav-text">rpc.call(‘db.vulns’, opts)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-28"><span class="nav-number">4.7.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#workspaces"><span class="nav-number">4.7.1.</span> <span class="nav-text">rpc.call(‘db.workspaces’)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-29"><span class="nav-number">4.8.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#current\_workspace"><span class="nav-number">4.8.1.</span> <span class="nav-text">rpc.call(‘db.current_workspace’)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-30"><span class="nav-number">4.9.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#get\_workspace"><span class="nav-number">4.9.1.</span> <span class="nav-text">rpc.call(‘db.get_workspace’)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-31"><span class="nav-number">4.10.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#set\_workspace"><span class="nav-number">4.10.1.</span> <span class="nav-text">rpc.call(‘db.set_workspace’, workspace)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-32"><span class="nav-number">4.11.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#wspace"><span class="nav-number">4.11.1.</span> <span class="nav-text">rpc.call(‘db.wspace’, workspace)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-33"><span class="nav-number">4.12.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#get\_host"><span class="nav-number">4.12.1.</span> <span class="nav-text">rpc.call(‘db.get_host’, address)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-34"><span class="nav-number">4.13.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#report\_host"><span class="nav-number">4.13.1.</span> <span class="nav-text">rpc.call(‘db.report_host’, hostInfo)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-35"><span class="nav-number">4.14.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#report\_service"><span class="nav-number">4.14.1.</span> <span class="nav-text">rpc.call(‘db.report_service’, serviceInfo)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-36"><span class="nav-number">4.15.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#get\_service"><span class="nav-number">4.15.1.</span> <span class="nav-text">rpc.call(‘db.get_service’, search)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-37"><span class="nav-number">4.16.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#get\_note"><span class="nav-number">4.16.1.</span> <span class="nav-text">rpc.call(‘db.get_note’, opts)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-38"><span class="nav-number">4.17.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#get\_client"><span class="nav-number">4.17.1.</span> <span class="nav-text">rpc.call(‘db.get_client’, opts)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-39"><span class="nav-number">4.18.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#report\_client"><span class="nav-number">4.18.1.</span> <span class="nav-text">rpc.call(‘db.report_client’, clientInfo)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-40"><span class="nav-number">4.19.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#report\_note"><span class="nav-number">4.19.1.</span> <span class="nav-text">rpc.call(‘db.report_note’, noteInfo)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-41"><span class="nav-number">4.20.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#notes"><span class="nav-number">4.20.1.</span> <span class="nav-text">rpc.call(‘db.notes’, search)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-42"><span class="nav-number">4.21.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#get\_ref"><span class="nav-number">4.21.1.</span> <span class="nav-text">rpc.call(‘db.get_ref’, refName)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-43"><span class="nav-number">4.22.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#del\_vuln"><span class="nav-number">4.22.1.</span> <span class="nav-text">rpc.call(‘db.del_vuln’, opts)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-44"><span class="nav-number">4.23.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#del\_note"><span class="nav-number">4.23.1.</span> <span class="nav-text">rpc.call(‘db.del_note’, opts)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-45"><span class="nav-number">4.24.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#del\_service"><span class="nav-number">4.24.1.</span> <span class="nav-text">rpc.call(‘db.del_service’, opts)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-46"><span class="nav-number">4.25.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#del\_host"><span class="nav-number">4.25.1.</span> <span class="nav-text">rpc.call(‘db.del_host’, opts)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-47"><span class="nav-number">4.26.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#report\_vuln"><span class="nav-number">4.26.1.</span> <span class="nav-text">rpc.call(‘db.report_vuln’, vulInfo)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-48"><span class="nav-number">4.27.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#events"><span class="nav-number">4.27.1.</span> <span class="nav-text">rpc.call(‘db.events’, opts)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-49"><span class="nav-number">4.28.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#report\_event"><span class="nav-number">4.28.1.</span> <span class="nav-text">rpc.call(‘db.report_event’, eventInfo)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-50"><span class="nav-number">4.29.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#report\_loot"><span class="nav-number">4.29.1.</span> <span class="nav-text">rpc.call(‘db.report_loot’, itemInfo)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-51"><span class="nav-number">4.30.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#loots"><span class="nav-number">4.30.1.</span> <span class="nav-text">rpc.call(‘db.loots’, opts)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-52"><span class="nav-number">4.31.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#import\_data"><span class="nav-number">4.31.1.</span> <span class="nav-text">rpc.call(‘db.import_data’, opts)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-53"><span class="nav-number">4.32.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#get\_vuln"><span class="nav-number">4.32.1.</span> <span class="nav-text">rpc.call(‘db.get_vuln’, opts)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-54"><span class="nav-number">4.33.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#clients"><span class="nav-number">4.33.1.</span> <span class="nav-text">rpc.call(‘db.clients’, opts)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-55"><span class="nav-number">4.34.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#del\_client"><span class="nav-number">4.34.1.</span> <span class="nav-text">rpc.call(‘db.del_client’, opts)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-56"><span class="nav-number">4.35.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#driver"><span class="nav-number">4.35.1.</span> <span class="nav-text">rpc.call(‘db.driver’, name)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-57"><span class="nav-number">4.36.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#connect"><span class="nav-number">4.36.1.</span> <span class="nav-text">rpc.call(‘db.connect’, driverName)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-58"><span class="nav-number">4.37.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#status"><span class="nav-number">4.37.1.</span> <span class="nav-text">rpc.call(‘db.status’)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-59"><span class="nav-number">4.38.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#disconnect"><span class="nav-number">4.38.1.</span> <span class="nav-text">rpc.call(‘db.disconnect’)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">5.</span> <span class="nav-text">job</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#list"><span class="nav-number">5.0.1.</span> <span class="nav-text">rpc.call(‘job.list’)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-60"><span class="nav-number">5.1.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#stop"><span class="nav-number">5.1.1.</span> <span class="nav-text">rpc.call(‘job.stop’, id)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-61"><span class="nav-number">5.2.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#info"><span class="nav-number">5.2.1.</span> <span class="nav-text">rpc.call(‘job.info’, id)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">6.</span> <span class="nav-text">module</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#exploits"><span class="nav-number">6.0.1.</span> <span class="nav-text">rpc.call(‘module.exploits’)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-62"><span class="nav-number">6.1.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#auxiliary"><span class="nav-number">6.1.1.</span> <span class="nav-text">rpc.call(‘module.auxiliary’)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-63"><span class="nav-number">6.2.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#payloads"><span class="nav-number">6.2.1.</span> <span class="nav-text">rpc.call(‘module.payloads’)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-64"><span class="nav-number">6.3.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#encoders"><span class="nav-number">6.3.1.</span> <span class="nav-text">rpc.call(‘module.encoders’)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-65"><span class="nav-number">6.4.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#nops"><span class="nav-number">6.4.1.</span> <span class="nav-text">rpc.call(‘module.nops’)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-66"><span class="nav-number">6.5.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#post"><span class="nav-number">6.5.1.</span> <span class="nav-text">rpc.call(‘module.post’)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-67"><span class="nav-number">6.6.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#info"><span class="nav-number">6.6.1.</span> <span class="nav-text">rpc.call(‘module.info’, ModuleType, ModuleName)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-68"><span class="nav-number">6.7.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#compatible\_payloads"><span class="nav-number">6.7.1.</span> <span class="nav-text">rpc.call(‘module.compatible_payloads’, ModuleName)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-69"><span class="nav-number">6.8.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#compatible\_sessions"><span class="nav-number">6.8.1.</span> <span class="nav-text">rpc.call(‘module.compatible_sessions’, ModuleName)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-70"><span class="nav-number">6.9.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#target\_compatible\_payloads"><span class="nav-number">6.9.1.</span> <span class="nav-text">rpc.call(‘module.target_compatible_payloads’, ModuleName, target)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-71"><span class="nav-number">6.10.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#options"><span class="nav-number">6.10.1.</span> <span class="nav-text">rpc.call(‘module.options’, ModuleType, ModuleName)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-72"><span class="nav-number">6.11.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#execute"><span class="nav-number">6.11.1.</span> <span class="nav-text">rpc.call(‘module.execute’, ModuleType, ModuleName, opts)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-73"><span class="nav-number">6.12.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#encode\_formats"><span class="nav-number">6.12.1.</span> <span class="nav-text">rpc.call(‘module.encode_formats’)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">7.</span> <span class="nav-text">plugin</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#load"><span class="nav-number">7.0.1.</span> <span class="nav-text">rpc.call(‘plugin.load’, filename)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-74"><span class="nav-number">7.1.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#unload"><span class="nav-number">7.1.1.</span> <span class="nav-text">rpc.call(‘plugin.unload’, filename)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-75"><span class="nav-number">7.2.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#loaded"><span class="nav-number">7.2.1.</span> <span class="nav-text">rpc.call(‘plugin.loaded’)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">8.</span> <span class="nav-text">session</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#list"><span class="nav-number">8.0.1.</span> <span class="nav-text">rpc.call(‘session.list’)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-76"><span class="nav-number">8.1.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#shell\_read"><span class="nav-number">8.1.1.</span> <span class="nav-text">rpc.call(‘session.shell_read’, id)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-77"><span class="nav-number">8.2.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#shell\_write"><span class="nav-number">8.2.1.</span> <span class="nav-text">rpc.call(‘session.shell_write’, id, data)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-78"><span class="nav-number">8.3.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#shell\_upgrade"><span class="nav-number">8.3.1.</span> <span class="nav-text">rpc.call(‘session.shell_upgrade’, id, LHOST, LPORT)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-79"><span class="nav-number">8.4.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#meterpreter\_read"><span class="nav-number">8.4.1.</span> <span class="nav-text">rpc.call(‘session.meterpreter_read’, id)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-80"><span class="nav-number">8.5.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ring\_read"><span class="nav-number">8.5.1.</span> <span class="nav-text">rpc.call(‘session.ring_read’, id)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-81"><span class="nav-number">8.6.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ring\_put"><span class="nav-number">8.6.1.</span> <span class="nav-text">rpc.call(‘session.ring_put’, id, data)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-82"><span class="nav-number">8.7.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ring\_last"><span class="nav-number">8.7.1.</span> <span class="nav-text">rpc.call(‘session.ring_last’, id)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-83"><span class="nav-number">8.8.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ring\_clear"><span class="nav-number">8.8.1.</span> <span class="nav-text">rpc.call(‘session.ring_clear’, id)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-84"><span class="nav-number">8.9.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#meterpreter\_write"><span class="nav-number">8.9.1.</span> <span class="nav-text">rpc.call(‘session.meterpreter_write’, id, input)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-85"><span class="nav-number">8.10.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#meterpreter\_session\_detach"><span class="nav-number">8.10.1.</span> <span class="nav-text">rpc.call(‘session.meterpreter_session_detach’, id)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-86"><span class="nav-number">8.11.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#meterpreter\_session\_kill"><span class="nav-number">8.11.1.</span> <span class="nav-text">rpc.call(‘session.meterpreter_session_kill’, id)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-87"><span class="nav-number">8.12.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#meterpreter\_tabs"><span class="nav-number">8.12.1.</span> <span class="nav-text">rpc.call(‘session.meterpreter_tabs’, id, input)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-88"><span class="nav-number">8.13.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#meterpreter\_run\_single"><span class="nav-number">8.13.1.</span> <span class="nav-text">rpc.call(‘session.meterpreter_run_single’, id, command)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-89"><span class="nav-number">8.14.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#meterpreter\_script"><span class="nav-number">8.14.1.</span> <span class="nav-text">rpc.call(‘session.meterpreter_script’, id, scriptName)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-90"><span class="nav-number">8.15.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#meterpreter\_directory\_separator"><span class="nav-number">8.15.1.</span> <span class="nav-text">rpc.call(‘session.meterpreter_directory_separator’, id)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-91"><span class="nav-number">8.16.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#compatible\_modules"><span class="nav-number">8.16.1.</span> <span class="nav-text">rpc.call(‘session.compatible_modules’, id)</span></a></li></ol></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator">
+            <i class="fa fa-angle-double-down"></i>
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+      
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="icon-next-heart fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">s0m30ne</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io" rel="external nofollow">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" rel="external nofollow">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"s0m30ne"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+
+
+    
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.2"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.2"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+<script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+<script type="text/javascript" src="/js/motion.js?v=0.4.5.2" id="motion.global"></script>
+
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.2" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 1 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    motionMiddleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+      if (CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    };
+  });
+</script>
+
+
+
+  <script type="text/javascript" src="/js/bootstrap.js"></script>
+
+  
+  
+
+  
+  
+
+</body>
+</html>
