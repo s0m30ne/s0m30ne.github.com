@@ -53,7 +53,7 @@
 <meta property="og:site_name" content="s0m30ne的博客">
 <meta property="og:description" content="s0m3poc（https://github.com/s0m30ne/s0m3poc）是一款借助于ZoomEye的批量漏洞检测框架。可以通过设置搜索条件，将搜索结果依次带入poc文件，从而实现对漏洞的批量发现。">
 <meta property="og:image" content="http://7xp22c.com1.z0.glb.clouddn.com/scan.png">
-<meta property="og:updated_time" content="2016-07-18T08:54:28.948Z">
+<meta property="og:updated_time" content="2016-08-31T15:13:21.724Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="一款轻量级漏洞批量检测框架-s0m3poc">
 <meta name="twitter:description" content="s0m3poc（https://github.com/s0m30ne/s0m3poc）是一款借助于ZoomEye的批量漏洞检测框架。可以通过设置搜索条件，将搜索结果依次带入poc文件，从而实现对漏洞的批量发现。">
@@ -243,8 +243,8 @@
           </span>
           <span class="post-time">
             | 修改于
-            <time itemprop="dateCreated" datetime="2016-07-18T16:54:28+08:00" content="2016-07-18">
-              2016-07-18
+            <time itemprop="dateCreated" datetime="2016-08-31T23:13:21+08:00" content="2016-08-31">
+              2016-08-31
             </time>
           </span>
 
@@ -292,7 +292,7 @@
           
             <div class="post-gallery-row">
               <a class="post-gallery-img fancybox"
-                 href="http://7xp22c.com1.z0.glb.clouddn.com/scan.png" rel="gallery_cisj0hlm1000k0omqencgc6i3"
+                 href="http://7xp22c.com1.z0.glb.clouddn.com/scan.png" rel="gallery_cisj1p75o000kq0mqy0wq165a"
                  itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
                 <img src="http://7xp22c.com1.z0.glb.clouddn.com/scan.png" itemprop="contentUrl"/>
               </a>
@@ -305,7 +305,27 @@
       
 
       
-        <span itemprop="articleBody"><p>s0m3poc（<a href="https://github.com/s0m30ne/s0m3poc" title="https://github.com/s0m30ne/s0m3poc" target="_blank" rel="external">https://github.com/s0m30ne/s0m3poc</a>）是一款借助于ZoomEye的批量漏洞检测框架。可以通过设置搜索条件，将搜索结果依次带入poc文件，从而实现对漏洞的批量发现。</p>
+        <span itemprop="articleBody"><p>s0m3poc（<a href="https://github.com/s0m30ne/s0m3poc" title="https://github.com/s0m30ne/s0m3poc" target="_blank" rel="external">https://github.com/s0m30ne/s0m3poc</a>）是一款借助于ZoomEye的批量漏洞检测框架。可以通过设置搜索条件，将搜索结果依次带入poc文件，从而实现对漏洞的批量发现。<br><a id="more"></a></p>
+<p><strong>首先你需要在s0m3poc.py文件中配置账号信息：</strong></p>
+<p><img src="http://7xp22c.com1.z0.glb.clouddn.com/note.PNG" alt=""></p>
+<p>可以利用<code>help</code>命令查看帮助信息。</p>
+<p><img src="http://7xp22c.com1.z0.glb.clouddn.com/forHelp.PNG" alt=""></p>
+<p>可以利用<code>set</code>命令设置参数信息：</p>
+<pre><code>set query &lt;query&gt; : 设置搜索条件；
+set pages &lt;pagenum&gt; : 设置搜索页数，默认为10；
+set facets &lt;facets&gt; : 设置返回信息，默认仅仅返回IP；
+set port &lt;True or False&gt; : 设置是否返回端口信息, 默认为False，如果设置为True，其返回格式为: 123.123.123.123:22.
+
+set target &lt;target&gt;： 设置单个探测目标.
+
+set payload &lt;payload&gt; : 选择所使用的payload.
+</code></pre><p>使用<code>show payloads</code>命令列出所有可用的payloads：</p>
+<p><img src="http://7xp22c.com1.z0.glb.clouddn.com/payloads.PNG" alt=""></p>
+<p>使用<code>show options</code>命令列出目前已配置的选项：</p>
+<p><img src="http://7xp22c.com1.z0.glb.clouddn.com/option.PNG" alt=""></p>
+<p>使用<code>exploit</code>命令开始检测目标：</p>
+<p><img src="http://7xp22c.com1.z0.glb.clouddn.com/exploit.PNG" alt=""></p>
+<p>使用<code>exit</code>命令推出程序。</p>
 </span>
       
     </div>

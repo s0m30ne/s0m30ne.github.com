@@ -46,23 +46,17 @@
 
 
 
-<meta name="description" content="其实这并不能算是一个漏洞，只是一个配置上的失误罢了，而且很早之前就有人在用了。最近想着再次把这个翻出来结合Censys看看能不能批量拿shell，于是就有了此文。首先我还是介绍一下phpStudy是怎么回事吧。
-
-phpStudy是一个PHP调试环境的程序集成包。该程序包集成最新的Apache + PHP + MySQL + phpMyAdmin + ZendOptimizer，一次性安装，无须配">
+<meta name="description" content="其实这并不能算是一个漏洞，只是一个配置上的失误罢了，而且很早之前就有人在用了。最近想着再次把这个翻出来结合Censys看看能不能批量拿shell，于是就有了此文。首先我还是介绍一下phpStudy是怎么回事吧。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="利用phpStudy探针批量获取shell">
 <meta property="og:url" content="http://s0m30ne.github.io/2016/01/01/利用phpStudy批量获取shell/index.html">
 <meta property="og:site_name" content="s0m30ne的博客">
-<meta property="og:description" content="其实这并不能算是一个漏洞，只是一个配置上的失误罢了，而且很早之前就有人在用了。最近想着再次把这个翻出来结合Censys看看能不能批量拿shell，于是就有了此文。首先我还是介绍一下phpStudy是怎么回事吧。
-
-phpStudy是一个PHP调试环境的程序集成包。该程序包集成最新的Apache + PHP + MySQL + phpMyAdmin + ZendOptimizer，一次性安装，无须配">
+<meta property="og:description" content="其实这并不能算是一个漏洞，只是一个配置上的失误罢了，而且很早之前就有人在用了。最近想着再次把这个翻出来结合Censys看看能不能批量拿shell，于是就有了此文。首先我还是介绍一下phpStudy是怎么回事吧。">
 <meta property="og:image" content="http://7xp22c.com1.z0.glb.clouddn.com/phpStudy.png">
-<meta property="og:updated_time" content="2016-01-21T14:38:14.274Z">
+<meta property="og:updated_time" content="2016-08-31T15:15:52.501Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="利用phpStudy探针批量获取shell">
-<meta name="twitter:description" content="其实这并不能算是一个漏洞，只是一个配置上的失误罢了，而且很早之前就有人在用了。最近想着再次把这个翻出来结合Censys看看能不能批量拿shell，于是就有了此文。首先我还是介绍一下phpStudy是怎么回事吧。
-
-phpStudy是一个PHP调试环境的程序集成包。该程序包集成最新的Apache + PHP + MySQL + phpMyAdmin + ZendOptimizer，一次性安装，无须配">
+<meta name="twitter:description" content="其实这并不能算是一个漏洞，只是一个配置上的失误罢了，而且很早之前就有人在用了。最近想着再次把这个翻出来结合Censys看看能不能批量拿shell，于是就有了此文。首先我还是介绍一下phpStudy是怎么回事吧。">
 
 
 
@@ -249,8 +243,8 @@ phpStudy是一个PHP调试环境的程序集成包。该程序包集成最新的
           </span>
           <span class="post-time">
             | 修改于
-            <time itemprop="dateCreated" datetime="2016-01-21T22:38:14+08:00" content="2016-01-21">
-              2016-01-21
+            <time itemprop="dateCreated" datetime="2016-08-31T23:15:52+08:00" content="2016-08-31">
+              2016-08-31
             </time>
           </span>
 
@@ -298,7 +292,7 @@ phpStudy是一个PHP调试环境的程序集成包。该程序包集成最新的
           
             <div class="post-gallery-row">
               <a class="post-gallery-img fancybox"
-                 href="http://7xp22c.com1.z0.glb.clouddn.com/phpStudy.png" rel="gallery_cisj0hllr00030omq5ogwkwwj"
+                 href="http://7xp22c.com1.z0.glb.clouddn.com/phpStudy.png" rel="gallery_cisj1p7540003q0mqj5lasbd6"
                  itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
                 <img src="http://7xp22c.com1.z0.glb.clouddn.com/phpStudy.png" itemprop="contentUrl"/>
               </a>
@@ -311,7 +305,7 @@ phpStudy是一个PHP调试环境的程序集成包。该程序包集成最新的
       
 
       
-        <span itemprop="articleBody"><p>其实这并不能算是一个漏洞，只是一个配置上的失误罢了，而且很早之前就有人在用了。最近想着再次把这个翻出来结合Censys看看能不能批量拿shell，于是就有了此文。首先我还是介绍一下phpStudy是怎么回事吧。</p>
+        <span itemprop="articleBody"><p>其实这并不能算是一个漏洞，只是一个配置上的失误罢了，而且很早之前就有人在用了。最近想着再次把这个翻出来结合Censys看看能不能批量拿shell，于是就有了此文。首先我还是介绍一下phpStudy是怎么回事吧。<br><a id="more"></a></p>
 <blockquote>
 <p>phpStudy是一个PHP调试环境的程序集成包。该程序包集成最新的Apache + PHP + MySQL + phpMyAdmin + ZendOptimizer，一次性安装，无须配置即可使用，是非常方便、好用的PHP调试环境。该程序不仅包括PHP调试环境，还包括了开发工具、开发手册等，总之学习PHP只需一个包。</p>
 </blockquote>

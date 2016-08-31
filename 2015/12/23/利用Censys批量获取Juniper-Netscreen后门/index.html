@@ -54,7 +54,7 @@
 <meta property="og:description" content="Censys是一款用以搜索联网设备信息的新型搜索引擎，安全专家可以使用它来评估他们实现方案的安全性，而黑客则可以使用它作为前期侦查攻击目标、收集目标信息的强大利器。其功能与十分流行的Shodan十分相似，然而与Shodan相比其优势在于这是一款免费的搜索引擎，最初由密歇根大学的研究人员在10月发行，目前由谷歌提供支持。关于Censys的具体介绍可参考http://www.freebuf.com/n">
 <meta property="og:image" content="http://7xp22c.com1.z0.glb.clouddn.com/censys.png">
 <meta property="og:image" content="http://7xp22c.com1.z0.glb.clouddn.com/16.jpg">
-<meta property="og:updated_time" content="2016-01-21T14:38:04.750Z">
+<meta property="og:updated_time" content="2016-08-31T15:15:42.689Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="利用Censys批量获取Juniper Netscreen后门">
 <meta name="twitter:description" content="Censys是一款用以搜索联网设备信息的新型搜索引擎，安全专家可以使用它来评估他们实现方案的安全性，而黑客则可以使用它作为前期侦查攻击目标、收集目标信息的强大利器。其功能与十分流行的Shodan十分相似，然而与Shodan相比其优势在于这是一款免费的搜索引擎，最初由密歇根大学的研究人员在10月发行，目前由谷歌提供支持。关于Censys的具体介绍可参考http://www.freebuf.com/n">
@@ -244,8 +244,8 @@
           </span>
           <span class="post-time">
             | 修改于
-            <time itemprop="dateCreated" datetime="2016-01-21T22:38:04+08:00" content="2016-01-21">
-              2016-01-21
+            <time itemprop="dateCreated" datetime="2016-08-31T23:15:42+08:00" content="2016-08-31">
+              2016-08-31
             </time>
           </span>
 
@@ -293,7 +293,7 @@
           
             <div class="post-gallery-row">
               <a class="post-gallery-img fancybox"
-                 href="http://7xp22c.com1.z0.glb.clouddn.com/censys.png" rel="gallery_cisj0hlly000e0omq2j6spcdn"
+                 href="http://7xp22c.com1.z0.glb.clouddn.com/censys.png" rel="gallery_cisj1p75c000eq0mq0wyxmltb"
                  itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
                 <img src="http://7xp22c.com1.z0.glb.clouddn.com/censys.png" itemprop="contentUrl"/>
               </a>
@@ -301,7 +301,7 @@
           
             
               <a class="post-gallery-img fancybox"
-                 href="http://7xp22c.com1.z0.glb.clouddn.com/16.jpg" rel="gallery_cisj0hlly000e0omq2j6spcdn"
+                 href="http://7xp22c.com1.z0.glb.clouddn.com/16.jpg" rel="gallery_cisj1p75c000eq0mq0wyxmltb"
                  itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
                 <img src="http://7xp22c.com1.z0.glb.clouddn.com/16.jpg" itemprop="contentUrl"/>
               </a>
@@ -314,7 +314,7 @@
       
 
       
-        <span itemprop="articleBody"><p>Censys是一款用以搜索联网设备信息的新型搜索引擎，安全专家可以使用它来评估他们实现方案的安全性，而黑客则可以使用它作为前期侦查攻击目标、收集目标信息的强大利器。其功能与十分流行的Shodan十分相似，然而与Shodan相比其优势在于这是一款免费的搜索引擎，最初由密歇根大学的研究人员在10月发行，目前由谷歌提供支持。关于Censys的具体介绍可参考<a href="http://www.freebuf.com/news/89285.html" target="_blank" rel="external">http://www.freebuf.com/news/89285.html</a></p>
+        <span itemprop="articleBody"><p>Censys是一款用以搜索联网设备信息的新型搜索引擎，安全专家可以使用它来评估他们实现方案的安全性，而黑客则可以使用它作为前期侦查攻击目标、收集目标信息的强大利器。其功能与十分流行的Shodan十分相似，然而与Shodan相比其优势在于这是一款免费的搜索引擎，最初由密歇根大学的研究人员在10月发行，目前由谷歌提供支持。关于Censys的具体介绍可参考<a href="http://www.freebuf.com/news/89285.html" target="_blank" rel="external">http://www.freebuf.com/news/89285.html</a><br><a id="more"></a></p>
 <p>Juniper高级副总裁兼首席信息安全官Bob Worrall称，在最近的内部代码审计过程中发现了两枚漏洞，影响ScreenOS 6.2.0r15—6.2.0r18，6.3.0r12—6.3.0r20版本。其中一个是未授权代码漏洞，可解密VPN流量；另外一个可允许攻击者通过SSH或者telnet远程管理访问设备。Juniper提到这些系统的访问会被记录，密码认证也会成功，但是攻击者可改变或者删除日志条目。关于漏洞具体介绍可参考<a href="http://www.freebuf.com/news/90323.html" target="_blank" rel="external">http://www.freebuf.com/news/90323.html</a></p>
 <p>了解到该漏洞后我尝试着使用Censys搜索可能存在后门的主机并批量进行验证。在完成这项工作之前请先让我带领大家大体了解一下Censys中API的使用方法。</p>
 <p>首先，你需要有一个帐号，Censys是免费开放注册的，所以这个应该很简单。注册好后在我们的账户页面可以看到Censys为我们每人分配了一个APIID和一个Secret，另外我们还注意到下面有一个搜索频率的限制，使用API的话每5分钟只能搜索120次，这个问题我们下面再处理。<br><img src="http://7xp22c.com1.z0.glb.clouddn.com/account.PNG" alt=""></p>

@@ -46,23 +46,17 @@
 
 
 
-<meta name="description" content="在GEEK PWN大会上，TK为大家演示了腾讯玄武实验室最近研究的新成果—badbarcode，也就是对条码中一些安全隐患的研究。其实关于条码及二维码的安全研究由来已久，本文主要为大家介绍一下badbarcode最基本的原理。
-乌云上有一篇关于二维码出现过的利用总结，链接地址：http://drops.wooyun.org/mobile/10775
-在badbarcode中，主要针对的是code1">
+<meta name="description" content="在GEEK PWN大会上，TK为大家演示了腾讯玄武实验室最近研究的新成果—badbarcode，也就是对条码中一些安全隐患的研究。其实关于条码及二维码的安全研究由来已久，本文主要为大家介绍一下badbarcode最基本的原理。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="badbarcode浅析">
 <meta property="og:url" content="http://s0m30ne.github.io/2015/12/23/badbarcode浅析/index.html">
 <meta property="og:site_name" content="s0m30ne的博客">
-<meta property="og:description" content="在GEEK PWN大会上，TK为大家演示了腾讯玄武实验室最近研究的新成果—badbarcode，也就是对条码中一些安全隐患的研究。其实关于条码及二维码的安全研究由来已久，本文主要为大家介绍一下badbarcode最基本的原理。
-乌云上有一篇关于二维码出现过的利用总结，链接地址：http://drops.wooyun.org/mobile/10775
-在badbarcode中，主要针对的是code1">
+<meta property="og:description" content="在GEEK PWN大会上，TK为大家演示了腾讯玄武实验室最近研究的新成果—badbarcode，也就是对条码中一些安全隐患的研究。其实关于条码及二维码的安全研究由来已久，本文主要为大家介绍一下badbarcode最基本的原理。">
 <meta property="og:image" content="http://7xp22c.com1.z0.glb.clouddn.com/badbarcode.PNG">
-<meta property="og:updated_time" content="2016-08-31T14:39:56.462Z">
+<meta property="og:updated_time" content="2016-08-31T15:13:52.988Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="badbarcode浅析">
-<meta name="twitter:description" content="在GEEK PWN大会上，TK为大家演示了腾讯玄武实验室最近研究的新成果—badbarcode，也就是对条码中一些安全隐患的研究。其实关于条码及二维码的安全研究由来已久，本文主要为大家介绍一下badbarcode最基本的原理。
-乌云上有一篇关于二维码出现过的利用总结，链接地址：http://drops.wooyun.org/mobile/10775
-在badbarcode中，主要针对的是code1">
+<meta name="twitter:description" content="在GEEK PWN大会上，TK为大家演示了腾讯玄武实验室最近研究的新成果—badbarcode，也就是对条码中一些安全隐患的研究。其实关于条码及二维码的安全研究由来已久，本文主要为大家介绍一下badbarcode最基本的原理。">
 
 
 
@@ -249,7 +243,7 @@
           </span>
           <span class="post-time">
             | 修改于
-            <time itemprop="dateCreated" datetime="2016-08-31T22:39:56+08:00" content="2016-08-31">
+            <time itemprop="dateCreated" datetime="2016-08-31T23:13:52+08:00" content="2016-08-31">
               2016-08-31
             </time>
           </span>
@@ -298,7 +292,7 @@
           
             <div class="post-gallery-row">
               <a class="post-gallery-img fancybox"
-                 href="http://7xp22c.com1.z0.glb.clouddn.com/badbarcode.PNG" rel="gallery_cisj0hlmj00150omqamfwk1au"
+                 href="http://7xp22c.com1.z0.glb.clouddn.com/badbarcode.PNG" rel="gallery_cisj1p75v0015q0mq4k3dtpcm"
                  itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
                 <img src="http://7xp22c.com1.z0.glb.clouddn.com/badbarcode.PNG" itemprop="contentUrl"/>
               </a>
@@ -311,7 +305,7 @@
       
 
       
-        <span itemprop="articleBody"><p>在GEEK PWN大会上，TK为大家演示了腾讯玄武实验室最近研究的新成果—badbarcode，也就是对条码中一些安全隐患的研究。其实关于条码及二维码的安全研究由来已久，本文主要为大家介绍一下badbarcode最基本的原理。</p>
+        <span itemprop="articleBody"><p>在GEEK PWN大会上，TK为大家演示了腾讯玄武实验室最近研究的新成果—badbarcode，也就是对条码中一些安全隐患的研究。其实关于条码及二维码的安全研究由来已久，本文主要为大家介绍一下badbarcode最基本的原理。<br><a id="more"></a></p>
 <p>乌云上有一篇关于二维码出现过的利用总结，链接地址：<a href="http://drops.wooyun.org/mobile/10775" target="_blank" rel="external">http://drops.wooyun.org/mobile/10775</a></p>
 <p>在badbarcode中，主要针对的是code128协议，由于几乎所有的读码器都可以识别code128协议的条码，因此，此方法还是十分通用的。Code128码其实还分成三类，即128A、128B、128C。它们的区别就是对应的字符表不一样。那么code128码到底怎么读呢？请看下面的图：<br><img src="http://7xp22c.com1.z0.glb.clouddn.com/barcode.jpg" alt=""></p>
 <p>条码中从左往右是黑白相间的条形图，其中黑颜色的叫做“条”，用B表示，白颜色的叫做“空”，用S表示。条和空都有4种不同的宽度，我们将其从细到粗赋予1、2、3、4四个值。然后我们开始按照不同粗细的值来阅读上面的条码，结果如下：</p>
