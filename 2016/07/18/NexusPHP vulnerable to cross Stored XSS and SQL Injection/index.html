@@ -30,7 +30,7 @@
 <link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="zoomeye,漏洞," />
+  <meta name="keywords" content="poc,python,漏洞," />
 
 
 
@@ -46,20 +46,17 @@
 
 
 
-<meta name="description" content="关于ZoomEye
-ZoomEye ( https://www.zoomeye.org )，一款为你打开上帝视角的网络空间搜索引擎。在这里，网络空间不再神秘，你可以在ZoomEye站内任意页面键入Shift+?快速地获得帮助信息，从而轻易地对大量设备进行查询与分析。如果你感觉一个一个查询过于麻烦，你也可以很方便的编写程序使用ZoomEye API来自动化查询与操作。具体关于ZoomEye API的">
+<meta name="description" content="NexusPHP is an open-sourced BitTorrent private tracker script written in PHP. It forks from the TBSource project and some other open-sourced projects.The project is widely used in the network, especia">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ZoomEye+Pocsuite: 小心你背后的眼睛">
-<meta property="og:url" content="http://s0m30ne.github.io/2016/04/25/Zoomeye-Pocsuite-小心你背后的眼睛/index.html">
+<meta property="og:title" content="NexusPHP vulnerable to persistent XSS and SQL Injection">
+<meta property="og:url" content="http://s0m30ne.github.io/2016/07/18/NexusPHP vulnerable to cross Stored XSS and SQL Injection/index.html">
 <meta property="og:site_name" content="s0m30ne的博客">
-<meta property="og:description" content="关于ZoomEye
-ZoomEye ( https://www.zoomeye.org )，一款为你打开上帝视角的网络空间搜索引擎。在这里，网络空间不再神秘，你可以在ZoomEye站内任意页面键入Shift+?快速地获得帮助信息，从而轻易地对大量设备进行查询与分析。如果你感觉一个一个查询过于麻烦，你也可以很方便的编写程序使用ZoomEye API来自动化查询与操作。具体关于ZoomEye API的">
-<meta property="og:image" content="http://7xp22c.com1.z0.glb.clouddn.com/eye.jpg">
-<meta property="og:updated_time" content="2016-04-25T05:49:12.164Z">
+<meta property="og:description" content="NexusPHP is an open-sourced BitTorrent private tracker script written in PHP. It forks from the TBSource project and some other open-sourced projects.The project is widely used in the network, especia">
+<meta property="og:image" content="http://7xp22c.com1.z0.glb.clouddn.com/gangtiexia.jpg">
+<meta property="og:updated_time" content="2017-08-19T16:53:30.756Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ZoomEye+Pocsuite: 小心你背后的眼睛">
-<meta name="twitter:description" content="关于ZoomEye
-ZoomEye ( https://www.zoomeye.org )，一款为你打开上帝视角的网络空间搜索引擎。在这里，网络空间不再神秘，你可以在ZoomEye站内任意页面键入Shift+?快速地获得帮助信息，从而轻易地对大量设备进行查询与分析。如果你感觉一个一个查询过于麻烦，你也可以很方便的编写程序使用ZoomEye API来自动化查询与操作。具体关于ZoomEye API的">
+<meta name="twitter:title" content="NexusPHP vulnerable to persistent XSS and SQL Injection">
+<meta name="twitter:description" content="NexusPHP is an open-sourced BitTorrent private tracker script written in PHP. It forks from the TBSource project and some other open-sourced projects.The project is widely used in the network, especia">
 
 
 
@@ -71,7 +68,7 @@ ZoomEye ( https://www.zoomeye.org )，一款为你打开上帝视角的网络空
   };
 </script>
 
-  <title> ZoomEye+Pocsuite: 小心你背后的眼睛 | s0m30ne的博客 </title>
+  <title> NexusPHP vulnerable to persistent XSS and SQL Injection | s0m30ne的博客 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -231,7 +228,7 @@ ZoomEye ( https://www.zoomeye.org )，一款为你打开上帝视角的网络空
             
             
               
-                ZoomEye+Pocsuite: 小心你背后的眼睛
+                NexusPHP vulnerable to persistent XSS and SQL Injection
               
             
           </h1>
@@ -240,14 +237,14 @@ ZoomEye ( https://www.zoomeye.org )，一款为你打开上帝视角的网络空
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2016-04-25T11:56:15+08:00" content="2016-04-25">
-              2016-04-25
+            <time itemprop="dateCreated" datetime="2016-07-18T16:09:45+08:00" content="2016-07-18">
+              2016-07-18
             </time>
           </span>
           <span class="post-time">
             | 修改于
-            <time itemprop="dateCreated" datetime="2016-04-25T13:49:12+08:00" content="2016-04-25">
-              2016-04-25
+            <time itemprop="dateCreated" datetime="2017-08-20T00:53:30+08:00" content="2017-08-20">
+              2017-08-20
             </time>
           </span>
 
@@ -272,8 +269,8 @@ ZoomEye ( https://www.zoomeye.org )，一款为你打开上帝视角的网络空
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/04/25/Zoomeye-Pocsuite-小心你背后的眼睛/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/25/Zoomeye-Pocsuite-小心你背后的眼睛/" itemprop="commentsCount"></span>
+                <a href="/2016/07/18/NexusPHP vulnerable to cross Stored XSS and SQL Injection/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/07/18/NexusPHP vulnerable to cross Stored XSS and SQL Injection/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -295,9 +292,9 @@ ZoomEye ( https://www.zoomeye.org )，一款为你打开上帝视角的网络空
           
             <div class="post-gallery-row">
               <a class="post-gallery-img fancybox"
-                 href="http://7xp22c.com1.z0.glb.clouddn.com/eye.jpg" rel="gallery_cj6jjnj14001gckmismutabwi"
+                 href="http://7xp22c.com1.z0.glb.clouddn.com/gangtiexia.jpg" rel="gallery_cj6jjnj19001ockmioe0ykinc"
                  itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
-                <img src="http://7xp22c.com1.z0.glb.clouddn.com/eye.jpg" itemprop="contentUrl"/>
+                <img src="http://7xp22c.com1.z0.glb.clouddn.com/gangtiexia.jpg" itemprop="contentUrl"/>
               </a>
             
           
@@ -308,31 +305,129 @@ ZoomEye ( https://www.zoomeye.org )，一款为你打开上帝视角的网络空
       
 
       
-        <span itemprop="articleBody"><p></p><h1>关于ZoomEye</h1><br><img src="http://7xp22c.com1.z0.glb.clouddn.com/zoomeye.PNG" alt=""><p></p>
-<p>ZoomEye ( <a href="https://www.zoomeye.org" target="_blank" rel="external">https://www.zoomeye.org</a> )，一款为你打开上帝视角的网络空间搜索引擎。在这里，网络空间不再神秘，你可以在ZoomEye站内任意页面键入<code>Shift+?</code>快速地获得帮助信息，从而轻易地对大量设备进行查询与分析。如果你感觉一个一个查询过于麻烦，你也可以很方便的编写程序使用ZoomEye API来自动化查询与操作。具体关于ZoomEye API的信息请移步<a href="https://www.zoomeye.org/api" target="_blank" rel="external">https://www.zoomeye.org/api</a>查看。</p>
-<p></p><h1>关于pocsuite</h1><br><img src="http://7xp22c.com1.z0.glb.clouddn.com/pocsuite.PNG" alt=""><p></p>
-<p>Pocsuite 是知道创宇安全研究团队打造的一款基于漏洞与 PoC 的远程漏洞验证框架。在获取到相关漏洞详情后，任何有一定 Python 开发基础的人都可以基于 Pocsuite 开发出对应漏洞的 PoC ，轻而易举的就可以直接使用 Pocsuite 进行相关的验证和调用，而无需考虑底层代码架构等。具体的开发文档可以参考<a href="https://www.seebug.org/help/dev" target="_blank" rel="external">https://www.seebug.org/help/dev</a></p>
-<p></p><h1>背后的眼睛</h1><br>也许，你是一名普通白领，每天开车往返于公司与家之间的路上；也许，你是一家公司的技术负责人，每天维护着上百台设备；也许，你只是一个普普通通的路人。无论你是谁，试想一下如果你的背后总有一双眼睛盯着你，无时无刻地监视着你的一举一动，是不是想想就觉得可怕？是的，今天我们的主角就是这双你背后的眼睛—–摄像头。当今社会，到处都可以看到摄像头的踪迹，但是摄像头的安全性如何呢？让我们借助ZoomEye以及Pocsuite来一探究竟。<p></p>
-<p>首先我们需要自己编写一个ZoomEye SDK，方便自己调用，而后在poc文件中导入ZoomEye，并加入Dork字段从而对搜索结果进行验证。</p>
-<p><img src="http://7xp22c.com1.z0.glb.clouddn.com/dork.PNG" alt=""></p>
-<p><img src="http://7xp22c.com1.z0.glb.clouddn.com/zoomeyeSDK.PNG" alt=""></p>
-<p>在seebug上搜索摄像头或者camera，可以得到大量的漏洞信息。接下来我们分别对三款摄像头的弱密码以及认证绕过漏洞进行统计分析进而得出摄像头漏洞状况。</p>
-<p>1、 SQ-WEBCAM弱密码：admin/admin，通过对ZoomEye搜索结果分析得到如下结果：</p>
-<p><img src="http://7xp22c.com1.z0.glb.clouddn.com/vul1.PNG" alt=""></p>
-<p><img src="http://7xp22c.com1.z0.glb.clouddn.com/data1.PNG" alt=""></p>
-<p>可以看到，高达64%的设备存在弱口令，大量摄像头可轻易地被操纵监视。</p>
-<p><img src="http://7xp22c.com1.z0.glb.clouddn.com/camera1.PNG" alt=""></p>
-<p>2、 大华网络摄像头弱口令：adimin/admin，通过对ZoomEye搜索结果分析得到如下结果：</p>
-<p><img src="http://7xp22c.com1.z0.glb.clouddn.com/vul2.PNG" alt=""></p>
-<p><img src="http://7xp22c.com1.z0.glb.clouddn.com/data2.PNG" alt=""></p>
-<p>可以看到，这款摄像头夸张的有93%的设备存在弱口令，使用该摄像头的都是国内用户。</p>
-<p><img src="http://7xp22c.com1.z0.glb.clouddn.com/camera2.PNG" alt=""></p>
-<p>3、 Axis摄像头认证绕过漏洞，经过搜索与分析有如下结果：</p>
-<p><img src="http://7xp22c.com1.z0.glb.clouddn.com/vul3.PNG" alt=""></p>
-<p><img src="http://7xp22c.com1.z0.glb.clouddn.com/data3.PNG" alt=""></p>
-<p>可见，这款摄像头漏洞情况好一些，但仍然有29%的设备存在风险。</p>
-<p><img src="http://7xp22c.com1.z0.glb.clouddn.com/camera3.PNG" alt=""></p>
-<p></p><h1>总结</h1><br>经过对以上三款摄像头的分析，我们可以对其他摄像头的安全状况进行大体的估计，很大一部分暴露在公网上的摄像头都存在着一定的安全风险，这就是隐藏在你背后的眼睛，你的隐私或许在不经意间就会被窥探。在此呼吁广大用户小心这双背后的眼睛，至少要记得改密码啊！<p></p>
+        <span itemprop="articleBody"><p>NexusPHP is an open-sourced BitTorrent private tracker script written in PHP. It forks from the TBSource project and some other open-sourced projects.<br>The project is widely used in the network, especially in educational websites to share resources.<br><a id="more"></a></p>
+<h2 id="persistent_XSS"><a href="#persistent_XSS" class="headerlink" title="persistent XSS"></a>persistent XSS</h2><p>A persistent XSS was found when you comment on an article or send a message to someone. You can insert a url like “javascript:javascript codes”, and if someone clicks the url, you can get his/her cookie. </p>
+<p>Actually NexusPHP has a function to manage with contents to output. The function looks like below:</p>
+<pre><code>function format_comment($text, $strip_html = true, $xssclean = false, $newtab = false, $imageresizer = true, $image_max_width = 700, $enableimage = true, $enableflash = true , $imagenum = -1, $image_max_height = 0, $adid = 0)
+{
+    global $lang_functions;
+    global $CURUSER, $SITENAME, $BASEURL, $enableattach_attachment;
+    global $tempCode, $tempCodeCount;
+    $tempCode = array();
+    $tempCodeCount = 0;
+    $imageresizer = $imageresizer ? 1 : 0;
+    $s = $text;
+
+    if ($strip_html) {
+        $s = htmlspecialchars($s);
+    }
+    // Linebreaks
+    $s = nl2br($s);
+
+    if (strpos($s,&quot;[code]&quot;) !== false &amp;&amp; strpos($s,&quot;[/code]&quot;) !== false) {
+        $s = preg_replace(&quot;/\[code\](.+?)\[\/code\]/eis&quot;,&quot;formatCode(&apos;\\1&apos;)&quot;, $s);
+    }
+
+    $originalBbTagArray = array(&apos;[siteurl]&apos;, &apos;[site]&apos;,&apos;[*]&apos;, &apos;[b]&apos;, &apos;[/b]&apos;, &apos;[i]&apos;, &apos;[/i]&apos;, &apos;[u]&apos;, &apos;[/u]&apos;, &apos;[pre]&apos;, &apos;[/pre]&apos;, &apos;[/color]&apos;, &apos;[/font]&apos;, &apos;[/size]&apos;, &quot;  &quot;);
+    $replaceXhtmlTagArray = array(get_protocol_prefix().$BASEURL, $SITENAME, &apos;&lt;img class=&quot;listicon listitem&quot; src=&quot;pic/trans.gif&quot; alt=&quot;list&quot; /&gt;&apos;, &apos;&lt;b&gt;&apos;, &apos;&lt;/b&gt;&apos;, &apos;&lt;i&gt;&apos;, &apos;&lt;/i&gt;&apos;, &apos;&lt;u&gt;&apos;, &apos;&lt;/u&gt;&apos;, &apos;&lt;pre&gt;&apos;, &apos;&lt;/pre&gt;&apos;, &apos;&lt;/span&gt;&apos;, &apos;&lt;/font&gt;&apos;, &apos;&lt;/font&gt;&apos;, &apos; &amp;nbsp;&apos;);
+    $s = str_replace($originalBbTagArray, $replaceXhtmlTagArray, $s);
+
+    $originalBbTagArray = array(&quot;/\[font=([^\[\(&amp;\\;]+?)\]/is&quot;, &quot;/\[color=([#0-9a-z]{1,15})\]/is&quot;, &quot;/\[color=([a-z]+)\]/is&quot;, &quot;/\[size=([1-7])\]/is&quot;);
+    $replaceXhtmlTagArray = array(&quot;&lt;font face=\&quot;\\1\&quot;&gt;&quot;, &quot;&lt;span style=\&quot;color: \\1;\&quot;&gt;&quot;, &quot;&lt;span style=\&quot;color: \\1;\&quot;&gt;&quot;, &quot;&lt;font size=\&quot;\\1\&quot;&gt;&quot;);
+    $s = preg_replace($originalBbTagArray, $replaceXhtmlTagArray, $s);
+
+    if ($enableattach_attachment == &apos;yes&apos; &amp;&amp; $imagenum != 1){
+        $limit = 20;
+        $s = preg_replace(&quot;/\[attach\]([0-9a-zA-z][0-9a-zA-z]*)\[\/attach\]/ies&quot;, &quot;print_attachment(&apos;\\1&apos;, &quot;.($enableimage ? 1 : 0).&quot;, &quot;.($imageresizer ? 1 : 0).&quot;)&quot;, $s, $limit);
+    }
+
+    if ($enableimage) {
+        $s = preg_replace(&quot;/\[img\]([^\&lt;\r\n\&quot;&apos;]+?)\[\/img\]/ei&quot;, &quot;formatImg(&apos;\\1&apos;,&quot;.$imageresizer.&quot;,&quot;.$image_max_width.&quot;,&quot;.$image_max_height.&quot;)&quot;, $s, $imagenum, $imgReplaceCount);
+        $s = preg_replace(&quot;/\[img=([^\&lt;\r\n\&quot;&apos;]+?)\]/ei&quot;, &quot;formatImg(&apos;\\1&apos;,&quot;.$imageresizer.&quot;,&quot;.$image_max_width.&quot;,&quot;.$image_max_height.&quot;)&quot;, $s, ($imagenum != -1 ? max($imagenum-$imgReplaceCount, 0) : -1));
+    } else {
+        $s = preg_replace(&quot;/\[img\]([^\&lt;\r\n\&quot;&apos;]+?)\[\/img\]/i&quot;, &apos;&apos;, $s, -1);
+        $s = preg_replace(&quot;/\[img=([^\&lt;\r\n\&quot;&apos;]+?)\]/i&quot;, &apos;&apos;, $s, -1);
+    }
+
+    // [flash,500,400]http://www/image.swf[/flash]
+    if (strpos($s,&quot;[flash&quot;) !== false) { //flash is not often used. Better check if it exist before hand
+        if ($enableflash) {
+            $s = preg_replace(&quot;/\[flash(\,([1-9][0-9]*)\,([1-9][0-9]*))?\]((http|ftp):\/\/[^\s&apos;\&quot;&lt;&gt;]+(\.(swf)))\[\/flash\]/ei&quot;, &quot;formatFlash(&apos;\\4&apos;, &apos;\\2&apos;, &apos;\\3&apos;)&quot;, $s);
+        } else {
+            $s = preg_replace(&quot;/\[flash(\,([1-9][0-9]*)\,([1-9][0-9]*))?\]((http|ftp):\/\/[^\s&apos;\&quot;&lt;&gt;]+(\.(swf)))\[\/flash\]/i&quot;, &apos;&apos;, $s);
+        }
+    }
+    //[flv,320,240]http://www/a.flv[/flv]
+    if (strpos($s,&quot;[flv&quot;) !== false) { //flv is not often used. Better check if it exist before hand
+        if ($enableflash) {
+            $s = preg_replace(&quot;/\[flv(\,([1-9][0-9]*)\,([1-9][0-9]*))?\]((http|ftp):\/\/[^\s&apos;\&quot;&lt;&gt;]+(\.(flv)))\[\/flv\]/ei&quot;, &quot;formatFlv(&apos;\\4&apos;, &apos;\\2&apos;, &apos;\\3&apos;)&quot;, $s);
+        } else {
+            $s = preg_replace(&quot;/\[flv(\,([1-9][0-9]*)\,([1-9][0-9]*))?\]((http|ftp):\/\/[^\s&apos;\&quot;&lt;&gt;]+(\.(flv)))\[\/flv\]/i&quot;, &apos;&apos;, $s);
+        }
+    }
+
+    // [url=http://www.example.com]Text[/url]
+    if ($adid) {
+        $s = preg_replace(&quot;/\[url=([^\[\s]+?)\](.+?)\[\/url\]/ei&quot;, &quot;formatAdUrl(&quot;.$adid.&quot; ,&apos;\\1&apos;, &apos;\\2&apos;, &quot;.($newtab==true ? 1 : 0).&quot;, &apos;faqlink&apos;)&quot;, $s);
+    } else {
+        $s = preg_replace(&quot;/\[url=([^\[\s]+?)\](.+?)\[\/url\]/ei&quot;, &quot;formatUrl(&apos;\\1&apos;, &quot;.($newtab==true ? 1 : 0).&quot;, &apos;\\2&apos;, &apos;faqlink&apos;)&quot;, $s);
+    }
+
+    // [url]http://www.example.com[/url]
+    $s = preg_replace(&quot;/\[url\]([^\[\s]+?)\[\/url\]/ei&quot;,
+    &quot;formatUrl(&apos;\\1&apos;, &quot;.($newtab==true ? 1 : 0).&quot;, &apos;&apos;, &apos;faqlink&apos;)&quot;, $s);
+
+    $s = format_urls($s, $newtab);
+    // Quotes
+    if (strpos($s,&quot;[quote&quot;) !== false &amp;&amp; strpos($s,&quot;[/quote]&quot;) !== false) { //format_quote is kind of slow. Better check if [quote] exists beforehand
+        $s = format_quotes($s);
+    }
+
+    $s = preg_replace(&quot;/\[em([1-9][0-9]*)\]/ie&quot;, &quot;(\\1 &lt; 192 ? &apos;&lt;img src=\&quot;pic/smilies/\\1.gif\&quot; alt=\&quot;[em\\1]\&quot; /&gt;&apos; : &apos;[em\\1]&apos;)&quot;, $s);
+    reset($tempCode);
+    $j = 0;
+    while(count($tempCode) || $j &gt; 5) {
+        foreach($tempCode as $key=&gt;$code) {
+            $s = str_replace(&quot;&lt;tempCode_$key&gt;&quot;, $code, $s, $count);
+            if ($count) {
+                unset($tempCode[$key]);
+                $i = $i+$count;
+            }
+        }
+        $j++;
+    }
+    return $s;
+}
+</code></pre><p>The code uses <code>htmlspecialchars</code> to manage with <code>&amp;</code>, <code>&quot;</code>, <code>&lt;</code> and <code>&gt;</code> which means we can not get out of the <code>&quot;</code> and insert JavaScript code directly. However, it allows we insert url with the format like <code>[url=&quot;user input&quot;]user input[/url]</code> and the user input would be treated as url without any check.</p>
+<p>Once you get someone’s cookie you can obtain his/her account just by visit the site with his/her cookie. Cookies of NexusPHP look like below.</p>
+<pre><code>c_secure_ssl=bm9wZQ%3D%3D; c_secure_uid=MQ%3D%3D; c_secure_pass=58ffa98fdb39aa21c9d510509b12e7b4; c_secure_tracker_ssl=bm9wZQ%3D%3D; c_secure_login=bm9wZQ%3D%3D
+</code></pre><p>“c_secure_uid” is the uid of user. “c_secure_pass” is calculated as md5($row[“passhash”) which would not changed until the user changes his/her password. So that we do not need to crack user’s password and could control the account directory until the user changed his/her password.</p>
+<h2 id="SQL_Injection"><a href="#SQL_Injection" class="headerlink" title="SQL Injection"></a>SQL Injection</h2><p>If the user is in the <code>$forummanage_class</code>, he would be able to manage the forum through the <code>forummanage.php</code> page. There is some codes like below which would cause SQL injection.</p>
+<pre><code>//EDIT FORUM ACTION
+elseif ($_POST[&apos;action&apos;] == &quot;editforum&quot;) {
+    $name = $_POST[&apos;name&apos;];
+    $desc = $_POST[&apos;desc&apos;];
+    $id = $_POST[&apos;id&apos;];
+    if (!$name &amp;&amp; !$desc &amp;&amp; !$id) {
+        header(&quot;Location: &quot; . get_protocol_prefix() . &quot;$BASEURL/forummanage.php&quot;);
+        die();
+    }
+    if ($_POST[&quot;moderator&quot;]){
+    $moderator = $_POST[&quot;moderator&quot;];
+    set_forum_moderators($moderator,$id);
+    }
+    else{
+        sql_query(&quot;DELETE FROM forummods WHERE forumid=&quot;.sqlesc($id)) or sqlerr(__FILE__, __LINE__);
+    }
+    sql_query(&quot;UPDATE forums SET sort = &apos;&quot; . $_POST[&apos;sort&apos;] . &quot;&apos;, name = &quot; . sqlesc($_POST[&apos;name&apos;]). &quot;, description = &quot; . sqlesc($_POST[&apos;desc&apos;]). &quot;, forid = &quot;.sqlesc(($_POST[&apos;overforums&apos;])).&quot;, minclassread = &apos;&quot; . $_POST[&apos;readclass&apos;] . &quot;&apos;, minclasswrite = &apos;&quot; . $_POST[&apos;writeclass&apos;] . &quot;&apos;, minclasscreate = &apos;&quot; . $_POST[&apos;createclass&apos;] . &quot;&apos; where id = &quot;.sqlesc($id)) or sqlerr(__FILE__, __LINE__);
+    $Cache-&gt;delete_value(&apos;forums_list&apos;);
+    $Cache-&gt;delete_value(&apos;forum_moderator_array&apos;);
+    header(&quot;Location: forummanage.php&quot;);
+    die();
+}
+</code></pre><p>The code using <code>sqlesc</code> to prevent SQL injection and it is quite useful. But when the action is <code>editforum</code>, some post datas are put into the sql query directly. The post data like below could be used.</p>
+<pre><code>name=rrrfrrf&amp;desc=frfrfr&amp;overforums=1&amp;moderator=s0m3&amp;readclass=0&amp;writeclass=0&amp;createclass=0 or updatexml(0,concat(0x7e,(select username from users where id=1)),0) or&apos;&apos;&amp;sort=0&amp;action=addforum&amp;Submit=Make+Forum
+</code></pre><p>However, it requires the user be a forum manager! How could we be a manager? Thanks to the XSS, we could be anyone!</p>
 </span>
       
     </div>
@@ -341,7 +436,9 @@ ZoomEye ( https://www.zoomeye.org )，一款为你打开上帝视角的网络空
       
         <div class="post-tags">
           
-            <a href="/tags/zoomeye/" rel="tag">#zoomeye</a>
+            <a href="/tags/poc/" rel="tag">#poc</a>
+          
+            <a href="/tags/python/" rel="tag">#python</a>
           
             <a href="/tags/漏洞/" rel="tag">#漏洞</a>
           
@@ -352,16 +449,16 @@ ZoomEye ( https://www.zoomeye.org )，一款为你打开上帝视角的网络空
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/01/21/metasploit-API/" rel="next" title="metasploit API">
-                <i class="fa fa-chevron-left"></i> metasploit API
+              <a href="/2016/04/25/Zoomeye-Pocsuite-小心你背后的眼睛/" rel="next" title="ZoomEye+Pocsuite: 小心你背后的眼睛">
+                <i class="fa fa-chevron-left"></i> ZoomEye+Pocsuite: 小心你背后的眼睛
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/07/18/NexusPHP vulnerable to cross Stored XSS and SQL Injection/" rel="prev" title="NexusPHP vulnerable to persistent XSS and SQL Injection">
-                NexusPHP vulnerable to persistent XSS and SQL Injection <i class="fa fa-chevron-right"></i>
+              <a href="/2016/07/18/一款轻量级漏洞批量检测框架-s0m3poc/" rel="prev" title="一款轻量级漏洞批量检测框架-s0m3poc">
+                一款轻量级漏洞批量检测框架-s0m3poc <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -389,8 +486,8 @@ ZoomEye ( https://www.zoomeye.org )，一款为你打开上帝视角的网络空
         
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/04/25/Zoomeye-Pocsuite-小心你背后的眼睛/"
-           data-title="ZoomEye+Pocsuite: 小心你背后的眼睛" data-url="http://s0m30ne.github.io/2016/04/25/Zoomeye-Pocsuite-小心你背后的眼睛/">
+      <div class="ds-thread" data-thread-key="2016/07/18/NexusPHP vulnerable to cross Stored XSS and SQL Injection/"
+           data-title="NexusPHP vulnerable to persistent XSS and SQL Injection" data-url="http://s0m30ne.github.io/2016/07/18/NexusPHP vulnerable to cross Stored XSS and SQL Injection/">
       </div>
     
   </div>
@@ -480,7 +577,7 @@ ZoomEye ( https://www.zoomeye.org )，一款为你打开上帝视角的网络空
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">关于ZoomEye</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">2.</span> <span class="nav-text">关于pocsuite</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">3.</span> <span class="nav-text">背后的眼睛</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#persistent_XSS"><span class="nav-number">1.</span> <span class="nav-text">persistent XSS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SQL_Injection"><span class="nav-number">2.</span> <span class="nav-text">SQL Injection</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
