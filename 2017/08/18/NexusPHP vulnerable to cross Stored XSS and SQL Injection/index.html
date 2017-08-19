@@ -46,17 +46,17 @@
 
 
 
-<meta name="description" content="NexusPHP is an open-sourced BitTorrent private tracker script written in PHP. It forks from the TBSource project and some other open-sourced projects.The project is widely used in the network, especia">
+<meta name="description" content="NexusPHP is an open-sourced BitTorrent private tracker script written in PHP. It forks from the TBSource project and some other open-sourced projects. The project is widely used in the network, especi">
 <meta property="og:type" content="article">
 <meta property="og:title" content="NexusPHP vulnerable to persistent XSS and SQL Injection">
 <meta property="og:url" content="http://s0m30ne.github.io/2017/08/18/NexusPHP vulnerable to cross Stored XSS and SQL Injection/index.html">
 <meta property="og:site_name" content="s0m30ne的博客">
-<meta property="og:description" content="NexusPHP is an open-sourced BitTorrent private tracker script written in PHP. It forks from the TBSource project and some other open-sourced projects.The project is widely used in the network, especia">
+<meta property="og:description" content="NexusPHP is an open-sourced BitTorrent private tracker script written in PHP. It forks from the TBSource project and some other open-sourced projects. The project is widely used in the network, especi">
 <meta property="og:image" content="http://7xp22c.com1.z0.glb.clouddn.com/gangtiexia.jpg">
-<meta property="og:updated_time" content="2017-08-19T17:02:09.660Z">
+<meta property="og:updated_time" content="2017-08-19T17:04:14.010Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NexusPHP vulnerable to persistent XSS and SQL Injection">
-<meta name="twitter:description" content="NexusPHP is an open-sourced BitTorrent private tracker script written in PHP. It forks from the TBSource project and some other open-sourced projects.The project is widely used in the network, especia">
+<meta name="twitter:description" content="NexusPHP is an open-sourced BitTorrent private tracker script written in PHP. It forks from the TBSource project and some other open-sourced projects. The project is widely used in the network, especi">
 
 
 
@@ -243,7 +243,7 @@
           </span>
           <span class="post-time">
             | 修改于
-            <time itemprop="dateCreated" datetime="2017-08-20T01:02:09+08:00" content="2017-08-20">
+            <time itemprop="dateCreated" datetime="2017-08-20T01:04:14+08:00" content="2017-08-20">
               2017-08-20
             </time>
           </span>
@@ -292,7 +292,7 @@
           
             <div class="post-gallery-row">
               <a class="post-gallery-img fancybox"
-                 href="http://7xp22c.com1.z0.glb.clouddn.com/gangtiexia.jpg" rel="gallery_cj6jjy698001o00mimb6cmt83"
+                 href="http://7xp22c.com1.z0.glb.clouddn.com/gangtiexia.jpg" rel="gallery_cj6jjzz80001ogkmilc6wenxy"
                  itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
                 <img src="http://7xp22c.com1.z0.glb.clouddn.com/gangtiexia.jpg" itemprop="contentUrl"/>
               </a>
@@ -305,7 +305,7 @@
       
 
       
-        <span itemprop="articleBody"><p>NexusPHP is an open-sourced BitTorrent private tracker script written in PHP. It forks from the TBSource project and some other open-sourced projects.The project is widely used in the network, especially in educational websites to share resources.<br><a id="more"></a></p>
+        <span itemprop="articleBody"><p>NexusPHP is an open-sourced BitTorrent private tracker script written in PHP. It forks from the TBSource project and some other open-sourced projects. The project is widely used in the network, especially in educational websites to share resources.<br><a id="more"></a></p>
 <h2 id="persistent_XSS"><a href="#persistent_XSS" class="headerlink" title="persistent XSS"></a>persistent XSS</h2><p>A persistent XSS was found when you comment on an article or send a message to someone. You can insert a url like <code>javascript:javascript codes</code>, and if someone clicks the url, you can get his/her cookie. </p>
 <p>Actually NexusPHP has a function to manage with contents to output. The function looks like below:</p>
 <pre><code>function format_comment($text, $strip_html = true, $xssclean = false, $newtab = false, $imageresizer = true, $image_max_width = 700, $enableimage = true, $enableflash = true , $imagenum = -1, $image_max_height = 0, $adid = 0)
