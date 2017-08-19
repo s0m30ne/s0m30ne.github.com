@@ -53,7 +53,7 @@
 <meta property="og:site_name" content="s0m30ne的博客">
 <meta property="og:description" content="NexusPHP is an open-sourced BitTorrent private tracker script written in PHP. It forks from the TBSource project and some other open-sourced projects. The project is widely used in the network, especi">
 <meta property="og:image" content="http://7xp22c.com1.z0.glb.clouddn.com/gangtiexia.jpg">
-<meta property="og:updated_time" content="2017-08-19T17:04:14.010Z">
+<meta property="og:updated_time" content="2017-08-19T17:20:34.850Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NexusPHP vulnerable to persistent XSS and SQL Injection">
 <meta name="twitter:description" content="NexusPHP is an open-sourced BitTorrent private tracker script written in PHP. It forks from the TBSource project and some other open-sourced projects. The project is widely used in the network, especi">
@@ -243,7 +243,7 @@
           </span>
           <span class="post-time">
             | 修改于
-            <time itemprop="dateCreated" datetime="2017-08-20T01:04:14+08:00" content="2017-08-20">
+            <time itemprop="dateCreated" datetime="2017-08-20T01:20:34+08:00" content="2017-08-20">
               2017-08-20
             </time>
           </span>
@@ -292,7 +292,7 @@
           
             <div class="post-gallery-row">
               <a class="post-gallery-img fancybox"
-                 href="http://7xp22c.com1.z0.glb.clouddn.com/gangtiexia.jpg" rel="gallery_cj6jjzz80001ogkmilc6wenxy"
+                 href="http://7xp22c.com1.z0.glb.clouddn.com/gangtiexia.jpg" rel="gallery_cj6jkl84c001oakmiiqrfpfj5"
                  itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
                 <img src="http://7xp22c.com1.z0.glb.clouddn.com/gangtiexia.jpg" itemprop="contentUrl"/>
               </a>
@@ -399,9 +399,9 @@
     return $s;
 }
 </code></pre><p>The code uses <code>htmlspecialchars</code> to manage with <code>&amp;</code>, <code>&quot;</code>, <code>&lt;</code> and <code>&gt;</code> which means we can not get out of the <code>&quot;</code> and insert JavaScript code directly. However, it allows we insert url with the format like <code>[url=&quot;user input&quot;]user input[/url]</code> and the user input would be treated as url without any check.</p>
-<p>Once you get someone’s cookie you can obtain his/her account just by visit the site with his/her cookie. Cookies of NexusPHP look like below.</p>
+<p>Once you get someone’s cookie you can obtain his/her account just by visiting the site with his/her cookie. Cookies of NexusPHP look like below.</p>
 <pre><code>c_secure_ssl=bm9wZQ%3D%3D; c_secure_uid=MQ%3D%3D; c_secure_pass=58ffa98fdb39aa21c9d510509b12e7b4; c_secure_tracker_ssl=bm9wZQ%3D%3D; c_secure_login=bm9wZQ%3D%3D
-</code></pre><p><code>c_secure_uid</code> is the uid of user. <code>c_secure_pass</code> is calculated as <code>md5($row[&quot;passhash&quot;])</code> which would not changed until the user changes his/her password. So that we do not need to crack user’s password and could control the account directory until the user changed his/her password.</p>
+</code></pre><p><code>c_secure_uid</code> is the uid of user. <code>c_secure_pass</code> is calculated by <code>md5($row[&quot;passhash&quot;])</code> which would not change until the user changes his/her password. So that we do not need to crack user’s password and could control the account directly until the user change his/her password.</p>
 <h2 id="SQL_Injection"><a href="#SQL_Injection" class="headerlink" title="SQL Injection"></a>SQL Injection</h2><p>If the user is in the <code>$forummanage_class</code>, he would be able to manage the forum through the <code>forummanage.php</code> page. There is some codes like below which would cause SQL injection.</p>
 <pre><code>//EDIT FORUM ACTION
 elseif ($_POST[&apos;action&apos;] == &quot;editforum&quot;) {
