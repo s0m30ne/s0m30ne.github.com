@@ -5,7 +5,7 @@
     
   <url>
     <loc>http://s0m30ne.github.io/2017/08/18/NexusPHP%20vulnerable%20to%20cross%20Stored%20XSS%20and%20SQL%20Injection/</loc>
-    <lastmod>2017-08-19T16:57:08.241Z</lastmod>
+    <lastmod>2017-08-19T16:59:03.650Z</lastmod>
     <data>
         <display>
         <title>NexusPHP vulnerable to persistent XSS and SQL Injection</title>
@@ -16,7 +16,7 @@
          
            
              
-              <breadCrumb title="漏洞挖掘" url="http://s0m30ne.github.io/categories/%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/"/>
+              <breadCrumb title="漏洞分析" url="http://s0m30ne.github.io/categories/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"/>
           
         </display>
     </data>
